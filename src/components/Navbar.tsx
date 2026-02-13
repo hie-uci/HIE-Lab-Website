@@ -44,7 +44,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
-            <Image src="/images/logo/hie-logo.png" alt="HIE Lab logo" width={240} height={36} className="h-10 sm:h-12 w-auto group-hover:opacity-80 transition-opacity" unoptimized />
+            <Image src="/images/logo/hie-logo.png" alt="HIE Lab logo" width={300} height={45} className="h-12 sm:h-14 w-auto group-hover:opacity-80 transition-opacity" unoptimized />
           </Link>
 
           {/* Desktop Navigation */}
