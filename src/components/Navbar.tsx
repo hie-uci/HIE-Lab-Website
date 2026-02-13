@@ -43,12 +43,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <Image src="/images/logo/hie-logo.png" alt="HIE Lab logo" width={120} height={18} className="h-5 w-auto shadow-md group-hover:shadow-lg transition-shadow" unoptimized />
-            <div className="hidden sm:block">
-              <p className="text-sm font-bold text-eng-blue leading-tight">HIE Lab</p>
-              <p className="text-[10px] text-eecs-teal leading-tight">UC Irvine EECS</p>
-            </div>
+          <Link href="/" className="flex items-center group">
+            <Image src="/images/logo/hie-logo.png" alt="HIE Lab logo" width={200} height={30} className="h-9 sm:h-10 w-auto group-hover:opacity-80 transition-opacity" unoptimized />
           </Link>
 
           {/* Desktop Navigation */}
