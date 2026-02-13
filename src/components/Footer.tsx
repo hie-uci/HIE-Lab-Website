@@ -50,12 +50,12 @@ export default function Footer() {
             <p className="text-sm text-white/70 leading-relaxed mb-4">
               High-speed Integrated Electronics Laboratory — Advancing mm-wave and terahertz circuit design for next-generation sensing, imaging, and communication systems.
             </p>
-            <div className="flex items-center gap-2">
+            <a href="https://engineering.uci.edu/dept/eecs" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-80 transition-opacity">
               <div className="w-8 h-8 rounded-full bg-uci-gold/20 flex items-center justify-center">
                 <span className="text-[8px] font-bold text-uci-gold">UCI</span>
               </div>
-              <span className="text-xs text-white/50">EECS Department</span>
-            </div>
+              <span className="text-xs text-white/50 hover:text-white/70 transition-colors">EECS Department</span>
+            </a>
           </div>
 
           {/* Quick Links */}
@@ -125,7 +125,7 @@ export default function Footer() {
                 </svg>
                 <span className="text-sm text-white/70">
                   University of California, Irvine<br />
-                  Dept. of EECS
+                  <a href="https://engineering.uci.edu/dept/eecs" target="_blank" rel="noopener noreferrer" className="hover:text-uci-gold transition-colors">Dept. of EECS</a>
                 </span>
               </div>
             </div>

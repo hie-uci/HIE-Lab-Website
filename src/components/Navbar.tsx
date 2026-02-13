@@ -63,12 +63,12 @@ export default function Navbar() {
           {/* UCI Badge */}
           <div className="hidden lg:flex items-center gap-2">
             <div className="h-8 w-px bg-gray-200" />
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-uci-blue/5 border border-uci-blue/10">
+            <a href="https://engineering.uci.edu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-uci-blue/5 border border-uci-blue/10 hover:bg-uci-blue/10 transition-colors">
               <div className="w-5 h-5 rounded-full bg-uci-blue flex items-center justify-center">
                 <span className="text-[8px] font-bold text-white">UCI</span>
               </div>
               <span className="text-xs font-medium text-uci-blue">Engineering</span>
-            </div>
+            </a>
           </div>
 
           {/* Mobile menu button */}

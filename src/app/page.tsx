@@ -194,9 +194,9 @@ export default function HomePage() {
               height={28}
               className="rounded-full"
             />
-            <span className="text-sm font-medium text-eng-blue">UC Irvine EECS</span>
+            <a href="https://engineering.uci.edu/dept/eecs" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-eng-blue hover:text-uci-blue transition-colors">UC Irvine EECS</a>
             <div className="w-1 h-1 rounded-full bg-uci-gold" />
-            <span className="text-sm text-eecs-teal">Samueli School of Engineering</span>
+            <a href="https://engineering.uci.edu" target="_blank" rel="noopener noreferrer" className="text-sm text-eecs-teal hover:text-uci-blue transition-colors">Samueli School of Engineering</a>
           </motion.div>
 
           {/* Title */}
