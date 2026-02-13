@@ -107,7 +107,7 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-800">Prof. Hamidreza Aghasi</p>
+                      <p className="font-semibold text-gray-800">Hamidreza Aghasi</p>
                       <p className="text-sm text-gray-500">Assistant Professor, EECS</p>
                     </div>
                   </div>
