@@ -178,46 +178,6 @@ export default function ContactPage() {
                 </div>
               </motion.div>
 
-              {/* Academic Links */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="glass rounded-2xl p-6 shadow-lg"
-              >
-                <h3 className="text-lg font-bold text-eng-blue mb-4">Academic Profiles</h3>
-                <div className="space-y-3">
-                  <a href="#" className="flex items-center gap-3 p-3 rounded-xl hover:bg-uci-blue/5 transition-colors group">
-                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                      <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 24a7 7 0 110-14 7 7 0 010 14zm0-24L0 9.5l4.838 3.94A8 8 0 0112 9a8 8 0 017.162 4.44L24 9.5z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-800 group-hover:text-uci-blue transition-colors">Google Scholar</p>
-                      <p className="text-xs text-gray-400">Publications & Citations</p>
-                    </div>
-                    <svg className="w-4 h-4 text-gray-300 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                  <a href="#" className="flex items-center gap-3 p-3 rounded-xl hover:bg-uci-blue/5 transition-colors group">
-                    <div className="w-10 h-10 rounded-lg bg-uci-blue/10 flex items-center justify-center">
-                      <svg className="w-5 h-5 text-uci-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-800 group-hover:text-uci-blue transition-colors">UCI Faculty Page</p>
-                      <p className="text-xs text-gray-400">Official University Profile</p>
-                    </div>
-                    <svg className="w-4 h-4 text-gray-300 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                </div>
-              </motion.div>
             </div>
 
             {/* Right - Form & Positions */}
