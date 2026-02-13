@@ -98,7 +98,7 @@ const newsItems = [
   },
   {
     date: 'Sep 2025',
-    text: 'Xuyang successfully defends his PhD dissertation. Congratulations, Dr. Xuyang!',
+    text: 'Xuyang successfully defends his PhD dissertation. Congratulations, Dr. Liu!',
     tag: 'Milestone',
   },
   {

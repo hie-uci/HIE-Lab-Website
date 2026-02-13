@@ -44,7 +44,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <Image src="/images/logo/hie-logo.png" alt="HIE Lab logo" width={40} height={40} className="w-10 h-10 rounded-lg shadow-md group-hover:shadow-lg transition-shadow" />
+            <Image src="/images/logo/hie-logo.png" alt="HIE Lab logo" width={120} height={18} className="h-5 w-auto shadow-md group-hover:shadow-lg transition-shadow" unoptimized />
             <div className="hidden sm:block">
               <p className="text-sm font-bold text-eng-blue leading-tight">HIE Lab</p>
               <p className="text-[10px] text-eecs-teal leading-tight">UC Irvine EECS</p>
