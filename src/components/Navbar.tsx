@@ -14,7 +14,7 @@ const navLinks = [
   { name: 'News', href: '/news' },
   { name: 'Teaching', href: '/teaching' },
   { name: 'Contact', href: '/contact' },
-  { name: 'Positions', href: '/contact#positions' },
+  { name: 'Positions', href: '/available-positions' },
 ];
 
 export default function Navbar() {
