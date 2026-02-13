@@ -23,14 +23,7 @@ const positions = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.627 48.627 0 0 1 12 20.904a48.627 48.627 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.57 50.57 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342" />
       </svg>
     ),
-    description: 'We are looking for candidates with expertise in the following areas:',
-    skills: [
-      'RF/mm-wave circuit design',
-      'Microwave theory',
-      'Solid-state device physics',
-      'Nonlinear dynamics',
-    ],
-    requirements: 'Please send a cover letter, CV, and research statement to haghasi@uci.edu. Applicants must also provide contact information for 2–3 references.',
+    text: 'Currently we are looking for candidates with backgrounds in RF/mm-wave circuit design, microwave theory, solid-state device physics, and nonlinear dynamics. If you are interested to join our group, please send your cover letter, CV, and statement of research to haghasi@uci.edu. In your cover letter please also include the contact information for 2-3 references.',
     gradient: 'from-[#0064a4] to-[#00386d]',
   },
   {
@@ -40,13 +33,7 @@ const positions = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
       </svg>
     ),
-    description: 'We welcome students with backgrounds in circuit design and microwave theory. Prospective students should:',
-    skills: [
-      'Apply through UCI\'s graduate program',
-      'Email haghasi@uci.edu with CV and transcripts',
-      'Mention interest in joining the group during the formal application process',
-    ],
-    requirements: null,
+    text: 'We encourage candidates with backgrounds in circuit design and microwave theory to apply to the graduate program at the UCI and also send an email to haghasi@uci.edu with your CV and transcripts. Please follow the application process of the UCI and mention that you are interested to join us.',
     gradient: 'from-[#203043] to-[#528188]',
   },
   {
@@ -56,12 +43,7 @@ const positions = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
       </svg>
     ),
-    description: 'Current UCI undergraduates interested in mm-wave circuit design should email haghasi@uci.edu with:',
-    skills: [
-      'Academic transcript',
-      'Brief summary of research interests',
-    ],
-    requirements: 'We also provide a list of suggested textbooks which cover the prerequisite knowledge for students seeking foundational preparation in this research area.',
+    text: 'Please send an email to haghasi@uci.edu with your transcript and a short summary of your research interests. The undergraduate students at UCI who are interested to conduct research in the broad area of mm-wave circuit design can also send an email to haghasi@uci.edu and receive a list of suggested textbooks which cover the prerequisite knowledge of our research.',
     gradient: 'from-[#00386d] to-[#528188]',
   },
 ];
@@ -126,22 +108,7 @@ export default function AvailablePositionsPage() {
 
                 {/* Content */}
                 <div className="p-8">
-                  <p className="text-gray-700 leading-relaxed mb-5">{pos.description}</p>
-
-                  <ul className="space-y-3 mb-6">
-                    {pos.skills.map((skill) => (
-                      <li key={skill} className="flex items-start gap-3">
-                        <span className="mt-1.5 w-2 h-2 rounded-full bg-uci-blue flex-shrink-0" />
-                        <span className="text-gray-600">{skill}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {pos.requirements && (
-                    <div className="p-5 rounded-xl bg-slate-warm border border-gray-100">
-                      <p className="text-sm text-gray-600 leading-relaxed">{pos.requirements}</p>
-                    </div>
-                  )}
+                  <p className="text-gray-700 leading-relaxed">{pos.text}</p>
                 </div>
               </motion.div>
             ))}
