@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import PageWrapper from '@/components/PageWrapper';
 import SectionHeader from '@/components/SectionHeader';
 import CircuitBackground from '@/components/CircuitBackground';
@@ -268,8 +267,6 @@ const projects: Project[] = [
 /* ──────────────────────────── project card component ──────────────────────────── */
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 60 }}
@@ -306,97 +303,62 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </div>
         </div>
 
-        {/* Card body */}
+        {/* Card body — all content displayed directly */}
         <div className="px-6 sm:px-8 py-6">
-          <p className="text-sm text-gray-600 leading-relaxed mb-4">
-            {project.description[0]}
-          </p>
+          {project.description.map((p, i) => (
+            <p key={i} className="text-sm text-gray-600 leading-relaxed mb-4">{p}</p>
+          ))}
 
-          {/* Expandable content */}
-          <AnimatePresence>
-            {isExpanded && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
-                {project.description.slice(1).map((p, i) => (
-                  <p key={i} className="text-sm text-gray-600 leading-relaxed mb-4">{p}</p>
+          {/* Applications */}
+          <div className="mb-5">
+            <h4 className="text-xs font-bold text-eng-blue uppercase tracking-wider mb-2">Applications</h4>
+            <div className="flex flex-wrap gap-2">
+              {project.applications.map((app) => (
+                <span key={app} className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-warm text-gray-600 border border-gray-100">
+                  {app}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Publications */}
+          <div className="mb-5">
+            <h4 className="text-xs font-bold text-eng-blue uppercase tracking-wider mb-2">Related Publications</h4>
+            <div className="flex flex-wrap gap-2">
+              {project.publications.map((pub) => (
+                <Link
+                  key={pub}
+                  href="/publications"
+                  className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-uci-blue/5 text-uci-blue border border-uci-blue/10 hover:bg-uci-blue/10 transition-colors"
+                >
+                  {pub}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Image Gallery */}
+          {project.galleryImages.length > 0 && (
+            <div>
+              <h4 className="text-xs font-bold text-eng-blue uppercase tracking-wider mb-3">Gallery</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {project.galleryImages.map((img, imgIdx) => (
+                  <div
+                    key={imgIdx}
+                    className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-sm border border-gray-100 group/img bg-slate-warm"
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover/img:scale-110"
+                      {...(img.isGif ? { unoptimized: true } : {})}
+                    />
+                  </div>
                 ))}
-
-                {/* Applications */}
-                <div className="mb-5">
-                  <h4 className="text-xs font-bold text-eng-blue uppercase tracking-wider mb-2">Applications</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.applications.map((app) => (
-                      <span key={app} className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-warm text-gray-600 border border-gray-100">
-                        {app}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Publications */}
-                <div className="mb-5">
-                  <h4 className="text-xs font-bold text-eng-blue uppercase tracking-wider mb-2">Related Publications</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.publications.map((pub) => (
-                      <Link
-                        key={pub}
-                        href="/publications"
-                        className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-uci-blue/5 text-uci-blue border border-uci-blue/10 hover:bg-uci-blue/10 transition-colors"
-                      >
-                        {pub}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Image Gallery */}
-                {project.galleryImages.length > 0 && (
-                  <div>
-                    <h4 className="text-xs font-bold text-eng-blue uppercase tracking-wider mb-3">Gallery</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                      {project.galleryImages.map((img, imgIdx) => (
-                        <div
-                          key={imgIdx}
-                          className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-sm border border-gray-100 group/img bg-slate-warm"
-                        >
-                          <Image
-                            src={img.src}
-                            alt={img.alt}
-                            fill
-                            className="object-cover transition-transform duration-300 group-hover/img:scale-110"
-                            {...(img.isGif ? { unoptimized: true } : {})}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Toggle button */}
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-uci-blue hover:text-eng-blue transition-colors"
-          >
-            {isExpanded ? 'Show less' : 'Read more'}
-            <motion.svg
-              animate={{ rotate: isExpanded ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </motion.svg>
-          </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
