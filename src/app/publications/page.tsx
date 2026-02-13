@@ -8,7 +8,7 @@ import CircuitBackground from '@/components/CircuitBackground';
 
 // --------------- types ---------------
 
-type PubType = 'journal' | 'conference' | 'patent';
+type PubType = 'journal' | 'conference' | 'patent' | 'talk';
 
 interface Publication {
   authors: string;
@@ -28,60 +28,86 @@ const publications: Publication[] = [
   { authors: 'M. H. Maktoomi, X. Liu, H. R. Aghasi', title: 'A 19 dBm Psat 110–142 GHz Power Amplifier in 65-nm CMOS', venue: 'IEEE JSSC', year: 2025, type: 'journal', status: 'Under Review' },
   { authors: 'M. Alonso, X. Liu, H. R. Aghasi', title: 'Non-Linear Analog Processing in MIMO Systems', venue: 'IEEE JSAIT', year: 2025, type: 'journal', status: 'Under Review' },
   { authors: 'M. Alesheikh, A. Montazar, H. R. Aghasi', title: 'Effect of Object Shape and Radar Topology', venue: 'IEEE MWTL', year: 2025, type: 'journal', status: 'Under Review' },
-  { authors: 'J. Gruber et al.', title: 'Sub-THz Communication Systems in Silicon', venue: 'Nature Communications Engineering', year: 2025, type: 'journal' },
+  { authors: 'J. Gruber, H. Alotaibi, A. Tabatabavakili, L. Chen, H. R. Aghasi, H. Naghavi, E. Afshari', title: 'Sub-THz Communication Systems in Silicon', venue: 'Nature Communications Engineering', year: 2025, type: 'journal' },
   { authors: 'A. Montazar, X. Liu, Z. Zhang, H. R. Aghasi', title: 'A Hybrid CMOS–Polyimide Adaptive Force Radiometric Array', venue: 'IEEE MWTL', year: 2025, type: 'journal', link: 'https://ieeexplore.ieee.org/document/10969567' },
   { authors: 'M. Berahman, H. R. Aghasi', title: 'Tunneling FETs Based on Janus Monolayer PtSSe', venue: 'IEEE TNANO', year: 2025, type: 'journal', link: 'https://ieeexplore.ieee.org/document/11082011' },
   { authors: 'X. Liu, M. Maktoomi, M. Alesheikh, P. Heydari, H. R. Aghasi', title: 'A CMOS 49–63-GHz Phase-Locked Stepped-Chirp FMCW Radar Transceiver', venue: 'IEEE JSSC', year: 2025, type: 'journal', link: 'https://ieeexplore.ieee.org/document/10964133' },
 
   // 2026 Conferences
-  { authors: 'Y. Huang et al.', title: 'EM-Aware Physical Synthesis', venue: 'IEEE ISCAS', year: 2026, type: 'conference', status: 'Submitted' },
-  { authors: 'A. Montazar et al.', title: 'Energy-Autonomous Frequency-Domain Force Sensor', venue: 'IEEE ISCAS', year: 2026, type: 'conference', status: 'Submitted' },
-  { authors: 'M. Maktoomi et al.', title: '110–142 GHz 19 dBm PA', venue: 'IEEE RWW', year: 2025, type: 'conference', highlight: 'Best Student Paper Nominee' },
-  { authors: 'A. Ding, Y. Huang et al.', title: 'Attention-Based Cognitive Beam Steering', venue: 'IEEE RadarConf', year: 2025, type: 'conference', highlight: 'Best Student Paper Nominee' },
-  { authors: 'A. Mehradfar et al.', title: 'FALCON: ML Framework for Analog Circuit Design', venue: 'NeurIPS', year: 2025, type: 'conference' },
-  { authors: 'A. Montazar et al.', title: 'Hybrid CMOS-Polyimide Array', venue: 'IEEE IMS', year: 2025, type: 'conference' },
-  { authors: 'M. Alesheikh et al.', title: '55–65 GHz Half-Width Leaky Wave Antenna', venue: 'IEEE APS', year: 2025, type: 'conference' },
-  { authors: 'M. Alesheikh et al.', title: 'Curvature Effect of Flexible Antenna Arrays', venue: 'IEEE APS', year: 2025, type: 'conference' },
+  { authors: 'Y. Huang, A. Mehradfar, S. Avestimehr, H. R. Aghasi', title: 'EM-Aware Physical Synthesis', venue: 'IEEE ISCAS', year: 2026, type: 'conference', status: 'Submitted' },
+  { authors: 'A. Montazar, X. Liu, Y. Huang, H. R. Aghasi', title: 'Energy-Autonomous Frequency-Domain Force Sensor', venue: 'IEEE ISCAS', year: 2026, type: 'conference', status: 'Submitted' },
+  { authors: 'M. Maktoomi, X. Liu, H. R. Aghasi', title: '110–142 GHz 19 dBm PA', venue: 'IEEE RWW', year: 2025, type: 'conference', highlight: 'Best Student Paper Nominee' },
+  { authors: 'A. Ding, Y. Huang, S. Jeung, X. Liu, H. R. Aghasi, M. Imani', title: 'Attention-Based Cognitive Beam Steering', venue: 'IEEE RadarConf', year: 2025, type: 'conference', highlight: 'Best Student Paper Nominee' },
+  { authors: 'A. Mehradfar, X. Zhao, Y. Huang, E. Ceyani, Y. Yang, S. Han, H. R. Aghasi, S. Avestimehr', title: 'FALCON: ML Framework for Analog Circuit Design', venue: 'NeurIPS', year: 2025, type: 'conference' },
+  { authors: 'A. Montazar, X. Liu, H. R. Aghasi', title: 'Hybrid CMOS-Polyimide Array', venue: 'IEEE IMS', year: 2025, type: 'conference' },
+  { authors: 'M. Alesheikh, S. Saadat, A. Montazar, H. R. Aghasi', title: '55–65 GHz Half-Width Leaky Wave Antenna', venue: 'IEEE APS', year: 2025, type: 'conference' },
+  { authors: 'M. Alesheikh, S. Saadat, H. R. Aghasi', title: 'Curvature Effect of Flexible Antenna Arrays', venue: 'IEEE APS', year: 2025, type: 'conference' },
+  { authors: 'H. R. Aghasi', title: 'Data-Efficient Supervised Learning for RF and mm-Wave Circuit Design: Techniques, Challenges, and Benefits', venue: 'IEEE APWC (Invited Talk)', year: 2025, type: 'conference' },
 
   // 2024 Journals
-  { authors: 'A. Mahdavifar et al.', title: 'Supervised Learning for Analog and RF Circuit Design', venue: 'IEEE TCAD', year: 2024, type: 'journal', status: 'Under Review' },
-  { authors: 'H. R. Aghasi et al.', title: 'Broadband Harmonic-Assisted Power Enhancement', venue: 'IEEE JSSC', year: 2024, type: 'journal', link: 'https://ieeexplore.ieee.org/document/10758425' },
+  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'Supervised Learning for Analog and RF Circuit Design', venue: 'IEEE TCAD', year: 2024, type: 'journal', status: 'Under Review' },
+  { authors: 'H. R. Aghasi, X. Liu, M. Tavakolli Taba, F. Khoeini, E. Afshari', title: 'Broadband Harmonic-Assisted Power Enhancement', venue: 'IEEE JSSC', year: 2024, type: 'journal', link: 'https://ieeexplore.ieee.org/document/10758425' },
   { authors: 'X. Liu, B. Moradi, H. R. Aghasi', title: 'Single-Switch 3.1–4.7 GHz Class-D VCO', venue: 'IEEE TCAS-II', year: 2024, type: 'journal', link: 'https://ieeexplore.ieee.org/document/10543114' },
   { authors: 'B. Moradi, X. Liu, H. R. Aghasi', title: '76–82 GHz VCO in 65 nm CMOS', venue: 'IEEE TCAS-I', year: 2024, type: 'journal', link: 'https://ieeexplore.ieee.org/document/10296176' },
 
   // 2024 Conferences
-  { authors: 'A. Mahdavifar et al.', title: 'AICircuit: Multi-Level Dataset', venue: 'NeurIPS ML4PS Workshop', year: 2024, type: 'conference' },
-  { authors: 'M. Alesheikh et al.', title: 'Electronically Tunable 28–34 GHz 2D Steerable LWA', venue: 'IEEE APS', year: 2024, type: 'conference' },
+  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'AICircuit: Multi-Level Dataset', venue: 'NeurIPS ML4PS Workshop', year: 2024, type: 'conference' },
+  { authors: 'M. Alesheikh, M. Maktoomi, S. Saadat, H. R. Aghasi', title: 'Electronically Tunable 28–34 GHz 2D Steerable LWA', venue: 'IEEE APS', year: 2024, type: 'conference' },
 
   // 2023
-  { authors: 'H. Maktoomi et al.', title: 'Broadband Antenna Design for THz Communication', venue: 'IEEE Access', year: 2023, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/10056150' },
-  { authors: 'X. Liu et al.', title: '49–63 GHz Phase-Locked FMCW Radar', venue: 'ESSCIRC', year: 2023, type: 'conference', link: 'https://ieeexplore.ieee.org/abstract/document/10268798' },
-  { authors: 'D. Krylov et al.', title: 'Learning to Design Analog Circuits', venue: 'ICML', year: 2023, type: 'conference', link: 'https://openreview.net/forum?id=38W1BXgAqx' },
+  { authors: 'H. Maktoomi, S. Saadat, O. Momeni, P. Heydari, H. R. Aghasi', title: 'Broadband Antenna Design for THz Communication', venue: 'IEEE Access', year: 2023, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/10056150' },
+  { authors: 'X. Liu, M. Maktoomi, M. Alesheikh, P. Heydari, H. R. Aghasi', title: '49–63 GHz Phase-Locked FMCW Radar', venue: 'ESSCIRC', year: 2023, type: 'conference', link: 'https://ieeexplore.ieee.org/abstract/document/10268798' },
+  { authors: 'D. Krylov, P. Khajeh, T. Reeves, J. Ouyang, T. Liu, H. R. Aghasi, R. Fox', title: 'Learning to Design Analog Circuits', venue: 'ICML', year: 2023, type: 'conference', link: 'https://openreview.net/forum?id=38W1BXgAqx' },
 
   // 2022
-  { authors: 'H. Maktoomi et al.', title: 'Sub-THz Wideband Stacked-Patch Antenna', venue: 'IEEE TAP', year: 2022, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/9810798' },
+  { authors: 'H. Maktoomi, Z. Wang, H. Wang, S. Saadat, P. Heydari, H. R. Aghasi', title: 'Sub-THz Wideband Stacked-Patch Antenna', venue: 'IEEE TAP', year: 2022, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/9810798' },
   { authors: 'F. Shirani, H. R. Aghasi', title: 'Quantifying Capacity Gains', venue: 'IEEE Globecom', year: 2022, type: 'conference', link: 'https://ieeexplore.ieee.org/abstract/document/10008530' },
   { authors: 'F. Shirani, H. R. Aghasi', title: 'MIMO with One-Bit ADCs', venue: 'IEEE ISIT', year: 2022, type: 'conference', link: 'https://ieeexplore.ieee.org/abstract/document/9834405' },
-  { authors: 'B. Moradi et al.', title: 'Compact CMOS 76–82 GHz Super-Harmonic VCO', venue: 'IEEE RFIC', year: 2022, type: 'conference', link: 'https://ieeexplore.ieee.org/abstract/document/9863140' },
+  { authors: 'B. Moradi, X. Liu, M. Green, H. R. Aghasi', title: 'Compact CMOS 76–82 GHz Super-Harmonic VCO', venue: 'IEEE RFIC', year: 2022, type: 'conference', link: 'https://ieeexplore.ieee.org/abstract/document/9863140' },
 
   // 2020-2021
   { authors: 'H. R. Aghasi, P. Heydari', title: 'mm-Wave Radars-on-Chip', venue: 'IEEE Communications Magazine', year: 2020, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/9311904' },
-  { authors: 'H. R. Aghasi et al.', title: 'THz Electronics: Wave Propagation and Nonlinear Processes', venue: 'Applied Physics Reviews', year: 2020, type: 'journal', highlight: "Editor's Choice", link: 'https://pubs.aip.org/aip/apr/article-abstract/7/2/021302/124062' },
-  { authors: 'A. Mostajeran et al.', title: 'Fully Integrated Solutions for THz Imaging', venue: 'IEEE CICC', year: 2019, type: 'conference' },
-  { authors: 'H. Maktoomi et al.', title: 'GSG-Excited Ultra-Wideband 103–147 GHz Stacked Patch Antenna', venue: 'IEEE APS', year: 2021, type: 'conference' },
+  { authors: 'H. R. Aghasi, H. Naghavi, S. M. Tavakolitaba, M. Aseeri, A. Cathelin, E. Afshari', title: 'THz Electronics: Wave Propagation and Nonlinear Processes', venue: 'Applied Physics Reviews', year: 2020, type: 'journal', highlight: "Editor's Choice", link: 'https://pubs.aip.org/aip/apr/article-abstract/7/2/021302/124062' },
+  { authors: 'A. Mostajeran, H. R. Aghasi, M. H. Naghavi, E. Afshari', title: 'Fully Integrated Solutions for THz Imaging', venue: 'IEEE CICC', year: 2019, type: 'conference' },
+  { authors: 'H. Maktoomi, Z. Wang, H. Wang, S. Saadat, P. Heydari, H. R. Aghasi', title: 'GSG-Excited Ultra-Wideband 103–147 GHz Stacked Patch Antenna', venue: 'IEEE APS', year: 2021, type: 'conference' },
 
   // 2015-2018
   { authors: 'H. R. Aghasi, E. Afshari', title: '88 GHz Compact Fundamental Oscillator', venue: 'IEEE SSCL', year: 2018, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/8490693' },
-  { authors: 'H. R. Aghasi et al.', title: '0.92 THz SiGe Power Radiator', venue: 'IEEE JSSC', year: 2017, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/7819530' },
+  { authors: 'H. R. Aghasi, A. Cathelin, E. Afshari', title: '0.92 THz SiGe Power Radiator', venue: 'IEEE JSSC', year: 2017, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/7819530' },
   { authors: 'H. R. Aghasi, E. Afshari', title: 'Power-Efficient THz Communication Circuits', venue: 'ACM NANOCOM', year: 2017, type: 'conference', link: 'https://dl.acm.org/citation.cfm?id=3122844' },
-  { authors: 'H. R. Aghasi et al.', title: 'Smart Detector Cell', venue: 'IEEE TNANO', year: 2016, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/7407630' },
+  { authors: 'H. R. Aghasi, R. M. Iraei, A. Naeemi, E. Afshari', title: 'Smart Detector Cell', venue: 'IEEE TNANO', year: 2016, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/7407630' },
   { authors: 'H. R. Aghasi, E. Afshari', title: 'Broadband mm-Wave and THz Frequency Doublers', venue: 'ESSCIRC', year: 2016, type: 'conference', link: 'https://ieeexplore.ieee.org/abstract/document/7598318' },
-  { authors: 'S. Saadat et al.', title: 'Low Power Negative Inductance IC', venue: 'IEEE MWCL', year: 2015, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/7004068' },
-  { authors: 'R. Han et al.', title: '320 GHz Phase-Locked Transmitter', venue: 'IEEE ISSCC', year: 2015, type: 'conference' },
+  { authors: 'S. Saadat, H. R. Aghasi, E. Afshari, H. Mosallaei', title: 'Low Power Negative Inductance IC', venue: 'IEEE MWCL', year: 2015, type: 'journal', link: 'https://ieeexplore.ieee.org/abstract/document/7004068' },
+  { authors: 'R. Han, C. Jiang, A. Mostajeran, M. Emadi, H. R. Aghasi, A. Cathelin, E. Afshari', title: '320 GHz Phase-Locked Transmitter', venue: 'IEEE ISSCC', year: 2015, type: 'conference' },
+  { authors: 'R. Han, C. Jiang, A. Mostajeran, M. Emadi, H. R. Aghasi, A. Cathelin, E. Afshari', title: 'A SiGe Terahertz Heterodyne Imaging Transmitter with 3.3 mW Radiated Power and Fully-Integrated Phase-Locked Loop', venue: 'IEEE JSSC', year: 2015, type: 'journal' },
+
+  // 2011-2012
+  { authors: 'H. R. Aghasi, M. Hashemi, B. H. Khalaj', title: 'A Source Localization Based on Signal Attenuation and Time Delay Estimation in Sensor Networks', venue: 'IJCEE', year: 2012, type: 'journal' },
+  { authors: 'H. R. Aghasi, H. Amindavar, A. Aghasi', title: 'A Hybrid Global Minimization Scheme for Accurate Source Localization in Sensor Networks', venue: 'EURASIP JASP', year: 2011, type: 'journal' },
+  { authors: 'H. R. Aghasi, M. Hashemi, B. H. Khalaj', title: 'Source Localization Through Adaptive Signal Attenuation Model and Time Delay Estimation', venue: 'IEEE ICT', year: 2011, type: 'conference' },
 
   // Patents
   { authors: 'A. Montazar, X. Liu, H. R. Aghasi', title: 'Hybrid CMOS-Polyimide Force Radiometric Array', venue: 'US Patent', year: 2025, type: 'patent' },
   { authors: 'H. R. Aghasi, P. Heydari', title: 'Integrated Wideband Stepped-Chirp Radar Sensor', venue: 'US Patent', year: 2022, type: 'patent' },
+
+  // Invited Presentations and Talks
+  { authors: 'H. R. Aghasi', title: 'IEEE Optical Interconnects and Packaging Conference', venue: 'Fort Collins', year: 2025, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'University of Michigan', venue: 'Ann Arbor', year: 2025, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'University of Washington', venue: 'Seattle', year: 2024, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'IEEE RFIC Symposium', venue: '', year: 2022, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'MaxLinear Inc.', venue: 'Carlsbad, CA', year: 2020, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'Intel Corporation', venue: 'Hillsboro, OR', year: 2019, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'University of California, Irvine', venue: '', year: 2019, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'Acacia Communications', venue: 'Holmdel, NJ', year: 2018, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'Nokia Bell Labs', venue: 'Murray Hill, NJ', year: 2018, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'Anokiwave Inc.', venue: 'Billerica, MA', year: 2018, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'Integrated Device Technology (IDT)', venue: 'San Diego, CA', year: 2018, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'Qualcomm Inc.', venue: 'San Diego, CA', year: 2018, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'University of Michigan School of Medicine', venue: 'Ann Arbor', year: 2018, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'Goodix Technology Inc.', venue: 'Irvine, CA', year: 2017, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'Analog Photonics Inc.', venue: 'Boston, MA', year: 2017, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'University of Massachusetts', venue: 'Amherst, MA', year: 2017, type: 'talk' },
+  { authors: 'H. R. Aghasi', title: 'Cornell University – EDS Seminar Series', venue: 'Ithaca, NY', year: 2016, type: 'talk' },
 ];
 
 // --------------- helpers ---------------
@@ -91,6 +117,7 @@ const filterTabs: { label: string; value: PubType | 'all' }[] = [
   { label: 'Journal', value: 'journal' },
   { label: 'Conference', value: 'conference' },
   { label: 'Patent', value: 'patent' },
+  { label: 'Talks', value: 'talk' },
 ];
 
 function venueColor(type: PubType) {
@@ -98,6 +125,7 @@ function venueColor(type: PubType) {
     case 'journal': return 'bg-uci-blue/10 text-uci-blue border-uci-blue/20';
     case 'conference': return 'bg-eecs-teal/10 text-eecs-teal border-eecs-teal/20';
     case 'patent': return 'bg-uci-gold/10 text-uci-gold-light border-uci-gold/20';
+    case 'talk': return 'bg-purple-100 text-purple-700 border-purple-200';
   }
 }
 
@@ -130,7 +158,7 @@ export default function PublicationsPage() {
 
   // Group by year, newest first; within each year: journals → conferences → patents
   const grouped = useMemo(() => {
-    const typeOrder: Record<PubType, number> = { journal: 0, conference: 1, patent: 2 };
+    const typeOrder: Record<PubType, number> = { journal: 0, conference: 1, patent: 2, talk: 3 };
     const map = new Map<number, Publication[]>();
     for (const p of filtered) {
       const arr = map.get(p.year) ?? [];
@@ -149,6 +177,7 @@ export default function PublicationsPage() {
     journals: publications.filter((p) => p.type === 'journal').length,
     conferences: publications.filter((p) => p.type === 'conference').length,
     patents: publications.filter((p) => p.type === 'patent').length,
+    talks: publications.filter((p) => p.type === 'talk').length,
   }), []);
 
   return (
@@ -176,6 +205,7 @@ export default function PublicationsPage() {
               { label: 'Journals', count: stats.journals, color: 'text-uci-gold' },
               { label: 'Conferences', count: stats.conferences, color: 'text-eecs-teal-light' },
               { label: 'Patents', count: stats.patents, color: 'text-uci-gold' },
+              { label: 'Talks', count: stats.talks, color: 'text-purple-300' },
             ].map((s) => (
               <div key={s.label} className="text-center">
                 <p className={`text-3xl sm:text-4xl font-bold ${s.color}`}>{s.count}</p>
@@ -267,7 +297,7 @@ export default function PublicationsPage() {
                       >
                         <div className="flex flex-wrap items-start gap-2 mb-2">
                           <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold border ${venueColor(pub.type)}`}>
-                            {pub.venue}
+                            {pub.type === 'talk' ? (pub.venue ? `Invited Talk — ${pub.venue}` : 'Invited Talk') : pub.venue}
                           </span>
                           {pub.status && (
                             <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-gray-100 text-gray-500 border border-gray-200">

@@ -52,9 +52,8 @@ const stagger = {
 
 const stats = [
   { value: 50, suffix: '+', label: 'Publications' },
-  { value: 5, suffix: '', label: 'Research Areas' },
-  { value: 15, suffix: '+', label: 'Lab Members' },
-  { value: 1, suffix: '', label: 'NSF CAREER Award' },
+  { value: 9, suffix: '', label: 'Active Members' },
+  { value: 8, suffix: '', label: 'Awards & Honors' },
 ];
 
 const researchAreas: { title: string; description: string; iconVariant: 'radar' | 'thz' | 'siggen' | 'ai' | 'device'; gradient: string }[] = [
@@ -255,7 +254,7 @@ export default function HomePage() {
             initial="hidden"
             animate={mounted ? 'visible' : 'hidden'}
             variants={stagger}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto"
+            className="grid grid-cols-3 gap-6 max-w-2xl mx-auto"
           >
             {stats.map((stat, i) => (
               <motion.div
