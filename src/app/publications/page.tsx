@@ -367,6 +367,30 @@ export default function PublicationsPage() {
           </AnimatePresence>
         </div>
       </section>
+
+      {/* Working Papers */}
+      {(filter === 'all' || filter === 'journal') && !search && (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-24 border-t border-gray-100 pt-16">
+          <div className="flex items-center gap-4 mb-10">
+            <h2 className="text-2xl font-bold text-eng-blue">Working Papers</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent" />
+            <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-500 text-xs font-bold uppercase tracking-widest">Under Review</span>
+          </div>
+          
+          <div className="grid grid-cols-1 gap-4">
+            {workingPapers.map((pub) => (
+              <div key={pub.title} className="glass rounded-xl p-5 border-l-4 border-l-uci-gold/30">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-2 py-0.5 rounded-full bg-uci-blue/5 text-uci-blue text-[10px] font-bold border border-uci-blue/10">{pub.venue}</span>
+                  <span className="px-2 py-0.5 rounded-full bg-yellow-50 text-yellow-700 text-[10px] font-bold border border-yellow-100">Under Review</span>
+                </div>
+                <h3 className="text-base font-semibold text-eng-blue mb-1">{pub.title}</h3>
+                <p className="text-xs text-gray-400">{pub.authors}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </PageWrapper>
   );
 }
