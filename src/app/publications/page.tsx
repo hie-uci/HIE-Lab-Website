@@ -70,7 +70,7 @@ const publications: Publication[] = [
   // #2
   { authors: 'H. R. Aghasi, H. Amindavar, A. Aghasi', title: 'A Hybrid Global Minimization Scheme for Accurate Source Localization in Sensor Networks', venue: 'EURASIP JASP', year: 2011, type: 'journal', status: 'Published', link: 'https://link.springer.com/article/10.1186/1687-6180-2011-81' },
   // #1
-  { authors: 'H. R. Aghasi, M. Hashemi, B. H. Khalaj', title: 'A Source Localization Based on Signal Attenuation and Time Delay Estimation in Sensor Networks', venue: 'IJCEE', year: 2012, type: 'journal', status: 'Published' },
+  { authors: 'H. R. Aghasi, M. Hashemi, B. H. Khalaj', title: 'A Source Localization Based on Signal Attenuation and Time Delay Estimation in Sensor Networks', venue: 'IJCEE', year: 2012, type: 'journal', status: 'Published', link: 'http://www.ijcee.org/papers/498-E0736.pdf' },
 
   // ===== SELECTED CONFERENCE PUBLICATIONS (22) =====
   // #1
