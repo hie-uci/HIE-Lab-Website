@@ -91,26 +91,13 @@ const researchAreas: { title: string; description: string; iconVariant: 'radar' 
 ];
 
 const newsItems = [
-  {
-    date: 'Oct 2025',
-    text: "Hedayat's RWW paper selected as finalist for best student paper award.",
-    tag: 'Award',
-  },
-  {
-    date: 'Sep 2025',
-    text: 'Xuyang successfully defends his PhD dissertation. Congratulations, Dr. Liu!',
-    tag: 'Milestone',
-  },
-  {
-    date: 'Sep 2025',
-    text: 'IEEE Radar Conference paper by Allen and Xuyang nominated in top 5 for best student paper.',
-    tag: 'Award',
-  },
-  {
-    date: 'Apr 2025',
-    text: 'FALCON accepted to NeurIPS 2025 -- bridging AI and analog circuit design.',
-    tag: 'Publication',
-  },
+  { date: 'Oct 2025', text: "Hedayat's RWW paper selected as finalist for best student paper award.", tag: 'Award' },
+  { date: 'Sep 2025', text: 'Xuyang successfully defends his PhD dissertation. Congratulations, Dr. Liu!', tag: 'Milestone' },
+  { date: 'Sep 2025', text: 'IEEE Radar Conference paper by Allen and Xuyang nominated in top 5 for best student paper.', tag: 'Award' },
+  { date: 'Sep 2025', text: 'Mahdi presents two articles at IEEE APS 2025. Congratulations, Mahdi!', tag: 'Publication' },
+  { date: 'Apr 2025', text: 'FALCON accepted to NeurIPS 2025 — bridging AI and analog circuit design.', tag: 'Publication' },
+  { date: 'Mar 2025', text: "Xuyang's IEEE JSSC paper on phase-locked stepped-chirp radar transceiver is published.", tag: 'Publication' },
+  { date: 'Feb 2025', text: 'Sub-THz Communication Systems paper appears in Nature Communications Engineering.', tag: 'Publication' },
 ];
 
 const venues = ['JSSC', 'ISSCC', 'NeurIPS', 'Nature Comm.', 'RFIC', 'ESSCIRC', 'TCAS'];
