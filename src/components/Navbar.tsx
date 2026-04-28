@@ -66,7 +66,14 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
             <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center group">
-              <Image src="/images/logo/hie-logo.png" alt="HIE Lab logo" width={922} height={137} className="h-12 sm:h-18 w-auto object-contain group-hover:opacity-80 transition-opacity" unoptimized />
+              <Image 
+                src="/images/logo/hie-logo.png" 
+                alt="HIE Lab logo" 
+                width={922} 
+                height={137} 
+                className="h-12 sm:h-18 w-auto object-contain transition-all duration-300 group-hover:opacity-90 dark:brightness-110 dark:contrast-125 dark:drop-shadow-[0_0_8px_rgba(56,189,248,0.3)]" 
+                unoptimized 
+              />
             </Link>
 
             {/* Desktop Navigation */}
