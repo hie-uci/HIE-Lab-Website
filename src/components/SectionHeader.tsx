@@ -29,13 +29,13 @@ export default function SectionHeader({ title, subtitle, badge, centered = true,
         </span>
       )}
       <h2 className={`text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight ${
-        light ? 'text-white' : 'text-eng-blue'
+        light ? 'text-white' : 'text-eng-blue dark:text-white'
       }`}>
         {title}
       </h2>
       {subtitle && (
         <p className={`mt-4 text-lg max-w-2xl ${centered ? 'mx-auto' : ''} ${
-          light ? 'text-white/70' : 'text-gray-500'
+          light ? 'text-white/70' : 'text-slate-800 dark:text-slate-300'
         }`}>
           {subtitle}
         </p>

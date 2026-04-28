@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -62,7 +63,7 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'glass shadow-lg shadow-eng-blue/5'
+            ? 'glass-ios shadow-lg shadow-eng-blue/5 dark:shadow-none'
             : 'bg-transparent'
         }`}
       >
@@ -82,7 +83,7 @@ export default function Navbar() {
                   className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                     isActive(link.href)
                       ? 'text-uci-blue bg-uci-blue/8'
-                      : 'text-navy/70 hover:text-uci-blue hover:bg-uci-blue/5'
+                      : 'text-navy/70 dark:text-slate-300 hover:text-uci-blue dark:hover:text-blue-400 hover:bg-uci-blue/5'
                   }`}
                 >
                   {link.name}
@@ -98,41 +99,45 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* UCI Badge */}
-            <div className="hidden lg:flex items-center gap-2">
-              <div className="h-8 w-px bg-gray-200" />
-              <a href="https://engineering.uci.edu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-uci-blue/5 border border-uci-blue/10 hover:bg-uci-blue/10 transition-colors">
+            {/* UCI Badge & Theme */}
+            <div className="hidden lg:flex items-center gap-4">
+              <ThemeSwitcher />
+              <div className="h-8 w-px bg-gray-200 dark:bg-gray-700" />
+              <a href="https://engineering.uci.edu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-uci-blue/5 border border-uci-blue/10 dark:border-white/10 hover:bg-uci-blue/10 dark:hover:bg-white/5 transition-colors">
                 <div className="w-5 h-5 rounded-full bg-uci-blue flex items-center justify-center">
                   <span className="text-[8px] font-bold text-white">UCI</span>
                 </div>
-                <span className="text-xs font-medium text-uci-blue">Engineering</span>
+                <span className="text-xs font-medium text-uci-blue dark:text-blue-300">Engineering</span>
               </a>
             </div>
 
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              aria-label="Toggle menu"
-            >
-              <div className="w-6 h-5 relative flex flex-col justify-between">
-                <span
-                  className={`w-full h-0.5 bg-navy rounded-full transition-all duration-300 ${
-                    isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
-                  }`}
-                />
-                <span
-                  className={`w-full h-0.5 bg-navy rounded-full transition-all duration-300 ${
-                    isMobileMenuOpen ? 'opacity-0' : ''
-                  }`}
-                />
-                <span
-                  className={`w-full h-0.5 bg-navy rounded-full transition-all duration-300 ${
-                    isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
-                  }`}
-                />
-              </div>
-            </button>
+            {/* Mobile menu button & Theme */}
+            <div className="lg:hidden flex items-center gap-3">
+              <ThemeSwitcher />
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                aria-label="Toggle menu"
+              >
+                <div className="w-6 h-5 relative flex flex-col justify-between">
+                  <span
+                    className={`w-full h-0.5 bg-navy dark:bg-gray-200 rounded-full transition-all duration-300 ${
+                      isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
+                    }`}
+                  />
+                  <span
+                    className={`w-full h-0.5 bg-navy dark:bg-gray-200 rounded-full transition-all duration-300 ${
+                      isMobileMenuOpen ? 'opacity-0' : ''
+                    }`}
+                  />
+                  <span
+                    className={`w-full h-0.5 bg-navy dark:bg-gray-200 rounded-full transition-all duration-300 ${
+                      isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
+                    }`}
+                  />
+                </div>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -144,7 +149,7 @@ export default function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden glass border-t border-white/20"
+              className="lg:hidden glass-ios border-t border-white/20 dark:border-white/10"
             >
               <div className="px-4 py-4 space-y-1">
                 {navLinks.map((link, index) => (
@@ -160,7 +165,7 @@ export default function Navbar() {
                       className={`block px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                         isActive(link.href)
                           ? 'text-uci-blue bg-uci-blue/10 border-l-2 border-uci-blue'
-                          : 'text-navy/70 hover:text-uci-blue hover:bg-uci-blue/5'
+                          : 'text-navy/70 dark:text-slate-300 hover:text-uci-blue dark:hover:text-blue-400 hover:bg-uci-blue/5'
                       }`}
                     >
                       {link.name}

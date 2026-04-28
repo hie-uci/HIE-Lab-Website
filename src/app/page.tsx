@@ -9,8 +9,8 @@ import GradientMesh from '@/components/GradientMesh';
 import AnimatedResearchIcon from '@/components/AnimatedResearchIcon';
 import WaveformDivider from '@/components/WaveformDivider';
 import SectionHeader from "@/components/SectionHeader";
-import ParticleField from "@/components/ParticleField";
 import ChipMarquee from '@/components/ChipMarquee';
+import FluidPlasmaBackground from '@/components/FluidPlasmaBackground';
 
 /* ──────────────────────────── helpers ──────────────────────────── */
 
@@ -114,12 +114,21 @@ export default function HomePage() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <main className="overflow-hidden">
+    <main className="overflow-hidden bg-background text-foreground transition-colors duration-500 relative">
+      
+      {/* Dynamic Background Rendering */}
+      <FluidPlasmaBackground className="z-0" />
+      
+      {/* Glowing Orbs for visionOS Glassmorphism Refraction */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+         <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-uci-blue/10 dark:bg-uci-blue/30 blur-[120px] mix-blend-normal dark:mix-blend-screen opacity-60 dark:opacity-50 animate-pulse" style={{ animationDuration: '8s' }} />
+         <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-eecs-teal/20 dark:bg-eecs-teal/30 blur-[150px] mix-blend-normal dark:mix-blend-screen opacity-50 dark:opacity-40 animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
+         <div className="absolute top-[40%] left-[60%] w-[40vw] h-[40vw] rounded-full bg-uci-gold/10 dark:bg-uci-gold/15 blur-[100px] mix-blend-normal dark:mix-blend-screen opacity-40 dark:opacity-30 animate-pulse" style={{ animationDuration: '10s', animationDelay: '4s' }} />
+      </div>
+
       {/* ═══════ HERO ═══════ */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-warm via-white to-white">
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background layers */}
-        <CircuitBackground className="opacity-40" density={55} interactive />
-        <ParticleField className="opacity-30 z-[2]" />
         <GradientMesh />
 
         {/* Floating chip die photos — decorative background mosaic */}
@@ -167,14 +176,14 @@ export default function HomePage() {
 
         <motion.div
           style={{ opacity: heroOpacity, y: heroY }}
-          className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 pb-20"
+          className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 pb-20 pointer-events-none"
         >
           {/* UCI Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/70 backdrop-blur-sm border border-uci-blue/10 shadow-sm mb-8"
+            className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-ios mb-8 pointer-events-auto"
           >
             <Image
               src="/images/logo/hie-logo.png"
@@ -183,9 +192,9 @@ export default function HomePage() {
               height={28}
               className="rounded-full"
             />
-            <a href="https://engineering.uci.edu/dept/eecs" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-eng-blue hover:text-uci-blue transition-colors">UC Irvine EECS</a>
+            <a href="https://engineering.uci.edu/dept/eecs" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-eng-blue dark:text-blue-300 hover:text-uci-blue transition-colors">UC Irvine EECS</a>
             <div className="w-1 h-1 rounded-full bg-uci-gold" />
-            <a href="https://engineering.uci.edu" target="_blank" rel="noopener noreferrer" className="text-sm text-eecs-teal hover:text-uci-blue transition-colors">Samueli School of Engineering</a>
+            <a href="https://engineering.uci.edu" target="_blank" rel="noopener noreferrer" className="text-sm text-eecs-teal dark:text-teal-400 hover:text-uci-blue transition-colors">Samueli School of Engineering</a>
           </motion.div>
 
           {/* Title */}
@@ -205,7 +214,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg sm:text-xl text-slate-900 dark:text-slate-200 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             Pioneering mm-wave and terahertz electronic circuits and systems
             for next-generation sensing, imaging, and communications.
@@ -216,7 +225,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-4 mb-16"
+            className="flex flex-wrap items-center justify-center gap-4 mb-16 pointer-events-auto"
           >
             <Link
               href="/research"
@@ -229,7 +238,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/contact#positions"
-              className="group inline-flex items-center gap-2 px-7 py-3.5 bg-white text-eng-blue font-semibold rounded-xl border border-eng-blue/15 shadow-sm hover:shadow-md hover:border-uci-blue/30 transition-all duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2 px-7 py-3.5 glass-ios text-foreground font-semibold rounded-xl transition-all duration-300 hover:-translate-y-0.5"
             >
               Join Our Team
               <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -243,20 +252,21 @@ export default function HomePage() {
             initial="hidden"
             animate={mounted ? 'visible' : 'hidden'}
             variants={stagger}
-            className="grid grid-cols-3 gap-6 max-w-2xl mx-auto"
+            className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pointer-events-auto"
           >
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 variants={fadeUp}
                 custom={i + 10}
-                whileHover={{ boxShadow: '0 0 20px rgba(0, 100, 164, 0.3), 0 0 60px rgba(0, 100, 164, 0.1)' }}
-                className="relative p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/80 shadow-sm transition-shadow"
+                whileHover={{ y: -5 }}
+                className="relative p-4 rounded-2xl glass-ios transition-all duration-300 group"
               >
-                <div className="text-3xl sm:text-4xl font-bold text-eng-blue mb-1">
+                <div className="absolute inset-0 bg-gradient-to-br from-uci-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
+                <div className="relative z-10 text-3xl sm:text-4xl font-bold text-eng-blue dark:text-blue-300 mb-1">
                   <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                 </div>
-                <div className="text-xs sm:text-sm text-gray-500 font-medium">{stat.label}</div>
+                <div className="relative z-10 text-xs sm:text-sm text-slate-900 dark:text-slate-200 font-medium">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -267,13 +277,13 @@ export default function HomePage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none"
         >
           <span className="text-xs text-gray-400 tracking-widest uppercase">Scroll</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-5 h-8 rounded-full border-2 border-gray-300 flex items-start justify-center p-1"
+            className="w-5 h-8 rounded-full border-2 border-gray-400 dark:border-gray-600 flex items-start justify-center p-1"
           >
             <motion.div className="w-1 h-2 rounded-full bg-uci-blue" />
           </motion.div>
@@ -281,7 +291,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════ ABOUT ═══════ */}
-      <section className="relative py-24 lg:py-32 bg-white">
+      <section className="relative py-24 lg:py-32 bg-background relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="About the Lab"
@@ -298,7 +308,7 @@ export default function HomePage() {
               transition={{ duration: 0.7 }}
               className="lg:col-span-2"
             >
-              <div className="relative p-6 rounded-2xl bg-gradient-to-br from-eng-blue to-navy text-white overflow-hidden">
+              <div className="relative p-6 rounded-2xl bg-gradient-to-br from-eng-blue to-navy dark:from-slate-800 dark:to-slate-900 text-white overflow-hidden shadow-xl border border-white/10">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-uci-gold/20 to-transparent rounded-bl-full" />
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-5">
@@ -386,13 +396,13 @@ export default function HomePage() {
                   key={theme.label}
                   variants={fadeUp}
                   custom={i}
-                  className="group p-5 rounded-xl border border-gray-100 bg-slate-warm hover:border-uci-blue/20 hover:shadow-lg hover:shadow-uci-blue/5 transition-all duration-300"
+                  className="group p-5 rounded-xl glass-ios hover:border-uci-blue/30 hover:shadow-lg hover:shadow-uci-blue/10 transition-all duration-300"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-uci-blue/10 to-eecs-teal/10 flex items-center justify-center text-uci-blue mb-3 group-hover:from-uci-blue/20 group-hover:to-eecs-teal/20 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-uci-blue/10 to-eecs-teal/10 flex items-center justify-center text-uci-blue dark:text-blue-400 mb-3 group-hover:from-uci-blue/20 group-hover:to-eecs-teal/20 transition-colors">
                     {theme.icon}
                   </div>
-                  <h4 className="font-semibold text-eng-blue mb-1">{theme.label}</h4>
-                  <p className="text-sm text-gray-500">{theme.desc}</p>
+                  <h4 className="font-semibold text-eng-blue dark:text-gray-100 mb-1">{theme.label}</h4>
+                  <p className="text-sm text-slate-900 dark:text-slate-200">{theme.desc}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -401,14 +411,14 @@ export default function HomePage() {
       </section>
 
       {/* ═══════ SILICON SHOWCASE ═══════ */}
-      <section className="relative py-20 lg:py-24 bg-white">
+      <section className="relative py-20 lg:py-24 bg-background z-10 border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Silicon Showcase"
             title="Our Fabricated Chips"
             subtitle="A selection of integrated circuits designed and fabricated by the HIE Lab -- from mm-wave radars to THz transmitters."
           />
-          <div className="mt-10">
+          <div className="mt-10 glass-ios rounded-3xl p-4 sm:p-8">
             <ChipMarquee />
           </div>
           <motion.div
@@ -420,7 +430,7 @@ export default function HomePage() {
           >
             <Link
               href="/chip-gallery"
-              className="inline-flex items-center gap-2 text-sm font-medium text-uci-blue hover:text-eng-blue transition-colors animated-underline"
+              className="inline-flex items-center gap-2 text-sm font-medium text-uci-blue dark:text-blue-400 hover:text-eng-blue dark:hover:text-blue-300 transition-colors animated-underline"
             >
               View full chip gallery
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -434,7 +444,7 @@ export default function HomePage() {
       <WaveformDivider color="blue" />
 
       {/* ═══════ RESEARCH HIGHLIGHTS ═══════ */}
-      <section className="relative py-24 lg:py-32 bg-gradient-to-b from-white via-slate-warm to-white">
+      <section className="relative py-24 lg:py-32 bg-slate-warm dark:bg-transparent z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Research"
@@ -455,21 +465,15 @@ export default function HomePage() {
                 variants={fadeUp}
                 custom={i}
                 whileHover={{
-                  boxShadow: '0 0 30px rgba(0, 100, 164, 0.2), 0 0 80px rgba(0, 100, 164, 0.06)',
                   y: -8,
                 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
-                className={`group relative rounded-2xl bg-white border border-gray-100 hover:border-uci-blue/25 overflow-hidden transition-colors duration-500 ${
+                className={`group relative rounded-2xl glass-ios overflow-hidden transition-all duration-500 hover:border-uci-blue/40 hover:shadow-[0_0_30px_rgba(0,100,164,0.15)] ${
                   i === 4 ? 'md:col-span-2 lg:col-span-1' : ''
                 }`}
               >
-                {/* Animated gradient border on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-uci-blue via-uci-gold to-eecs-teal opacity-30 blur-sm" />
-                </div>
-
                 {/* Number badge */}
-                <div className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-xs font-bold text-white/80 border border-white/20">
+                <div className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-xs font-bold text-white/90 border border-white/30 shadow-sm">
                   {String(i + 1).padStart(2, '0')}
                 </div>
 
@@ -496,13 +500,13 @@ export default function HomePage() {
                 </div>
 
                 <div className="p-6 relative">
-                  <h3 className="text-lg font-bold text-eng-blue mb-2 group-hover:text-uci-blue transition-colors duration-300">
+                  <h3 className="text-lg font-bold text-eng-blue dark:text-gray-100 mb-2 group-hover:text-uci-blue dark:group-hover:text-blue-400 transition-colors duration-300">
                     {area.title}
                   </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed mb-4">{area.description}</p>
+                  <p className="text-sm text-slate-900 dark:text-slate-200 leading-relaxed mb-4">{area.description}</p>
                   <Link
                     href="/research"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-uci-blue opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-uci-blue dark:text-blue-400 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
                   >
                     Learn more
                     <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -517,7 +521,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════ LATEST NEWS ═══════ */}
-      <section className="relative py-24 lg:py-32 bg-white">
+      <section className="relative py-24 lg:py-32 bg-background z-10 border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="News"
@@ -537,25 +541,25 @@ export default function HomePage() {
                 key={i}
                 variants={fadeUp}
                 custom={i}
-                className="group flex gap-5 p-5 rounded-xl border border-gray-100 bg-white hover:border-uci-blue/15 hover:shadow-md transition-all duration-300"
+                className="group flex gap-5 p-5 rounded-xl glass-ios hover:border-uci-blue/20 transition-all duration-300"
               >
-                <div className="shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-uci-blue/5 to-eecs-teal/5 border border-uci-blue/10">
-                  <span className="text-[11px] font-bold text-uci-blue uppercase leading-tight">{item.date.split(' ')[0]}</span>
-                  <span className="text-xs text-gray-400">{item.date.split(' ')[1]}</span>
+                <div className="shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-uci-blue/5 to-eecs-teal/5 border border-uci-blue/10 dark:border-white/5">
+                  <span className="text-[11px] font-bold text-uci-blue dark:text-blue-400 uppercase leading-tight">{item.date.split(' ')[0]}</span>
+                  <span className="text-xs text-slate-800 dark:text-slate-300">{item.date.split(' ')[1]}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
                       item.tag === 'Award'
-                        ? 'bg-uci-gold/15 text-yellow-700'
+                        ? 'bg-uci-gold/15 text-yellow-700 dark:text-yellow-500'
                         : item.tag === 'Milestone'
-                        ? 'bg-eecs-teal/10 text-eecs-teal'
-                        : 'bg-uci-blue/10 text-uci-blue'
+                        ? 'bg-eecs-teal/10 text-eecs-teal dark:text-teal-400'
+                        : 'bg-uci-blue/10 text-uci-blue dark:text-blue-400'
                     }`}>
                       {item.tag}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-700 leading-relaxed">{item.text}</p>
+                  <p className="text-sm text-slate-950 dark:text-slate-100 leading-relaxed">{item.text}</p>
                 </div>
               </motion.div>
             ))}
@@ -570,7 +574,7 @@ export default function HomePage() {
           >
             <Link
               href="/news"
-              className="inline-flex items-center gap-2 text-sm font-medium text-uci-blue hover:text-eng-blue transition-colors animated-underline"
+              className="inline-flex items-center gap-2 text-sm font-medium text-uci-blue dark:text-blue-400 hover:text-eng-blue transition-colors animated-underline"
             >
               View all news
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -584,8 +588,8 @@ export default function HomePage() {
       <WaveformDivider color="gold" />
 
       {/* ═══════ PUBLICATIONS HIGHLIGHT ═══════ */}
-      <section className="relative py-24 lg:py-32 bg-gradient-to-b from-slate-warm to-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,100,164,0.04),transparent_60%)]" />
+      <section className="relative py-24 lg:py-32 bg-slate-warm dark:bg-transparent z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(0,100,164,0.04),transparent_60%)] pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <SectionHeader
             badge="Publications"
@@ -603,7 +607,7 @@ export default function HomePage() {
             <div className="text-7xl sm:text-8xl lg:text-9xl font-bold gradient-text leading-none">
               <AnimatedCounter target={50} suffix="+" />
             </div>
-            <p className="text-lg text-gray-500 mt-2">Peer-Reviewed Publications</p>
+            <p className="text-lg text-slate-900 dark:text-slate-200 mt-2">Peer-Reviewed Publications</p>
           </motion.div>
 
           <motion.div
@@ -618,7 +622,7 @@ export default function HomePage() {
                 key={venue}
                 variants={fadeUp}
                 custom={i}
-                className="px-5 py-2.5 rounded-xl bg-white/60 border border-gray-100/80 text-sm font-bold text-eng-blue/70 tracking-wide uppercase hover:text-uci-blue hover:border-uci-blue/20 hover:bg-white hover:shadow-lg hover:shadow-uci-blue/5 transition-all duration-400 cursor-default"
+                className="px-5 py-2.5 rounded-xl glass-ios text-sm font-bold text-eng-blue dark:text-slate-200 tracking-wide uppercase hover:text-uci-blue dark:hover:text-blue-400 hover:border-uci-blue/30 transition-all duration-400 cursor-default"
                 style={{ letterSpacing: '0.08em' }}
               >
                 {venue}
@@ -634,7 +638,7 @@ export default function HomePage() {
           >
             <Link
               href="/publications"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-eng-blue font-semibold rounded-xl border border-eng-blue/15 shadow-sm hover:shadow-md hover:border-uci-blue/30 transition-all duration-300 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3 glass-ios text-foreground font-semibold rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
             >
               Browse All Publications
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -646,13 +650,13 @@ export default function HomePage() {
       </section>
 
       {/* ═══════ JOIN US CTA ═══════ */}
-      <section className="relative py-24 lg:py-32 bg-gradient-to-br from-eng-blue via-navy to-eng-blue overflow-hidden">
+      <section className="relative py-24 lg:py-32 bg-gradient-to-br from-eng-blue via-navy to-eng-blue overflow-hidden z-10">
         {/* Decorative elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-uci-blue/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-uci-gold/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-uci-blue/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-uci-gold/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
         </div>
-        <div className="absolute inset-0 opacity-[0.03]">
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <svg width="100%" height="100%">
             <pattern id="cta-grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
               <circle cx="20" cy="20" r="1" fill="white" />
