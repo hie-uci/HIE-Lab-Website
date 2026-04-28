@@ -5,20 +5,20 @@ import Image from 'next/image';
 import Lightbox from './Lightbox';
 
 const chipImages = [
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet1-01-pmcw-radar.png', name: 'PMCW Radar' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png', name: '76-82 GHz VCO' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png', name: '110-143 GHz PA' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png', name: '49-63 GHz FMCW Radar' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png', name: '3.1-4.7 GHz Class-D VCO' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png', name: '174-232 GHz SiGe VCO' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png', name: '23-27/69-81 GHz MIMO FMCW' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png', name: '50-60 GHz FMCW Radar' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png', name: '0.32 THz SiGe Tx' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png', name: '0.48 THz Freq. Doubler' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png', name: '0.92 THz Quadrupler' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png', name: '4-Ch TIA for MEMS PNT' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet3-01-0.1-6-ghz-negative-l-circuit.png', name: '0.1-6 GHz Negative-L' },
-  { src: '/HIE-Lab-Website/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png', name: '90 GHz Oscillator' },
+  { src: '/images/chips/individual/sheet1-01-pmcw-radar.png', name: 'PMCW Radar' },
+  { src: '/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png', name: '76-82 GHz VCO' },
+  { src: '/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png', name: '110-143 GHz PA' },
+  { src: '/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png', name: '49-63 GHz FMCW Radar' },
+  { src: '/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png', name: '3.1-4.7 GHz Class-D VCO' },
+  { src: '/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png', name: '174-232 GHz SiGe VCO' },
+  { src: '/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png', name: '23-27/69-81 GHz MIMO FMCW' },
+  { src: '/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png', name: '50-60 GHz FMCW Radar' },
+  { src: '/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png', name: '0.32 THz SiGe Tx' },
+  { src: '/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png', name: '0.48 THz Freq. Doubler' },
+  { src: '/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png', name: '0.92 THz Quadrupler' },
+  { src: '/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png', name: '4-Ch TIA for MEMS PNT' },
+  { src: '/images/chips/individual/sheet3-01-0.1-6-ghz-negative-l-circuit.png', name: '0.1-6 GHz Negative-L' },
+  { src: '/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png', name: '90 GHz Oscillator' },
 ];
 
 const row1 = chipImages.slice(0, 7);
