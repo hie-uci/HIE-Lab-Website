@@ -64,11 +64,11 @@ const projects: Project[] = [
     color: 'from-uci-blue to-eecs-teal',
     iconVariant: 'radar',
     galleryImages: [
-      { src: '/images/research/radar-1.png', alt: 'Radar system architecture' },
-      { src: '/images/research/radar-2.png', alt: 'Radar measurement results' },
-      { src: '/images/research/radar-3.png', alt: 'Radar signal processing' },
-      { src: '/images/research/radar-4.png', alt: 'Radar prototype' },
-      { src: '/images/research/radar-5.png', alt: 'Radar performance metrics' },
+      { src: '/HIE-Lab-Website/images/research/radar-1.png', alt: 'Radar system architecture' },
+      { src: '/HIE-Lab-Website/images/research/radar-2.png', alt: 'Radar measurement results' },
+      { src: '/HIE-Lab-Website/images/research/radar-3.png', alt: 'Radar signal processing' },
+      { src: '/HIE-Lab-Website/images/research/radar-4.png', alt: 'Radar prototype' },
+      { src: '/HIE-Lab-Website/images/research/radar-5.png', alt: 'Radar performance metrics' },
     ],
     icon: (
       <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
@@ -106,12 +106,12 @@ const projects: Project[] = [
     color: 'from-eng-blue to-uci-blue',
     iconVariant: 'thz',
     galleryImages: [
-      { src: '/images/research/thz-1.jpg', alt: 'THz power generation circuit' },
-      { src: '/images/research/thz-2.jpg', alt: 'THz harmonic analysis' },
-      { src: '/images/research/thz-3.jpg', alt: 'THz measurement setup' },
-      { src: '/images/research/thz-4.png', alt: 'THz output spectrum' },
-      { src: '/images/research/thz-5.png', alt: 'THz chip micrograph' },
-      { src: '/images/research/thz-6.png', alt: 'THz performance comparison' },
+      { src: '/HIE-Lab-Website/images/research/thz-1.jpg', alt: 'THz power generation circuit' },
+      { src: '/HIE-Lab-Website/images/research/thz-2.jpg', alt: 'THz harmonic analysis' },
+      { src: '/HIE-Lab-Website/images/research/thz-3.jpg', alt: 'THz measurement setup' },
+      { src: '/HIE-Lab-Website/images/research/thz-4.png', alt: 'THz output spectrum' },
+      { src: '/HIE-Lab-Website/images/research/thz-5.png', alt: 'THz chip micrograph' },
+      { src: '/HIE-Lab-Website/images/research/thz-6.png', alt: 'THz performance comparison' },
     ],
     icon: (
       <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
@@ -146,19 +146,19 @@ const projects: Project[] = [
     color: 'from-eecs-teal to-uci-blue',
     iconVariant: 'siggen',
     galleryImages: [
-      { src: '/images/research/siggen-1.png', alt: 'Signal generation overview' },
-      { src: '/images/research/siggen-2.png', alt: 'Signal generation circuit topology' },
-      { src: '/images/research/siggen-3.png', alt: 'Oscillator phase noise performance' },
-      { src: '/images/research/siggen-4.png', alt: 'Wideband tuning range results' },
-      { src: '/images/research/siggen-5.png', alt: 'Signal generation chip photo' },
-      { src: '/images/research/siggen-6.png', alt: 'Signal generation measurement 6' },
-      { src: '/images/research/siggen-7.png', alt: 'Signal generation measurement 7' },
-      { src: '/images/research/siggen-8.png', alt: 'Signal generation measurement 8' },
-      { src: '/images/research/siggen-9.png', alt: 'Signal generation measurement 9' },
-      { src: '/images/research/siggen-10.png', alt: 'Signal generation measurement 10' },
-      { src: '/images/research/siggen-11.png', alt: 'Signal generation measurement 11' },
-      { src: '/images/research/siggen-12.png', alt: 'Signal generation measurement 12' },
-      { src: '/images/research/siggen-13.png', alt: 'Signal generation measurement 13' },
+      { src: '/HIE-Lab-Website/images/research/siggen-1.png', alt: 'Signal generation overview' },
+      { src: '/HIE-Lab-Website/images/research/siggen-2.png', alt: 'Signal generation circuit topology' },
+      { src: '/HIE-Lab-Website/images/research/siggen-3.png', alt: 'Oscillator phase noise performance' },
+      { src: '/HIE-Lab-Website/images/research/siggen-4.png', alt: 'Wideband tuning range results' },
+      { src: '/HIE-Lab-Website/images/research/siggen-5.png', alt: 'Signal generation chip photo' },
+      { src: '/HIE-Lab-Website/images/research/siggen-6.png', alt: 'Signal generation measurement 6' },
+      { src: '/HIE-Lab-Website/images/research/siggen-7.png', alt: 'Signal generation measurement 7' },
+      { src: '/HIE-Lab-Website/images/research/siggen-8.png', alt: 'Signal generation measurement 8' },
+      { src: '/HIE-Lab-Website/images/research/siggen-9.png', alt: 'Signal generation measurement 9' },
+      { src: '/HIE-Lab-Website/images/research/siggen-10.png', alt: 'Signal generation measurement 10' },
+      { src: '/HIE-Lab-Website/images/research/siggen-11.png', alt: 'Signal generation measurement 11' },
+      { src: '/HIE-Lab-Website/images/research/siggen-12.png', alt: 'Signal generation measurement 12' },
+      { src: '/HIE-Lab-Website/images/research/siggen-13.png', alt: 'Signal generation measurement 13' },
     ],
     icon: (
       <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
@@ -193,9 +193,9 @@ const projects: Project[] = [
     color: 'from-uci-blue to-eng-blue',
     iconVariant: 'ai',
     galleryImages: [
-      { src: '/images/research/ai-beam-control.gif', alt: 'AI-driven beam control animation', isGif: true },
-      { src: '/images/research/ai-combined-figs.jpg', alt: 'AI circuit design combined figures' },
-      { src: '/images/research/ai-animation.gif', alt: 'AI design flow animation', isGif: true },
+      { src: '/HIE-Lab-Website/images/research/ai-beam-control.gif', alt: 'AI-driven beam control animation', isGif: true },
+      { src: '/HIE-Lab-Website/images/research/ai-combined-figs.jpg', alt: 'AI circuit design combined figures' },
+      { src: '/HIE-Lab-Website/images/research/ai-animation.gif', alt: 'AI design flow animation', isGif: true },
     ],
     icon: (
       <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">
@@ -235,11 +235,11 @@ const projects: Project[] = [
     color: 'from-navy to-eecs-teal',
     iconVariant: 'device',
     galleryImages: [
-      { src: '/images/research/device-1.jpg', alt: 'Emerging device overview' },
-      { src: '/images/research/device-2.jpg', alt: 'Spin-logic device simulation' },
-      { src: '/images/research/device-3.png', alt: 'Janus 2D material structure' },
-      { src: '/images/research/device-4.png', alt: 'Tunneling FET characteristics' },
-      { src: '/images/research/device-5.png', alt: 'Device performance benchmarks' },
+      { src: '/HIE-Lab-Website/images/research/device-1.jpg', alt: 'Emerging device overview' },
+      { src: '/HIE-Lab-Website/images/research/device-2.jpg', alt: 'Spin-logic device simulation' },
+      { src: '/HIE-Lab-Website/images/research/device-3.png', alt: 'Janus 2D material structure' },
+      { src: '/HIE-Lab-Website/images/research/device-4.png', alt: 'Tunneling FET characteristics' },
+      { src: '/HIE-Lab-Website/images/research/device-5.png', alt: 'Device performance benchmarks' },
     ],
     icon: (
       <svg viewBox="0 0 64 64" fill="none" className="w-full h-full">

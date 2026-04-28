@@ -136,43 +136,43 @@ export default function HomePage() {
         {/* Floating chip die photos — decorative background mosaic */}
         <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
           {/* Top-left cluster */}
-          <Image src="/images/chips/individual/sheet1-01-pmcw-radar.png" alt="" width={240} height={240} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet1-01-pmcw-radar.png" alt="" width={240} height={240} unoptimized
             className="absolute top-[6%] left-[3%] opacity-[0.16] blur-[0.5px] rotate-[-8deg]" />
-          <Image src="/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png" alt="" width={160} height={160} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png" alt="" width={160} height={160} unoptimized
             className="absolute top-[22%] left-[12%] opacity-[0.12] blur-[1px] rotate-[5deg]" />
 
           {/* Top-right cluster */}
-          <Image src="/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png" alt="" width={200} height={200} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png" alt="" width={200} height={200} unoptimized
             className="absolute top-[4%] right-[6%] opacity-[0.15] blur-[0.5px] rotate-[12deg]" />
-          <Image src="/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png" alt="" width={170} height={170} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png" alt="" width={170} height={170} unoptimized
             className="absolute top-[18%] right-[18%] opacity-[0.11] blur-[1px] rotate-[-4deg]" />
 
           {/* Middle-left */}
-          <Image src="/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png" alt="" width={190} height={190} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png" alt="" width={190} height={190} unoptimized
             className="absolute top-[42%] left-[2%] opacity-[0.14] blur-[0.5px] rotate-[3deg]" />
-          <Image src="/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png" alt="" width={140} height={140} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png" alt="" width={140} height={140} unoptimized
             className="absolute top-[55%] left-[14%] opacity-[0.10] blur-[1.5px] rotate-[-10deg]" />
 
           {/* Middle-right */}
-          <Image src="/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png" alt="" width={210} height={210} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png" alt="" width={210} height={210} unoptimized
             className="absolute top-[38%] right-[3%] opacity-[0.16] blur-[0.5px] rotate-[-5deg]" />
-          <Image src="/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png" alt="" width={150} height={150} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png" alt="" width={150} height={150} unoptimized
             className="absolute top-[52%] right-[16%] opacity-[0.11] blur-[1px] rotate-[7deg]" />
 
           {/* Bottom-left */}
-          <Image src="/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png" alt="" width={180} height={180} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png" alt="" width={180} height={180} unoptimized
             className="absolute bottom-[18%] left-[6%] opacity-[0.13] blur-[1px] rotate-[9deg]" />
 
           {/* Bottom-right cluster */}
-          <Image src="/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png" alt="" width={260} height={260} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png" alt="" width={260} height={260} unoptimized
             className="absolute bottom-[8%] right-[5%] opacity-[0.18] blur-[0.3px] rotate-[6deg]" />
-          <Image src="/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png" alt="" width={150} height={150} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png" alt="" width={150} height={150} unoptimized
             className="absolute bottom-[25%] right-[22%] opacity-[0.10] blur-[1.5px] rotate-[-12deg]" />
 
           {/* Center-bottom accent */}
-          <Image src="/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png" alt="" width={170} height={170} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png" alt="" width={170} height={170} unoptimized
             className="absolute bottom-[12%] left-[38%] opacity-[0.09] blur-[1.5px] rotate-[3deg]" />
-          <Image src="/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png" alt="" width={130} height={130} unoptimized
+          <Image src="/HIE-Lab-Website/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png" alt="" width={130} height={130} unoptimized
             className="absolute bottom-[30%] left-[28%] opacity-[0.08] blur-[2px] rotate-[-6deg]" />
         </div>
 
@@ -188,7 +188,7 @@ export default function HomePage() {
             className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/70 backdrop-blur-sm border border-uci-blue/10 shadow-sm mb-8"
           >
             <Image
-              src="/images/logo/hie-logo.png"
+              src="/HIE-Lab-Website/images/logo/hie-logo.png"
               alt="HIE Lab Logo"
               width={28}
               height={28}
@@ -315,7 +315,7 @@ export default function HomePage() {
                   <div className="flex items-center gap-4 mb-5">
                     <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
                       <Image
-                        src="/images/members/pi-aghasi.jpeg"
+                        src="/HIE-Lab-Website/images/members/pi-aghasi.jpeg"
                         alt="Prof. Hamidreza Aghasi"
                         width={64}
                         height={64}
@@ -660,7 +660,7 @@ export default function HomePage() {
         {/* Floating chip die photos — decorative CTA background */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <Image
-            src="/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png"
+            src="/HIE-Lab-Website/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png"
             alt=""
             width={240}
             height={240}
@@ -668,7 +668,7 @@ export default function HomePage() {
             className="absolute top-[8%] left-[3%] opacity-[0.07] blur-sm rotate-[-10deg]"
           />
           <Image
-            src="/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png"
+            src="/HIE-Lab-Website/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png"
             alt=""
             width={220}
             height={220}

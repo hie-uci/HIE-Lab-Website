@@ -20,23 +20,23 @@ interface ChipData {
 
 const chips: ChipData[] = [
   // --- mm-Wave Radar Systems ---
-  { id: 1, name: 'PMCW Radar', technology: 'CMOS', frequency: 'mm-Wave', category: 'Radar Systems', image: '/images/chips/individual/sheet1-01-pmcw-radar.png', width: 838, height: 544 },
-  { id: 2, name: '49–63 GHz FMCW Radar', technology: 'CMOS', frequency: '49–63 GHz', category: 'Radar Systems', image: '/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png', width: 835, height: 445 },
-  { id: 3, name: '23–27 & 69–81 GHz MIMO FMCW Radar', technology: 'CMOS', frequency: '23–81 GHz', category: 'Radar Systems', image: '/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png', width: 760, height: 564 },
-  { id: 4, name: 'Monostatic 50–60 GHz FMCW Radar', technology: 'CMOS', frequency: '50–60 GHz', category: 'Radar Systems', image: '/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png', width: 834, height: 472 },
+  { id: 1, name: 'PMCW Radar', technology: 'CMOS', frequency: 'mm-Wave', category: 'Radar Systems', image: '/HIE-Lab-Website/images/chips/individual/sheet1-01-pmcw-radar.png', width: 838, height: 544 },
+  { id: 2, name: '49–63 GHz FMCW Radar', technology: 'CMOS', frequency: '49–63 GHz', category: 'Radar Systems', image: '/HIE-Lab-Website/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png', width: 835, height: 445 },
+  { id: 3, name: '23–27 & 69–81 GHz MIMO FMCW Radar', technology: 'CMOS', frequency: '23–81 GHz', category: 'Radar Systems', image: '/HIE-Lab-Website/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png', width: 760, height: 564 },
+  { id: 4, name: 'Monostatic 50–60 GHz FMCW Radar', technology: 'CMOS', frequency: '50–60 GHz', category: 'Radar Systems', image: '/HIE-Lab-Website/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png', width: 834, height: 472 },
   // --- Power Amplifiers & VCOs ---
-  { id: 5, name: '110–143 GHz PA (19 dBm Psat)', technology: '65nm CMOS', frequency: '110–143 GHz', category: 'Amplifiers & Oscillators', image: '/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png', width: 838, height: 513 },
-  { id: 6, name: 'Low-Noise 76–82 GHz VCO', technology: '65nm CMOS', frequency: '76–82 GHz', category: 'Amplifiers & Oscillators', image: '/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png', width: 640, height: 567 },
-  { id: 7, name: '3.1–4.7 GHz Class-D VCO', technology: '65nm CMOS', frequency: '3.1–4.7 GHz', category: 'Amplifiers & Oscillators', image: '/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png', width: 838, height: 425 },
-  { id: 8, name: '174–232 GHz SiGe VCO', technology: 'SiGe BiCMOS', frequency: '174–232 GHz', category: 'Amplifiers & Oscillators', image: '/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png', width: 772, height: 556 },
-  { id: 9, name: '90 GHz Efficient Oscillator', technology: 'CMOS', frequency: '90 GHz', category: 'Amplifiers & Oscillators', image: '/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png', width: 710, height: 624 },
+  { id: 5, name: '110–143 GHz PA (19 dBm Psat)', technology: '65nm CMOS', frequency: '110–143 GHz', category: 'Amplifiers & Oscillators', image: '/HIE-Lab-Website/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png', width: 838, height: 513 },
+  { id: 6, name: 'Low-Noise 76–82 GHz VCO', technology: '65nm CMOS', frequency: '76–82 GHz', category: 'Amplifiers & Oscillators', image: '/HIE-Lab-Website/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png', width: 640, height: 567 },
+  { id: 7, name: '3.1–4.7 GHz Class-D VCO', technology: '65nm CMOS', frequency: '3.1–4.7 GHz', category: 'Amplifiers & Oscillators', image: '/HIE-Lab-Website/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png', width: 838, height: 425 },
+  { id: 8, name: '174–232 GHz SiGe VCO', technology: 'SiGe BiCMOS', frequency: '174–232 GHz', category: 'Amplifiers & Oscillators', image: '/HIE-Lab-Website/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png', width: 772, height: 556 },
+  { id: 9, name: '90 GHz Efficient Oscillator', technology: 'CMOS', frequency: '90 GHz', category: 'Amplifiers & Oscillators', image: '/HIE-Lab-Website/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png', width: 710, height: 624 },
   // --- Sub-THz & THz ---
-  { id: 10, name: '0.32 THz SiGe Transmitter', technology: 'SiGe BiCMOS', frequency: '0.32 THz', category: 'Sub-THz & THz', image: '/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png', width: 743, height: 546 },
-  { id: 11, name: '0.48 THz Frequency Doubler', technology: 'SiGe BiCMOS', frequency: '0.48 THz', category: 'Sub-THz & THz', image: '/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png', width: 721, height: 554 },
-  { id: 12, name: '0.92 THz SiGe Quadrupler', technology: 'SiGe BiCMOS', frequency: '0.92 THz', category: 'Sub-THz & THz', image: '/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png', width: 741, height: 574 },
+  { id: 10, name: '0.32 THz SiGe Transmitter', technology: 'SiGe BiCMOS', frequency: '0.32 THz', category: 'Sub-THz & THz', image: '/HIE-Lab-Website/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png', width: 743, height: 546 },
+  { id: 11, name: '0.48 THz Frequency Doubler', technology: 'SiGe BiCMOS', frequency: '0.48 THz', category: 'Sub-THz & THz', image: '/HIE-Lab-Website/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png', width: 721, height: 554 },
+  { id: 12, name: '0.92 THz SiGe Quadrupler', technology: 'SiGe BiCMOS', frequency: '0.92 THz', category: 'Sub-THz & THz', image: '/HIE-Lab-Website/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png', width: 741, height: 574 },
   // --- Special ---
-  { id: 13, name: '4-Channel TIA for MEMS PNT', technology: 'CMOS', frequency: 'Broadband', category: 'Specialty Circuits', image: '/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png', width: 745, height: 568 },
-  { id: 14, name: '0.1–6 GHz Negative L Circuit', technology: 'CMOS', frequency: '0.1–6 GHz', category: 'Specialty Circuits', image: '/images/chips/individual/sheet3-01-0.1-6-ghz-negative-l-circuit.png', width: 563, height: 601 },
+  { id: 13, name: '4-Channel TIA for MEMS PNT', technology: 'CMOS', frequency: 'Broadband', category: 'Specialty Circuits', image: '/HIE-Lab-Website/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png', width: 745, height: 568 },
+  { id: 14, name: '0.1–6 GHz Negative L Circuit', technology: 'CMOS', frequency: '0.1–6 GHz', category: 'Specialty Circuits', image: '/HIE-Lab-Website/images/chips/individual/sheet3-01-0.1-6-ghz-negative-l-circuit.png', width: 563, height: 601 },
 ];
 
 const categories = ['All', 'Radar Systems', 'Amplifiers & Oscillators', 'Sub-THz & THz', 'Specialty Circuits'];
@@ -75,7 +75,7 @@ export default function ChipGalleryPage() {
           <div className="group relative w-full overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-500">
             <motion.div style={{ y: bannerY }}>
               <Image
-                src="/images/chips/chip-1.png"
+                src="/HIE-Lab-Website/images/chips/chip-1.png"
                 alt="Chip Gallery Banner"
                 width={1200}
                 height={300}

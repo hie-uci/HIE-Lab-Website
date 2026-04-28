@@ -24,6 +24,12 @@ interface Publication {
 // --------------- data ---------------
 
 const publications: Publication[] = [
+  // 2026 Journals
+  { authors: 'X. Liu, Z. Zhang, H. Aghasi', title: 'A 25/75 GHz 2TX-4RX FMCW Radar Transceiver Utilizing Non-uniform Linear Arrays and Phase Dithering to Achieve 5.1° Angular Resolution', venue: 'IEEE TMTT', year: 2026, type: 'journal', link: 'https://ieeexplore.ieee.org/document/11483145' },
+
+  // 2026 Conferences
+  { authors: 'Z. Zhang, X. Liu, Y. Huang, H. Aghasi', title: 'A Doppler-Assisted 76 GHz PMCW Radar with Meter-Scale Unambiguous Range and μm-Scale Range Accuracy', venue: 'IEEE RFIC', year: 2026, type: 'conference' },
+
   // 2025 Journals
   { authors: 'M. H. Maktoomi, X. Liu, H. R. Aghasi', title: 'A 19 dBm Psat 110–142 GHz Power Amplifier in 65-nm CMOS', venue: 'IEEE JSSC', year: 2025, type: 'journal', status: 'Under Review' },
   { authors: 'M. Alonso, X. Liu, H. R. Aghasi', title: 'Non-Linear Analog Processing in MIMO Systems', venue: 'IEEE JSAIT', year: 2025, type: 'journal', status: 'Under Review' },
@@ -34,7 +40,7 @@ const publications: Publication[] = [
   { authors: 'X. Liu, M. Maktoomi, M. Alesheikh, P. Heydari, H. R. Aghasi', title: 'A CMOS 49–63-GHz Phase-Locked Stepped-Chirp FMCW Radar Transceiver', venue: 'IEEE JSSC', year: 2025, type: 'journal', link: 'https://ieeexplore.ieee.org/document/10964133' },
 
   // 2026 Conferences
-  { authors: 'Y. Huang, A. Mehradfar, S. Avestimehr, H. R. Aghasi', title: 'EM-Aware Physical Synthesis', venue: 'IEEE ISCAS', year: 2026, type: 'conference', status: 'Submitted' },
+  { authors: 'Y. Huang, A. Mehradfar, S. Avestimehr, H. R. Aghasi', title: 'EM-Aware Physical Synthesis: Neural Inductor Modeling and Intelligent Placement & Routing for RF Circuits', venue: 'IEEE ISCAS', year: 2026, type: 'conference' },
   { authors: 'A. Montazar, X. Liu, Y. Huang, H. R. Aghasi', title: 'Energy-Autonomous Frequency-Domain Force Sensor', venue: 'IEEE ISCAS', year: 2026, type: 'conference', status: 'Submitted' },
   { authors: 'M. Maktoomi, X. Liu, H. R. Aghasi', title: '110–142 GHz 19 dBm PA', venue: 'IEEE RWW', year: 2025, type: 'conference', highlight: 'Best Student Paper Nominee' },
   { authors: 'A. Ding, Y. Huang, S. Jeung, X. Liu, H. R. Aghasi, M. Imani', title: 'Attention-Based Cognitive Beam Steering', venue: 'IEEE RadarConf', year: 2025, type: 'conference', highlight: 'Best Student Paper Nominee' },

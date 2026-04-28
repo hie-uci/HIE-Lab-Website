@@ -3,20 +3,20 @@
 import Image from 'next/image';
 
 const chipImages = [
-  '/images/chips/individual/sheet1-01-pmcw-radar.png',
-  '/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png',
-  '/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png',
-  '/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png',
-  '/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png',
-  '/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png',
-  '/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png',
-  '/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png',
-  '/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png',
-  '/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png',
-  '/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png',
-  '/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png',
-  '/images/chips/individual/sheet3-01-0.1-6-ghz-negative-l-circuit.png',
-  '/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet1-01-pmcw-radar.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet3-01-0.1-6-ghz-negative-l-circuit.png',
+  '/HIE-Lab-Website/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png',
 ];
 
 /* Split into two rows: first 7 chips for row 1, last 7 for row 2 */

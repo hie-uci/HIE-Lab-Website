@@ -11,7 +11,7 @@ import CircuitBackground from '@/components/CircuitBackground';
 const director = {
   name: 'Prof. Hamidreza Aghasi',
   initials: 'HA',
-  image: '/images/members/pi-aghasi.jpeg',
+  image: '/HIE-Lab-Website/images/members/pi-aghasi.jpeg',
   title: 'Assistant Professor of EECS',
   email: 'haghasi@uci.edu',
   phone: '(949)-824-8810',
@@ -55,17 +55,17 @@ interface Member {
 }
 
 const phdStudents: Member[] = [
-  { name: 'Md Hedayatullah Maktoomi', initials: 'MH', image: '/images/members/phd-maktoomi.png', focus: 'RF/microwave and power amplifier design', bio: 'B. Engg. from Jamia Millia Islamia, New Delhi (2015), M.S. from Washington State University (2020). Intern and research assistant at IIIT Delhi (2016-2017) on passive RF/microwave circuits. RF engineering intern at Wolfspeed Inc. (2019) working on Doherty power amplifier design. Published in IEEE TCAS-II and IEEE TMTT. Frequent reviewer for multiple IEEE journals.', gradientFrom: 'from-uci-blue', gradientTo: 'to-eecs-teal' },
-  { name: 'Mahdi Alesheikh', initials: 'MA', image: '/images/members/phd-alesheikh.png', focus: 'Analog/RF circuits', bio: 'BSc in Electronics from Sharif University of Technology, Tehran, Iran. BSc thesis on IoT circuits under Prof. Safarian. MSc in ECE from University of Alberta, with master\'s work on RFIC and microwave circuits under Prof. Karumudi and Hossain. Currently pursuing PhD at UCI.', gradientFrom: 'from-eng-blue', gradientTo: 'to-uci-gold' },
-  { name: 'Allen (Yilun) Huang', initials: 'AH', image: '/images/members/phd-allen-huang.png', focus: 'Analog/mixed-signal and mm-wave design', bio: 'B.S. in electrical engineering from Iowa State University (2022), M.S. from UCLA (2024). Currently pursuing Ph.D. at UCI. Research interests include analog/mixed-signal, RF, mm-wave circuit design, and machine learning applications in circuit and radar system design.', gradientFrom: 'from-uci-gold', gradientTo: 'to-eecs-teal' },
-  { name: 'Mark (Zheng-yang) Zhang', initials: 'MZ', image: '/images/members/phd-mark-zhang.png', focus: 'Analog/mixed-signal/RF circuits', bio: 'BSEE from SUSTech, Shenzhen, China, with work on integrated power management for wireline transceivers. Currently pursuing PhD at UCI. Research interests in analog/mixed-signal/RF circuits and systems.', gradientFrom: 'from-eecs-teal', gradientTo: 'to-uci-blue' },
-  { name: 'Mohammadamin (Amin) Montazar', initials: 'AM', image: '/images/members/phd-montazar.png', focus: 'mm-wave and terahertz integrated circuits', bio: 'B.S. and M.S. in Electrical Engineering from UC Davis (2020, 2022). Under Prof. Omeed Momeni, designed LC VCO in C-band with thesis on low power, low phase noise VCO for PLL applications. Senior RF Design Engineer for two years specializing in military communication systems VHF to C-Band.', gradientFrom: 'from-uci-blue-dark', gradientTo: 'to-uci-gold' },
-  { name: 'Yuncheng Tu', initials: 'YT', image: '/images/members/phd-yuncheng-tu.png', focus: 'Analog, RF, and mm-wave circuits', bio: 'B.S. in Electrical Engineering from Southern University of Science and Technology, Shenzhen, China (2025). Currently pursuing Ph.D. at UCI.', gradientFrom: 'from-eng-blue', gradientTo: 'to-eecs-teal-light' },
+  { name: 'Md Hedayatullah Maktoomi', initials: 'MH', image: '/HIE-Lab-Website/images/members/phd-maktoomi.png', focus: 'RF/microwave and power amplifier design', bio: 'B. Engg. from Jamia Millia Islamia, New Delhi (2015), M.S. from Washington State University (2020). Intern and research assistant at IIIT Delhi (2016-2017) on passive RF/microwave circuits. RF engineering intern at Wolfspeed Inc. (2019) working on Doherty power amplifier design. Published in IEEE TCAS-II and IEEE TMTT. Frequent reviewer for multiple IEEE journals.', gradientFrom: 'from-uci-blue', gradientTo: 'to-eecs-teal' },
+  { name: 'Mahdi Alesheikh', initials: 'MA', image: '/HIE-Lab-Website/images/members/phd-alesheikh.png', focus: 'Analog/RF circuits', bio: 'BSc in Electronics from Sharif University of Technology, Tehran, Iran. BSc thesis on IoT circuits under Prof. Safarian. MSc in ECE from University of Alberta, with master\'s work on RFIC and microwave circuits under Prof. Karumudi and Hossain. Currently pursuing PhD at UCI.', gradientFrom: 'from-eng-blue', gradientTo: 'to-uci-gold' },
+  { name: 'Allen (Yilun) Huang', initials: 'AH', image: '/HIE-Lab-Website/images/members/phd-allen-huang.png', focus: 'Analog/mixed-signal and mm-wave design', bio: 'B.S. in electrical engineering from Iowa State University (2022), M.S. from UCLA (2024). Currently pursuing Ph.D. at UCI. Research interests include analog/mixed-signal, RF, mm-wave circuit design, and machine learning applications in circuit and radar system design.', gradientFrom: 'from-uci-gold', gradientTo: 'to-eecs-teal' },
+  { name: 'Mark (Zheng-yang) Zhang', initials: 'MZ', image: '/HIE-Lab-Website/images/members/phd-mark-zhang.png', focus: 'Analog/mixed-signal/RF circuits', bio: 'BSEE from SUSTech, Shenzhen, China, with work on integrated power management for wireline transceivers. Currently pursuing PhD at UCI. Research interests in analog/mixed-signal/RF circuits and systems.', gradientFrom: 'from-eecs-teal', gradientTo: 'to-uci-blue' },
+  { name: 'Mohammadamin (Amin) Montazar', initials: 'AM', image: '/HIE-Lab-Website/images/members/phd-montazar.png', focus: 'mm-wave and terahertz integrated circuits', bio: 'B.S. and M.S. in Electrical Engineering from UC Davis (2020, 2022). Under Prof. Omeed Momeni, designed LC VCO in C-band with thesis on low power, low phase noise VCO for PLL applications. Senior RF Design Engineer for two years specializing in military communication systems VHF to C-Band.', gradientFrom: 'from-uci-blue-dark', gradientTo: 'to-uci-gold' },
+  { name: 'Yuncheng Tu', initials: 'YT', image: '/HIE-Lab-Website/images/members/phd-yuncheng-tu.png', focus: 'Analog, RF, and mm-wave circuits', bio: 'B.S. in Electrical Engineering from Southern University of Science and Technology, Shenzhen, China (2025). Currently pursuing Ph.D. at UCI.', gradientFrom: 'from-eng-blue', gradientTo: 'to-eecs-teal-light' },
 ];
 
 const undergradResearchers: Member[] = [
-  { name: 'Wei Dai', initials: 'WD', image: '/images/members/undergrad-wei-dai.png', focus: 'Digital and analog circuits', bio: 'Pursuing BSc in Electrical Engineering at UCI with specialization in Electronic Circuit Design.', gradientFrom: 'from-uci-blue-light', gradientTo: 'to-eecs-teal' },
-  { name: 'Albert Huang', initials: 'AH', image: '/images/members/undergrad-albert-huang.png', focus: 'Analog circuit design', bio: 'Pursuing BSc in Electrical and Computer Engineering at UCI, specializing in Electronic Circuit Design, Semiconductors, and RF, Antennas, and Microwaves.', gradientFrom: 'from-uci-gold', gradientTo: 'to-uci-blue' },
+  { name: 'Wei Dai', initials: 'WD', image: '/HIE-Lab-Website/images/members/undergrad-wei-dai.png', focus: 'Digital and analog circuits', bio: 'Pursuing BSc in Electrical Engineering at UCI with specialization in Electronic Circuit Design.', gradientFrom: 'from-uci-blue-light', gradientTo: 'to-eecs-teal' },
+  { name: 'Albert Huang', initials: 'AH', image: '/HIE-Lab-Website/images/members/undergrad-albert-huang.png', focus: 'Analog circuit design', bio: 'Pursuing BSc in Electrical and Computer Engineering at UCI, specializing in Electronic Circuit Design, Semiconductors, and RF, Antennas, and Microwaves.', gradientFrom: 'from-uci-gold', gradientTo: 'to-uci-blue' },
 ];
 
 interface Alumnus {
@@ -78,21 +78,21 @@ interface Alumnus {
 }
 
 const phdAlumni: Alumnus[] = [
-  { name: 'Masoud Berahman', initials: 'MB', image: '/images/members/alumni-berahman.png', detail: 'Ph.D./Postdoc', now: undefined, bio: 'Completed PhD in electrical engineering and postdoctoral fellowship in physics. Primary research interests in two and one-dimensional materials applications in future electronic devices.' },
-  { name: 'Xuyang Liu', initials: 'XL', image: '/images/members/alumni-xuyang-liu.png', detail: '2020-2025', now: 'Staff Engineer, Marvell Technology', bio: 'BS in Electronic Information Engineering from Jilin University, China (2018), MS in Electrical Engineering from Columbia University (2019), PhD from UCI (2025). Research interests in mmWave front-end, VCO and PLL, FMCW radar system.' },
-  { name: 'Behnam Moradi Shahrbabak', initials: 'BM', image: '/images/members/alumni-behnam.jpg', detail: '2019-2024', now: 'Senior RFIC Engineer, Kyocera', bio: 'Research interests in analog, RF, millimeter-wave circuits, and system design.' },
+  { name: 'Masoud Berahman', initials: 'MB', image: '/HIE-Lab-Website/images/members/alumni-berahman.png', detail: 'Ph.D./Postdoc', now: undefined, bio: 'Completed PhD in electrical engineering and postdoctoral fellowship in physics. Primary research interests in two and one-dimensional materials applications in future electronic devices.' },
+  { name: 'Xuyang Liu', initials: 'XL', image: '/HIE-Lab-Website/images/members/alumni-xuyang-liu.png', detail: '2020-2025', now: 'Staff Engineer, Marvell Technology', bio: 'BS in Electronic Information Engineering from Jilin University, China (2018), MS in Electrical Engineering from Columbia University (2019), PhD from UCI (2025). Research interests in mmWave front-end, VCO and PLL, FMCW radar system.' },
+  { name: 'Behnam Moradi Shahrbabak', initials: 'BM', image: '/HIE-Lab-Website/images/members/alumni-behnam.jpg', detail: '2019-2024', now: 'Senior RFIC Engineer, Kyocera', bio: 'Research interests in analog, RF, millimeter-wave circuits, and system design.' },
 ];
 
 const otherAlumni: Alumnus[] = [
-  { name: 'Xuzhe Zhao', initials: 'XZ', image: '/images/members/alumni-xuzhe-zhao.png', detail: 'M.S.' },
-  { name: 'Tanqin He', initials: 'TH', image: '/images/members/alumni-tanqin-he.png', detail: 'M.S.' },
-  { name: 'Pooya Khajeh', initials: 'PK', image: '/images/members/alumni-pooya.jpg', detail: 'M.S.', now: 'R&D Test Engineer, Broadcom' },
-  { name: 'Mengjie (Kaylee) Xie', initials: 'MX', image: '/images/members/alumni-kaylee.jpg', detail: 'B.Sc.', now: 'Graduate Student, Stanford' },
-  { name: 'Kelly Aung Lu', initials: 'KL', image: '/images/members/alumni-kelly.jpg', detail: 'B.Sc.' },
-  { name: 'Annika Ageles Del Rosario', initials: 'AA', image: '/images/members/alumni-annika.png', detail: 'B.Sc.', now: 'Hardware Engineer, Western Digital' },
-  { name: 'Marcus Clark Wong', initials: 'MW', image: '/images/members/alumni-marcus.png', detail: 'B.Sc.', now: 'PhD Student, UCSC' },
-  { name: 'Shihao Han', initials: 'SH', image: '/images/members/alumni-shihao.png', detail: 'M.S.' },
-  { name: 'Yankai Yang', initials: 'YY', image: '/images/members/alumni-yankai.png', detail: 'M.S.' },
+  { name: 'Xuzhe Zhao', initials: 'XZ', image: '/HIE-Lab-Website/images/members/alumni-xuzhe-zhao.png', detail: 'M.S.' },
+  { name: 'Tanqin He', initials: 'TH', image: '/HIE-Lab-Website/images/members/alumni-tanqin-he.png', detail: 'M.S.' },
+  { name: 'Pooya Khajeh', initials: 'PK', image: '/HIE-Lab-Website/images/members/alumni-pooya.jpg', detail: 'M.S.', now: 'R&D Test Engineer, Broadcom' },
+  { name: 'Mengjie (Kaylee) Xie', initials: 'MX', image: '/HIE-Lab-Website/images/members/alumni-kaylee.jpg', detail: 'B.Sc.', now: 'Graduate Student, Stanford' },
+  { name: 'Kelly Aung Lu', initials: 'KL', image: '/HIE-Lab-Website/images/members/alumni-kelly.jpg', detail: 'B.Sc.' },
+  { name: 'Annika Ageles Del Rosario', initials: 'AA', image: '/HIE-Lab-Website/images/members/alumni-annika.png', detail: 'B.Sc.', now: 'Hardware Engineer, Western Digital' },
+  { name: 'Marcus Clark Wong', initials: 'MW', image: '/HIE-Lab-Website/images/members/alumni-marcus.png', detail: 'B.Sc.', now: 'PhD Student, UCSC' },
+  { name: 'Shihao Han', initials: 'SH', image: '/HIE-Lab-Website/images/members/alumni-shihao.png', detail: 'M.S.' },
+  { name: 'Yankai Yang', initials: 'YY', image: '/HIE-Lab-Website/images/members/alumni-yankai.png', detail: 'M.S.' },
 ];
 
 // --------------- animation helpers ---------------
