@@ -3,5 +3,9 @@
     "allow": [
       "Bash(npx next build:*)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "cadence"
+  ],
+  "enableAllProjectMcpServers": true
 }
