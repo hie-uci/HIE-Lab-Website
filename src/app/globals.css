@@ -50,6 +50,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--background);
 }
 
 body {
@@ -57,6 +58,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* Premium typography - tighter tracking on large headings (Linear/Vercel style) */
