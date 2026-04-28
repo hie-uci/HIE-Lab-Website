@@ -71,7 +71,7 @@ export default function Navbar() {
                 alt="HIE Lab logo" 
                 width={922} 
                 height={137} 
-                className="h-12 sm:h-18 w-auto object-contain transition-all duration-500 group-hover:opacity-90 dark:saturate-150 dark:brightness-105 dark:contrast-110 dark:drop-shadow-[0_0_1px_rgba(56,189,248,0.8)] dark:drop-shadow-[0_0_10px_rgba(56,189,248,0.4)]" 
+                className="h-12 sm:h-18 w-auto object-contain transition-all duration-500 group-hover:opacity-90 dark:saturate-150 dark:brightness-110 [filter:url(#clean-logo-edges)] dark:drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]" 
                 unoptimized 
               />
             </Link>
@@ -169,6 +169,22 @@ export default function Navbar() {
                       className={`block px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                         isActive(link.href)
                           ? 'text-uci-blue bg-uci-blue/10 border-l-2 border-uci-blue'
+                          : 'text-navy/70 dark:text-slate-300 hover:text-uci-blue dark:hover:text-blue-400 hover:bg-uci-blue/5'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </>
+  );
+}
+-blue bg-uci-blue/10 border-l-2 border-uci-blue'
                           : 'text-navy/70 dark:text-slate-300 hover:text-uci-blue dark:hover:text-blue-400 hover:bg-uci-blue/5'
                       }`}
                     >
