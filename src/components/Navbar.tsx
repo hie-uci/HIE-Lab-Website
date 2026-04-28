@@ -43,6 +43,14 @@ export default function Navbar() {
 
   return (
     <>
+      {/* SVG Filter for Logo Edge Clean-up in Dark Mode */}
+      <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden="true">
+        <filter id="clean-logo-edges">
+          {/* 'erode' shrinks the alpha channel, cutting off semi-transparent white pixels */}
+          <feMorphology operator="erode" radius="0.4" in="SourceGraphic" result="eroded" />
+        </filter>
+      </svg>
+
       {/* Scroll Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-[3px] z-[60] origin-left"
@@ -169,22 +177,6 @@ export default function Navbar() {
                       className={`block px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                         isActive(link.href)
                           ? 'text-uci-blue bg-uci-blue/10 border-l-2 border-uci-blue'
-                          : 'text-navy/70 dark:text-slate-300 hover:text-uci-blue dark:hover:text-blue-400 hover:bg-uci-blue/5'
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
-    </>
-  );
-}
--blue bg-uci-blue/10 border-l-2 border-uci-blue'
                           : 'text-navy/70 dark:text-slate-300 hover:text-uci-blue dark:hover:text-blue-400 hover:bg-uci-blue/5'
                       }`}
                     >
