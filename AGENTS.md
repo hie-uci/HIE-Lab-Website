@@ -170,6 +170,13 @@ Synced from old website (hie.eng.uci.edu/publications/) on April 28, 2026.
 
 ## How to Deploy
 
+🚨 **CRITICAL DEPLOYMENT WARNING (origin vs pages)** 🚨
+This local project is connected to TWO remote repositories:
+1. `origin` -> `HIE-Lab-Website` (Stores the source code)
+2. `pages` -> `hie-uci.github.io` (The actual LIVE website that triggers the deployment Action)
+
+A standard `git push` or `git push origin main` will **ONLY update the source code** but will **NOT update the live website**. To deploy changes to the live site, you **MUST** push to the `pages` remote.
+
 ```bash
 # Local development
 npm install
@@ -179,11 +186,11 @@ npm run dev          # → http://localhost:3000
 npm run build
 npx serve out        # → http://localhost:3000
 
-# Deploy (auto via GitHub Actions)
+# Deploy (MUST run BOTH commands to update source AND live site)
 git add -A
 git commit -m "your message"
-git push origin main   # → triggers build + deploy to hie-uci.github.io
-git push pages main    # → also push to backup repo
+git push origin main   # 1. Saves source code to HIE-Lab-Website repo
+git push pages main    # 2. 🚨 CRITICAL: Triggers build + deploy to live hie-uci.github.io
 ```
 
 ---
