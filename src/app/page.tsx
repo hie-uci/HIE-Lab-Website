@@ -51,12 +51,6 @@ const stagger = {
 
 /* ──────────────────────────── data ──────────────────────────── */
 
-const stats = [
-  { value: 40, suffix: '+', label: 'Publications' },
-  { value: 9, suffix: '', label: 'Active Members' },
-  { value: 8, suffix: '', label: 'Awards & Honors' },
-];
-
 type ResearchArea = {
   title: string;
   description: string;
@@ -241,7 +235,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-4 mb-16 pointer-events-auto"
+            className="flex flex-wrap items-center justify-center gap-4 pointer-events-auto"
           >
             <Link
               href="/research"
@@ -261,30 +255,6 @@ export default function HomePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
               </svg>
             </Link>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={stagger}
-            className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pointer-events-auto"
-          >
-            {stats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                variants={fadeUp}
-                custom={i + 10}
-                whileHover={{ y: -5 }}
-                className="relative p-4 rounded-2xl glass-ios transition-all duration-300 group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-uci-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
-                <div className="relative z-10 text-3xl sm:text-4xl font-bold text-eng-blue dark:text-blue-300 mb-1">
-                  <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-                </div>
-                <div className="relative z-10 text-xs sm:text-sm text-slate-900 dark:text-slate-200 font-medium">{stat.label}</div>
-              </motion.div>
-            ))}
           </motion.div>
         </motion.div>
 
