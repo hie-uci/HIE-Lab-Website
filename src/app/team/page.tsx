@@ -127,27 +127,50 @@ function TagPill({ text }: { text: string }) {
 }
 
 function MemberCard({ member, label = 'PhD Student' }: { member: Member; index: number; label?: string }) {
-  const tags = member.focus.split(/,\s*and\s*|,\s*|\s+and\s+/);
+  const tags = member.focus.split(/,\s*and\s*|,\\s*|\\s+and\\s+/);
   return (
     <motion.div
       variants={cardVariants}
-      whileHover={{ y: -6, transition: { duration: 0.25 } }}
-      className="group glass rounded-2xl p-6 flex flex-col items-center text-center card-hover relative overflow-hidden"
+      whileHover={{ y: -8, transition: { duration: 0.3, ease: 'easeOut' } }}
+      className="group relative rounded-2xl bg-white border border-gray-100 overflow-hidden transition-all duration-500 hover:border-uci-blue/20 hover:shadow-xl hover:shadow-uci-blue/10"
     >
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-uci-blue/5 via-transparent to-uci-gold/5" />
-      <Image src={member.image} alt={member.name} width={120} height={120} className="w-24 h-24 rounded-full object-cover shadow-lg border-2 border-white" />
-      <h3 className="mt-4 font-semibold text-eng-blue text-base leading-tight">{member.name}</h3>
-      <p className="text-xs text-gray-400 mt-1">{label}</p>
-      <div className="mt-3 flex flex-wrap justify-center gap-1.5">
-        {tags.map((t) => (
-          <TagPill key={t} text={t.trim()} />
-        ))}
+      {/* Gradient top accent bar */}
+      <div className={`h-1 w-full bg-gradient-to-r ${member.gradientFrom} ${member.gradientTo}`} />
+
+      {/* Subtle glow on hover */}
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none bg-gradient-to-br from-uci-blue/5 via-transparent to-uci-gold/5" />
+
+      <div className="p-6 flex flex-col items-center text-center relative">
+        {/* Photo with gradient ring */}
+        <div className="relative">
+          <div className={`absolute -inset-1 rounded-full bg-gradient-to-br ${member.gradientFrom} ${member.gradientTo} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm`} />
+          <Image
+            src={member.image}
+            alt={member.name}
+            width={120}
+            height={120}
+            className="relative w-24 h-24 rounded-full object-cover shadow-lg border-[3px] border-white group-hover:border-white/90 transition-all duration-300 group-hover:scale-105"
+          />
+        </div>
+
+        <h3 className="mt-4 font-bold text-eng-blue text-base leading-tight group-hover:text-uci-blue transition-colors duration-300">{member.name}</h3>
+        <p className="text-xs text-gray-400 mt-1 font-medium tracking-wide uppercase">{label}</p>
+
+        {/* Tags with improved styling */}
+        <div className="mt-3 flex flex-wrap justify-center gap-1.5">
+          {tags.map((t) => (
+            <span key={t} className="inline-block px-2.5 py-1 rounded-full text-[11px] font-medium bg-gradient-to-r from-uci-blue/5 to-eecs-teal/5 text-uci-blue border border-uci-blue/10 group-hover:border-uci-blue/20 group-hover:from-uci-blue/10 group-hover:to-eecs-teal/10 transition-all duration-300">
+              {t.trim()}
+            </span>
+          ))}
+        </div>
+
+        {member.bio && (
+          <p className="mt-4 text-xs text-gray-500 leading-relaxed text-left bg-gray-50/80 rounded-xl p-3.5 w-full border border-gray-100 group-hover:border-gray-200 transition-colors duration-300">
+            {member.bio}
+          </p>
+        )}
       </div>
-      {member.bio && (
-        <p className="mt-3 text-xs text-gray-500 leading-relaxed text-left bg-gray-50/80 rounded-lg p-3 w-full">
-          {member.bio}
-        </p>
-      )}
     </motion.div>
   );
 }

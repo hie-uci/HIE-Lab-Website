@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -20,6 +21,11 @@ const navLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Scroll progress bar
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,106 +35,143 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === '/';
+    return pathname.startsWith(href);
+  };
+
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'glass shadow-lg shadow-eng-blue/5'
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center group">
-            <Image src="/HIE-Lab-Website/images/logo/hie-logo.png" alt="HIE Lab logo" width={922} height={137} className="h-12 sm:h-18 w-auto object-contain group-hover:opacity-80 transition-opacity" unoptimized />
-          </Link>
+    <>
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[3px] z-[60] origin-left"
+        style={{
+          scaleX,
+          background: 'linear-gradient(90deg, #0064a4, #ffd200, #528188)',
+        }}
+      />
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="px-3 py-2 text-sm font-medium text-navy/80 hover:text-uci-blue rounded-lg hover:bg-uci-blue/5 transition-all duration-200 animated-underline"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled
+            ? 'glass shadow-lg shadow-eng-blue/5'
+            : 'bg-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            {/* Logo */}
+            <Link href="/" className="flex items-center group">
+              <Image src="/HIE-Lab-Website/images/logo/hie-logo.png" alt="HIE Lab logo" width={922} height={137} className="h-12 sm:h-18 w-auto object-contain group-hover:opacity-80 transition-opacity" unoptimized />
+            </Link>
 
-          {/* UCI Badge */}
-          <div className="hidden lg:flex items-center gap-2">
-            <div className="h-8 w-px bg-gray-200" />
-            <a href="https://engineering.uci.edu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-uci-blue/5 border border-uci-blue/10 hover:bg-uci-blue/10 transition-colors">
-              <div className="w-5 h-5 rounded-full bg-uci-blue flex items-center justify-center">
-                <span className="text-[8px] font-bold text-white">UCI</span>
-              </div>
-              <span className="text-xs font-medium text-uci-blue">Engineering</span>
-            </a>
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            aria-label="Toggle menu"
-          >
-            <div className="w-6 h-5 relative flex flex-col justify-between">
-              <span
-                className={`w-full h-0.5 bg-navy rounded-full transition-all duration-300 ${
-                  isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
-                }`}
-              />
-              <span
-                className={`w-full h-0.5 bg-navy rounded-full transition-all duration-300 ${
-                  isMobileMenuOpen ? 'opacity-0' : ''
-                }`}
-              />
-              <span
-                className={`w-full h-0.5 bg-navy rounded-full transition-all duration-300 ${
-                  isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
-                }`}
-              />
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden glass border-t border-white/20"
-          >
-            <div className="px-4 py-4 space-y-1">
-              {navLinks.map((link, index) => (
-                <motion.div
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-0.5">
+              {navLinks.map((link) => (
+                <Link
                   key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  href={link.href}
+                  className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                    isActive(link.href)
+                      ? 'text-uci-blue bg-uci-blue/8'
+                      : 'text-navy/70 hover:text-uci-blue hover:bg-uci-blue/5'
+                  }`}
                 >
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-4 py-3 text-sm font-medium text-navy/80 hover:text-uci-blue hover:bg-uci-blue/5 rounded-lg transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </motion.div>
+                  {link.name}
+                  {/* Active indicator dot */}
+                  {isActive(link.href) && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 rounded-full bg-gradient-to-r from-uci-blue to-uci-gold"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </Link>
               ))}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+
+            {/* UCI Badge */}
+            <div className="hidden lg:flex items-center gap-2">
+              <div className="h-8 w-px bg-gray-200" />
+              <a href="https://engineering.uci.edu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-uci-blue/5 border border-uci-blue/10 hover:bg-uci-blue/10 transition-colors">
+                <div className="w-5 h-5 rounded-full bg-uci-blue flex items-center justify-center">
+                  <span className="text-[8px] font-bold text-white">UCI</span>
+                </div>
+                <span className="text-xs font-medium text-uci-blue">Engineering</span>
+              </a>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label="Toggle menu"
+            >
+              <div className="w-6 h-5 relative flex flex-col justify-between">
+                <span
+                  className={`w-full h-0.5 bg-navy rounded-full transition-all duration-300 ${
+                    isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
+                  }`}
+                />
+                <span
+                  className={`w-full h-0.5 bg-navy rounded-full transition-all duration-300 ${
+                    isMobileMenuOpen ? 'opacity-0' : ''
+                  }`}
+                />
+                <span
+                  className={`w-full h-0.5 bg-navy rounded-full transition-all duration-300 ${
+                    isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
+                  }`}
+                />
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="lg:hidden glass border-t border-white/20"
+            >
+              <div className="px-4 py-4 space-y-1">
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
+                        isActive(link.href)
+                          ? 'text-uci-blue bg-uci-blue/10 border-l-2 border-uci-blue'
+                          : 'text-navy/70 hover:text-uci-blue hover:bg-uci-blue/5'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </>
   );
 }

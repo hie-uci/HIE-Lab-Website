@@ -8,7 +8,8 @@ import CircuitBackground from '@/components/CircuitBackground';
 import GradientMesh from '@/components/GradientMesh';
 import AnimatedResearchIcon from '@/components/AnimatedResearchIcon';
 import WaveformDivider from '@/components/WaveformDivider';
-import SectionHeader from '@/components/SectionHeader';
+import SectionHeader from "@/components/SectionHeader";
+import ParticleField from "@/components/ParticleField";
 import ChipMarquee from '@/components/ChipMarquee';
 
 /* ──────────────────────────── helpers ──────────────────────────── */
@@ -131,6 +132,7 @@ export default function HomePage() {
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-slate-warm via-white to-white">
         {/* Background layers */}
         <CircuitBackground className="opacity-40" density={55} interactive />
+        <ParticleField className="opacity-30 z-[2]" />
         <GradientMesh />
 
         {/* Floating chip die photos — decorative background mosaic */}
@@ -466,17 +468,27 @@ export default function HomePage() {
                 variants={fadeUp}
                 custom={i}
                 whileHover={{
-                  boxShadow: '0 0 24px rgba(0, 100, 164, 0.25), 0 0 64px rgba(0, 100, 164, 0.08)',
-                  y: -4,
+                  boxShadow: '0 0 30px rgba(0, 100, 164, 0.2), 0 0 80px rgba(0, 100, 164, 0.06)',
+                  y: -8,
                 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
-                className={`group relative rounded-2xl bg-white border border-gray-100 hover:border-uci-blue/20 overflow-hidden transition-colors duration-500 ${
+                className={`group relative rounded-2xl bg-white border border-gray-100 hover:border-uci-blue/25 overflow-hidden transition-colors duration-500 ${
                   i === 4 ? 'md:col-span-2 lg:col-span-1' : ''
                 }`}
               >
+                {/* Animated gradient border on hover */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                  <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-uci-blue via-uci-gold to-eecs-teal opacity-30 blur-sm" />
+                </div>
+
+                {/* Number badge */}
+                <div className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-xs font-bold text-white/80 border border-white/20">
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+
                 {/* Gradient icon banner */}
-                <div className={`relative w-full h-40 bg-gradient-to-br ${area.gradient} flex items-center justify-center overflow-hidden`}>
-                  {/* Subtle dot grid overlay */}
+                <div className={`relative w-full h-44 bg-gradient-to-br ${area.gradient} flex items-center justify-center overflow-hidden`}>
+                  {/* Animated dot grid overlay */}
                   <div className="absolute inset-0 opacity-[0.07]">
                     <svg width="100%" height="100%">
                       <pattern id={`dots-${i}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -485,24 +497,28 @@ export default function HomePage() {
                       <rect width="100%" height="100%" fill={`url(#dots-${i})`} />
                     </svg>
                   </div>
-                  {/* Radial glow behind icon */}
-                  <div className="absolute w-32 h-32 rounded-full bg-white/10 blur-2xl" />
-                  <div className="relative text-white/90 [&>div]:!text-inherit">
+                  {/* Animated radial glow */}
+                  <div className="absolute w-40 h-40 rounded-full bg-white/10 blur-3xl group-hover:bg-white/15 group-hover:scale-125 transition-all duration-700" />
+                  {/* Scan line effect on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" style={{ animation: 'scan-line 2s ease-in-out infinite' }} />
+                  </div>
+                  <div className="relative text-white/90 [&>div]:!text-inherit group-hover:scale-110 transition-transform duration-500">
                     <AnimatedResearchIcon variant={area.iconVariant} className="w-16 h-16 drop-shadow-lg" />
                   </div>
                 </div>
 
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-eng-blue mb-2 group-hover:text-uci-blue transition-colors">
+                <div className="p-6 relative">
+                  <h3 className="text-lg font-bold text-eng-blue mb-2 group-hover:text-uci-blue transition-colors duration-300">
                     {area.title}
                   </h3>
                   <p className="text-sm text-gray-500 leading-relaxed mb-4">{area.description}</p>
                   <Link
                     href="/research"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-uci-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-uci-blue opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
                   >
                     Learn more
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>
