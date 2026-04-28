@@ -149,7 +149,7 @@ function MemberCard({ member, label = 'PhD Student' }: { member: Member; index: 
             alt={member.name}
             width={120}
             height={120}
-            className="relative w-24 h-24 rounded-full object-cover shadow-lg border-[3px] border-white group-hover:border-white/90 transition-all duration-300 group-hover:scale-105"
+            className="relative w-32 h-32 rounded-full object-cover shadow-xl border-[3px] border-white group-hover:border-white/90 transition-all duration-300 group-hover:scale-105"
           />
         </div>
 
@@ -183,7 +183,7 @@ function AlumnusCard({ alumnus }: { alumnus: Alumnus }) {
       className="glass rounded-xl p-4 flex flex-col card-hover"
     >
       <div className="flex items-center gap-3">
-        <Image src={alumnus.image} alt={alumnus.name} width={48} height={48} className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-white flex-shrink-0" />
+        <Image src={alumnus.image} alt={alumnus.name} width={48} height={48} className="w-14 h-14 rounded-full object-cover shadow-md border-2 border-white flex-shrink-0" />
         <div className="min-w-0 flex-1">
           <p className="font-medium text-sm text-eng-blue truncate">{alumnus.name}</p>
           {alumnus.detail && <p className="text-xs text-gray-400">{alumnus.detail}</p>}
@@ -237,7 +237,7 @@ export default function TeamPage() {
             <div className="bg-white rounded-[22px] p-8 sm:p-10 flex flex-col md:flex-row gap-8 items-center md:items-start">
               {/* Avatar */}
               <div className="shrink-0">
-                <Image src={director.image} alt={director.name} width={160} height={160} className="w-36 h-36 rounded-full object-cover shadow-xl ring-4 ring-white" />
+                <Image src={director.image} alt={director.name} width={160} height={160} className="w-44 h-44 rounded-full object-cover shadow-xl ring-4 ring-white" />
               </div>
               {/* Info */}
               <div className="flex-1 text-center md:text-left">

@@ -193,7 +193,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.04em] leading-[1.1] mb-6"
           >
             <span className="gradient-text">High-speed Integrated</span>
             <br />
@@ -618,7 +618,8 @@ export default function HomePage() {
                 key={venue}
                 variants={fadeUp}
                 custom={i}
-                className="px-5 py-2.5 rounded-xl bg-white border border-gray-100 text-sm font-semibold text-eng-blue shadow-sm hover:border-uci-blue/20 hover:shadow-md transition-all duration-300"
+                className="px-5 py-2.5 rounded-xl bg-white/60 border border-gray-100/80 text-sm font-bold text-eng-blue/70 tracking-wide uppercase hover:text-uci-blue hover:border-uci-blue/20 hover:bg-white hover:shadow-lg hover:shadow-uci-blue/5 transition-all duration-400 cursor-default"
+                style={{ letterSpacing: '0.08em' }}
               >
                 {venue}
               </motion.span>

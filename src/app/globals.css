@@ -34,6 +34,8 @@
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -41,6 +43,22 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
+}
+
+/* Premium typography - tighter tracking on large headings (Linear/Vercel style) */
+h1, h2 {
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+h3 {
+  letter-spacing: -0.02em;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(0, 100, 164, 0.15);
+  color: inherit;
 }
 
 /* Custom scrollbar */
@@ -58,12 +76,12 @@ body {
   background: var(--uci-blue);
 }
 
-/* Glass morphism utility */
+/* Glass morphism utility - more refined */
 .glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .glass-dark {
@@ -106,13 +124,13 @@ body {
   background: linear-gradient(90deg, transparent, var(--uci-blue), var(--uci-gold), var(--eecs-teal), transparent);
 }
 
-/* Card hover effects */
+/* Card hover effects - more refined */
 .card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 56, 109, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 56, 109, 0.1), 0 8px 16px rgba(0, 56, 109, 0.06);
 }
 
 /* Animated underline for links */
