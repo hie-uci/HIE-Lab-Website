@@ -79,7 +79,7 @@ export default function Navbar() {
                 alt="HIE Lab logo" 
                 width={922} 
                 height={137} 
-                className="h-12 sm:h-18 w-auto object-contain transition-all duration-500 group-hover:opacity-90 dark:saturate-150 dark:brightness-110 [filter:url(#clean-logo-edges)] dark:drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]" 
+                className="h-12 sm:h-18 w-auto object-contain transition-all duration-500 group-hover:opacity-90 dark:saturate-150 dark:brightness-110 [filter:url(#clean-logo-edges)] dark:drop-shadow-[0.5px_0_0_#090e17] dark:drop-shadow-[-0.5px_0_0_#090e17] dark:drop-shadow-[0_0.5px_0_#090e17] dark:drop-shadow-[0_-0.5px_0_#090e17] dark:drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]" 
                 unoptimized 
               />
             </Link>
