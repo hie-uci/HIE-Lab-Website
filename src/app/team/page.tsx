@@ -37,10 +37,10 @@ const director = {
     'NeurIPS ML4PS Reproducibility Award (2024)',
     'Best Invited Paper Award, IEEE CICC (2019)',
     'IEEE TNANO "Article of the Month" (June 2016)',
-    'Cornell Graduate Fellowship',
-    'Jacobs Fellowship',
-    'Cornell ECE Innovation Award',
-    'Cornell Scale-Up and Prototyping Award',
+    'Cornell Graduate Fellowship (2011)',
+    'Jacobs Fellowship (2012)',
+    'Cornell ECE Innovation Award (2013)',
+    'Cornell Scale-Up and Prototyping Award (2017)',
   ],
 };
 

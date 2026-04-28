@@ -317,9 +317,9 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="space-y-3 text-sm text-white/80 leading-relaxed">
-                    <p>Principal Investigator of the HIE Lab at UC Irvine, specializing in mm-wave/THz integrated circuits and AI-driven design methodologies.</p>
+                    <p className="leading-relaxed">Building next-generation mm-wave and terahertz circuits that push silicon beyond its limits.</p>
                     <div className="flex flex-wrap gap-2 pt-2">
-                      {['Cornell PhD', 'NSF CAREER 2025', 'IEEE Sr. Member'].map((tag) => (
+                      {['Cornell PhD', 'NSF CAREER Award', 'IEEE Senior Member', '50+ Publications'].map((tag) => (
                         <span key={tag} className="px-3 py-1 rounded-full text-xs bg-white/10 border border-white/15 font-medium">
                           {tag}
                         </span>
