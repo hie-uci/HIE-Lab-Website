@@ -303,7 +303,7 @@ export default function PublicationsPage() {
 
           <AnimatePresence mode="wait">
             <motion.div key={filter + search} initial="hidden" animate="visible" exit="exit">
-              {grouped.map(([year, pubs], gi) => (
+              {grouped.map(([year, pubs]) => (
                 <div key={year} className="mb-12 last:mb-0">
                   {/* Year label */}
                   <motion.div

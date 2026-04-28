@@ -58,7 +58,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* Premium typography - tighter tracking on large headings (Linear/Vercel style) */

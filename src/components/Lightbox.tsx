@@ -68,6 +68,7 @@ export default function Lightbox({ isOpen, onClose, src, alt, title, description
             </button>
 
             {/* Image */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={src}
               alt={alt}

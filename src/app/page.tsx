@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring, animate } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import GradientMesh from '@/components/GradientMesh';
 import AnimatedResearchIcon from '@/components/AnimatedResearchIcon';
 import WaveformDivider from '@/components/WaveformDivider';
@@ -14,27 +14,6 @@ import ResearchVisual from '@/components/ResearchVisual';
 
 /* ──────────────────────────── helpers ──────────────────────────── */
 
-function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-40px' });
-  const motionVal = useMotionValue(0);
-  const spring = useSpring(motionVal, { damping: 40, stiffness: 100 });
-
-  useEffect(() => {
-    if (inView) {
-      animate(motionVal, target, { duration: 2, ease: 'easeOut' });
-    }
-  }, [inView, motionVal, target]);
-
-  useEffect(() => {
-    const unsub = spring.on('change', (v) => {
-      if (ref.current) ref.current.textContent = Math.round(v) + suffix;
-    });
-    return unsub;
-  }, [spring, suffix]);
-
-  return <span ref={ref}>0{suffix}</span>;
-}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },

@@ -108,23 +108,6 @@ const cardVariants = {
 
 // --------------- sub-components ---------------
 
-function Avatar({ initials, size = 'md', gradientFrom = 'from-uci-blue', gradientTo = 'to-uci-gold' }: { initials: string; size?: 'sm' | 'md' | 'lg'; gradientFrom?: string; gradientTo?: string }) {
-  const sizeClasses = { sm: 'w-10 h-10 text-xs', md: 'w-16 h-16 text-lg', lg: 'w-28 h-28 text-3xl' };
-  return (
-    <div className={`${sizeClasses[size]} rounded-full bg-gradient-to-br ${gradientFrom} ${gradientTo} flex items-center justify-center text-white font-bold shadow-lg`}>
-      {initials}
-    </div>
-  );
-}
-
-function TagPill({ text }: { text: string }) {
-  return (
-    <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-uci-blue/5 text-uci-blue border border-uci-blue/10">
-      {text}
-    </span>
-  );
-}
-
 function MemberCard({ member, label = 'PhD Student' }: { member: Member; index: number; label?: string }) {
   const tags = member.focus.split(/,\s*and\s*|,\\s*|\\s+and\\s+/);
   return (

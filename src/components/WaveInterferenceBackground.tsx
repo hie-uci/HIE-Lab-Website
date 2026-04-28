@@ -56,15 +56,11 @@ export default function WaveInterferenceBackground({ className = '' }: { classNa
       });
     };
 
-    let mouseX = -1000;
-    let mouseY = -1000;
     let lastSpawnTime = 0;
 
     const handlePointerMove = (e: MouseEvent | TouchEvent) => {
       const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
       const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
-      mouseX = clientX;
-      mouseY = clientY;
       
       const now = performance.now();
       if (now - lastSpawnTime > 100) { // Limit spawn rate
