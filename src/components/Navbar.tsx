@@ -46,8 +46,8 @@ export default function Navbar() {
       {/* SVG Filter for Logo Edge Clean-up in Dark Mode */}
       <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden="true">
         <filter id="clean-logo-edges">
-          {/* 'erode' shrinks the alpha channel, cutting off semi-transparent white pixels */}
-          <feMorphology operator="erode" radius="0.4" in="SourceGraphic" result="eroded" />
+          {/* Aggressive erosion to cut off the white halo */}
+          <feMorphology operator="erode" radius="1.5" in="SourceGraphic" result="eroded" />
         </filter>
       </svg>
 
@@ -79,7 +79,7 @@ export default function Navbar() {
                 alt="HIE Lab logo" 
                 width={922} 
                 height={137} 
-                className="h-12 sm:h-18 w-auto object-contain transition-all duration-500 group-hover:opacity-90 clean-logo-filter" 
+                className="h-12 sm:h-18 w-auto object-contain transition-all duration-500 group-hover:opacity-90 dark:saturate-150 dark:brightness-110 [filter:url(#clean-logo-edges)] dark:drop-shadow-[0_0_15px_rgba(56,189,248,0.5)]" 
                 unoptimized 
               />
             </Link>
