@@ -36,11 +36,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
-
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
     return pathname.startsWith(href);
@@ -70,7 +65,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center group">
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center group">
               <Image src="/images/logo/hie-logo.png" alt="HIE Lab logo" width={922} height={137} className="h-12 sm:h-18 w-auto object-contain group-hover:opacity-80 transition-opacity" unoptimized />
             </Link>
 
@@ -115,9 +110,11 @@ export default function Navbar() {
             <div className="lg:hidden flex items-center gap-3">
               <ThemeSwitcher />
               <button
+                type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 aria-label="Toggle menu"
+                aria-expanded={isMobileMenuOpen}
               >
                 <div className="w-6 h-5 relative flex flex-col justify-between">
                   <span

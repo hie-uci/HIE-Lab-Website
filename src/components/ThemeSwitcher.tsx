@@ -1,20 +1,19 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-import { Sun, Moon, DraftingCompass } from "lucide-react";
+import { useSyncExternalStore } from "react";
+import { Moon, Sun } from "lucide-react";
 import { motion } from "framer-motion";
 
+const subscribe = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 export default function ThemeSwitcher() {
-  const [mounted, setMounted] = useState(false);
+  const isClient = useSyncExternalStore(subscribe, getClientSnapshot, getServerSnapshot);
   const { theme, setTheme } = useTheme();
 
-  // useEffect only runs on the client, so now we can safely show the UI
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
+  if (!isClient) {
     return null;
   }
 
@@ -32,7 +31,9 @@ export default function ThemeSwitcher() {
         return (
           <button
             key={mode.id}
+            type="button"
             onClick={() => setTheme(mode.id)}
+            aria-label={mode.label}
             className={`relative flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-300 ${
               isActive ? "text-uci-blue dark:text-blue-400" : "text-gray-500 hover:text-foreground"
             }`}
@@ -45,7 +46,7 @@ export default function ThemeSwitcher() {
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
             )}
-            <Icon className="w-4 h-4 relative z-10" />
+            <Icon className="w-4 h-4 relative z-10" aria-hidden="true" />
           </button>
         );
       })}

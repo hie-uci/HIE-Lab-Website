@@ -414,7 +414,7 @@ export default function ResearchPage() {
       </section>
 
       {/* ═══════ OVERVIEW STATS ═══════ */}
-      <section className="relative py-16 bg-white border-b border-gray-100">
+      <section className="relative py-16 bg-white/35 border-b border-uci-blue/10 backdrop-blur-sm dark:bg-transparent dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
@@ -429,7 +429,7 @@ export default function ResearchPage() {
                 href={`#project-${p.id}`}
                 variants={fadeUp}
                 custom={i}
-                className="group text-center p-4 rounded-xl hover:bg-slate-warm transition-colors"
+                className="group text-center p-4 rounded-xl hover:bg-white/55 dark:hover:bg-white/5 transition-colors"
               >
                 <div className={`w-12 h-12 mx-auto mb-2 rounded-xl bg-gradient-to-br ${p.color} text-white/80 p-2.5 shadow-sm group-hover:shadow-md transition-shadow`}>
                   {p.icon}
@@ -446,7 +446,7 @@ export default function ResearchPage() {
       <WaveformDivider color="teal" />
 
       {/* ═══════ PROJECT SECTIONS ═══════ */}
-      <section className="relative py-24 lg:py-32 bg-gradient-to-b from-white via-slate-warm/30 to-white">
+      <section className="relative py-24 lg:py-32 bg-white/20 backdrop-blur-[2px] dark:bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Our Focus Areas"

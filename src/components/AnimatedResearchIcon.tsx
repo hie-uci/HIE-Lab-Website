@@ -52,7 +52,7 @@ function THzIcon() {
       <motion.path
         d="M4 36 L12 12 L20 36 L28 12 L36 36 L44 16"
         stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-        animate={{ pathLength: [0, 1], opacity: [0.3, 1] }}
+        animate={{ pathLength: [0.35, 1, 0.35], opacity: [0.55, 1, 0.55] }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
       />
       {/* Baseline */}

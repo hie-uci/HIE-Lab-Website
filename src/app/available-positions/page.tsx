@@ -52,7 +52,7 @@ export default function AvailablePositionsPage() {
   return (
     <PageWrapper>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-slate-warm via-white to-white">
+      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-slate-warm via-white to-white dark:from-eng-blue dark:via-navy dark:to-[#090e17]">
         <CircuitBackground className="opacity-30" density={40} />
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <SectionHeader

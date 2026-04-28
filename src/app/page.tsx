@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring, animate } from 'framer-motion';
-import CircuitBackground from '@/components/CircuitBackground';
 import GradientMesh from '@/components/GradientMesh';
 import AnimatedResearchIcon from '@/components/AnimatedResearchIcon';
 import WaveformDivider from '@/components/WaveformDivider';
 import SectionHeader from "@/components/SectionHeader";
 import ChipMarquee from '@/components/ChipMarquee';
 import FluidPlasmaBackground from '@/components/FluidPlasmaBackground';
+import ResearchVisual from '@/components/ResearchVisual';
 
 /* ──────────────────────────── helpers ──────────────────────────── */
 
@@ -57,36 +57,55 @@ const stats = [
   { value: 8, suffix: '', label: 'Awards & Honors' },
 ];
 
-const researchAreas: { title: string; description: string; iconVariant: 'radar' | 'thz' | 'siggen' | 'ai' | 'device'; gradient: string }[] = [
+type ResearchArea = {
+  title: string;
+  description: string;
+  iconVariant: 'radar' | 'thz' | 'siggen' | 'ai' | 'device';
+  gradient: string;
+  eyebrow: string;
+  metric: string;
+};
+
+const researchAreas: ResearchArea[] = [
   {
     title: 'Multi-Band mm-Wave Radars',
     description: 'Phase-frequency-locked radar architectures for vital signs monitoring, human-robot interaction, and 3D defect detection.',
     iconVariant: 'radar',
-    gradient: 'from-[#0064a4] to-[#00386d]',
+    gradient: 'from-[#0064a4]/95 via-[#00386d]/85 to-[#203043]/95',
+    eyebrow: 'Coherent Sensing',
+    metric: '23-232 GHz',
   },
   {
     title: 'Sub-THz & THz Power Generation',
     description: 'Breaking transistor frequency limits with Volterra-Weiner theory-based design methodology across MOSFET, BJT, HBT, and HEMT.',
     iconVariant: 'thz',
-    gradient: 'from-[#203043] to-[#528188]',
+    gradient: 'from-[#203043]/95 via-[#0064a4]/75 to-[#528188]/90',
+    eyebrow: 'Beyond fmax',
+    metric: '0.32-0.92 THz',
   },
   {
     title: 'Wideband Signal Generation',
     description: 'Novel oscillator structures overcoming phase-noise degradation for mm-wave and THz communications and sensing.',
     iconVariant: 'siggen',
-    gradient: 'from-[#00386d] to-[#528188]',
+    gradient: 'from-[#00386d]/95 via-[#0064a4]/80 to-[#528188]/90',
+    eyebrow: 'Low Phase Noise',
+    metric: 'Wide tuning',
   },
   {
     title: 'AI-Driven Analog/RF Design',
     description: 'Layout-aware ML pipelines, graph-based predictors, and attention-guided beam control for radar and circuit synthesis.',
     iconVariant: 'ai',
-    gradient: 'from-[#0064a4] via-[#203043] to-[#528188]',
+    gradient: 'from-[#0064a4]/90 via-[#203043]/90 to-[#528188]/85',
+    eyebrow: 'ML + Hardware',
+    metric: 'Layout-aware',
   },
   {
     title: 'Emerging Device Technologies',
     description: 'All-spin-logic smart detector cells and Janus 2D material tunneling FETs with sub-60 mV/dec switching.',
     iconVariant: 'device',
-    gradient: 'from-[#528188] to-[#00386d]',
+    gradient: 'from-[#528188]/95 via-[#00386d]/75 to-[#203043]/95',
+    eyebrow: 'Device Physics',
+    metric: 'Sub-60 mV/dec',
   },
 ];
 
@@ -109,9 +128,6 @@ export default function HomePage() {
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
 
   return (
     <main className="overflow-hidden bg-background text-foreground transition-colors duration-500 relative">
@@ -250,7 +266,7 @@ export default function HomePage() {
           {/* Stats */}
           <motion.div
             initial="hidden"
-            animate={mounted ? 'visible' : 'hidden'}
+            animate="visible"
             variants={stagger}
             className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pointer-events-auto"
           >
@@ -411,14 +427,18 @@ export default function HomePage() {
       </section>
 
       {/* ═══════ SILICON SHOWCASE ═══════ */}
-      <section className="relative py-20 lg:py-24 bg-background z-10 border-t border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="fabricated-chips" className="relative scroll-mt-24 overflow-hidden py-20 lg:py-24 bg-background z-10 border-t border-gray-200 dark:border-gray-800">
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(0,100,164,0.08),transparent_32%),radial-gradient(circle_at_82%_64%,rgba(82,129,136,0.10),transparent_34%),linear-gradient(180deg,rgba(248,249,252,0.35),rgba(255,255,255,0.80))] dark:bg-[radial-gradient(circle_at_18%_18%,rgba(56,189,248,0.10),transparent_34%),radial-gradient(circle_at_82%_64%,rgba(255,210,0,0.07),transparent_32%),linear-gradient(180deg,rgba(9,14,23,0.72),rgba(9,14,23,0.96))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,100,164,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,100,164,0.05)_1px,transparent_1px)] bg-[size:64px_64px] opacity-70 dark:bg-[linear-gradient(rgba(125,211,252,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(125,211,252,0.07)_1px,transparent_1px)] dark:opacity-45" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Silicon Showcase"
             title="Our Fabricated Chips"
             subtitle="A selection of integrated circuits designed and fabricated by the HIE Lab -- from mm-wave radars to THz transmitters."
           />
-          <div className="mt-10 glass-ios rounded-3xl p-4 sm:p-8">
+          <div className="mt-10 rounded-[28px] border border-uci-blue/10 bg-white/45 p-2 shadow-[0_18px_54px_rgba(0,56,109,0.08)] backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/30 dark:shadow-[0_0_55px_rgba(56,189,248,0.08)] sm:p-3">
             <ChipMarquee />
           </div>
           <motion.div
@@ -444,8 +464,13 @@ export default function HomePage() {
       <WaveformDivider color="blue" />
 
       {/* ═══════ RESEARCH HIGHLIGHTS ═══════ */}
-      <section className="relative py-24 lg:py-32 bg-slate-warm dark:bg-transparent z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="research-highlights" className="relative scroll-mt-24 py-24 lg:py-32 bg-slate-warm dark:bg-transparent z-10 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-70 dark:opacity-40">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,100,164,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(0,100,164,0.08)_1px,transparent_1px)] bg-[size:72px_72px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,rgba(255,210,0,0.10)_42%,transparent_68%)]" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Research"
             title="Research Highlights"
@@ -457,7 +482,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
             variants={stagger}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4"
+            className="grid md:grid-cols-2 lg:grid-cols-6 gap-5 mt-4"
           >
             {researchAreas.map((area, i) => (
               <motion.div
@@ -468,48 +493,50 @@ export default function HomePage() {
                   y: -8,
                 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
-                className={`group relative rounded-2xl glass-ios overflow-hidden transition-all duration-500 hover:border-uci-blue/40 hover:shadow-[0_0_30px_rgba(0,100,164,0.15)] ${
-                  i === 4 ? 'md:col-span-2 lg:col-span-1' : ''
+                className={`group relative flex min-h-[430px] flex-col overflow-hidden rounded-lg border border-white/70 bg-white/85 shadow-[0_18px_60px_rgba(0,56,109,0.10)] backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-500 dark:border-white/10 dark:bg-slate-950/70 dark:shadow-[0_18px_60px_rgba(0,0,0,0.30)] hover:border-uci-blue/35 hover:shadow-[0_24px_70px_rgba(0,100,164,0.18)] ${
+                  i < 2 ? 'lg:col-span-3' : 'lg:col-span-2'
+                } ${
+                  i === 4 ? 'md:col-span-2 lg:col-span-2' : ''
                 }`}
               >
                 {/* Number badge */}
-                <div className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-xs font-bold text-white/90 border border-white/30 shadow-sm">
+                <div className="absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-white/35 bg-white/20 text-xs font-bold text-white/90 shadow-sm backdrop-blur-md">
                   {String(i + 1).padStart(2, '0')}
                 </div>
 
-                {/* Gradient icon banner */}
-                <div className={`relative w-full h-44 bg-gradient-to-br ${area.gradient} flex items-center justify-center overflow-hidden`}>
-                  {/* Animated dot grid overlay */}
-                  <div className="absolute inset-0 opacity-[0.07]">
-                    <svg width="100%" height="100%">
-                      <pattern id={`dots-${i}`} x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                        <circle cx="10" cy="10" r="1" fill="white" />
-                      </pattern>
-                      <rect width="100%" height="100%" fill={`url(#dots-${i})`} />
-                    </svg>
+                <div className={`relative h-56 overflow-hidden border-b border-white/50 bg-gradient-to-br ${area.gradient} dark:border-white/10`}>
+                  <ResearchVisual variant={area.iconVariant} />
+
+                  <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/25 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/90 backdrop-blur-md">
+                    <span className="h-1.5 w-1.5 rounded-full bg-uci-gold shadow-[0_0_10px_rgba(255,210,0,0.8)]" />
+                    {area.eyebrow}
                   </div>
-                  {/* Animated radial glow */}
-                  <div className="absolute w-40 h-40 rounded-full bg-white/10 blur-3xl group-hover:bg-white/15 group-hover:scale-125 transition-all duration-700" />
-                  {/* Scan line effect on hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" style={{ animation: 'scan-line 2s ease-in-out infinite' }} />
+
+                  <div aria-hidden="true" className="absolute bottom-4 right-4 z-10 flex h-16 w-16 items-center justify-center rounded-full border border-white/25 bg-white/15 text-white/90 shadow-2xl backdrop-blur-md transition-transform duration-500 group-hover:scale-105">
+                    <AnimatedResearchIcon variant={area.iconVariant} className="h-9 w-9 text-white drop-shadow-lg" />
                   </div>
-                  <div className="relative text-white/90 [&>div]:!text-inherit group-hover:scale-110 transition-transform duration-500">
-                    <AnimatedResearchIcon variant={area.iconVariant} className="w-16 h-16 drop-shadow-lg" />
+
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+                  <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/45 to-transparent" style={{ animation: 'scan-line 2s ease-in-out infinite' }} />
                   </div>
                 </div>
 
-                <div className="p-6 relative">
-                  <h3 className="text-lg font-bold text-eng-blue dark:text-gray-100 mb-2 group-hover:text-uci-blue dark:group-hover:text-blue-400 transition-colors duration-300">
+                <div className="relative flex flex-1 flex-col p-6">
+                  <div className="mb-4 inline-flex w-fit items-center rounded-md border border-uci-blue/10 bg-uci-blue/5 px-2.5 py-1 text-xs font-semibold text-uci-blue dark:border-blue-300/15 dark:bg-blue-300/10 dark:text-blue-200">
+                    {area.metric}
+                  </div>
+                  <h3 className="mb-2 text-xl font-bold text-eng-blue transition-colors duration-300 [text-wrap:pretty] group-hover:text-uci-blue dark:text-gray-100 dark:group-hover:text-blue-300">
                     {area.title}
                   </h3>
-                  <p className="text-sm text-slate-900 dark:text-slate-200 leading-relaxed mb-4">{area.description}</p>
+                  <p className="mb-5 text-sm leading-relaxed text-slate-800 dark:text-slate-200">{area.description}</p>
                   <Link
                     href="/research"
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-uci-blue dark:text-blue-400 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                    aria-label={`Learn more about ${area.title}`}
+                    className="mt-auto inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-uci-blue transition-[color,transform] duration-300 hover:translate-x-0.5 hover:text-eng-blue dark:text-blue-300 dark:hover:text-blue-200"
                   >
                     Learn more
-                    <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>

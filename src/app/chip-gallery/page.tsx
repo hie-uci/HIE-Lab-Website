@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import PageWrapper from '@/components/PageWrapper';
 import SectionHeader from '@/components/SectionHeader';
@@ -44,9 +44,6 @@ const categories = ['All', 'Radar Systems', 'Amplifiers & Oscillators', 'Sub-THz
 export default function ChipGalleryPage() {
   const [filter, setFilter] = useState('All');
   const [lightbox, setLightbox] = useState<ChipData | null>(null);
-  const bannerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: bannerScroll } = useScroll({ target: bannerRef, offset: ['start end', 'end start'] });
-  const bannerY = useTransform(bannerScroll, [0, 1], [30, -30]);
 
   const filtered = filter === 'All' ? chips : chips.filter(c => c.category === filter);
 
@@ -65,35 +62,6 @@ export default function ChipGalleryPage() {
           />
           <div className="text-center mt-2">
             <p className="text-white/50 text-sm">{chips.length} fabricated chips across {categories.length - 1} categories</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Banner with parallax + scan line */}
-      <section className="bg-white py-6" ref={bannerRef}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="group relative w-full overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-500">
-            <motion.div style={{ y: bannerY }}>
-              <Image
-                src="/images/chips/chip-1.png"
-                alt="Chip Gallery Banner"
-                width={1200}
-                height={300}
-                className="w-full h-auto"
-                priority
-              />
-            </motion.div>
-            {/* Scan line */}
-            <div
-              className="absolute left-0 w-full h-[2px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
-              style={{
-                background: 'linear-gradient(90deg, transparent, #ffd200, transparent)',
-                animation: 'scan-line 3s linear infinite',
-                boxShadow: '0 0 15px 3px rgba(255, 210, 0, 0.3)',
-              }}
-            />
-            {/* Hover glow border */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-uci-gold/30 transition-colors duration-500 pointer-events-none" />
           </div>
         </div>
       </section>

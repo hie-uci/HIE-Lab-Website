@@ -166,7 +166,7 @@ function MemberCard({ member, label = 'PhD Student' }: { member: Member; index: 
         </div>
 
         {member.bio && (
-          <p className="mt-4 text-xs text-gray-500 leading-relaxed text-left bg-gray-50/80 rounded-xl p-3.5 w-full border border-gray-100 group-hover:border-gray-200 transition-colors duration-300">
+          <p className="mt-4 text-xs text-gray-500 leading-relaxed text-left bg-slate-warm/70 dark:bg-white/[0.04] rounded-xl p-3.5 w-full border border-gray-100 dark:border-white/10 group-hover:border-gray-200 dark:group-hover:border-white/15 transition-colors duration-300">
             {member.bio}
           </p>
         )}
@@ -196,7 +196,7 @@ function AlumnusCard({ alumnus }: { alumnus: Alumnus }) {
         </div>
       </div>
       {alumnus.bio && (
-        <p className="mt-2 text-[11px] text-gray-500 leading-relaxed bg-gray-50/80 rounded-lg p-2.5">
+        <p className="mt-2 text-[11px] text-gray-500 leading-relaxed bg-slate-warm/70 dark:bg-white/[0.04] rounded-lg p-2.5 border border-transparent dark:border-white/10">
           {alumnus.bio}
         </p>
       )}
@@ -337,7 +337,7 @@ export default function TeamPage() {
       </section>
 
       {/* Undergraduate Researchers */}
-      <section className="bg-gray-50/80 py-20">
+      <section className="py-20 bg-white/35 dark:bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <SectionHeader title="Undergraduate Researchers" badge="Undergrads" />
           <motion.div
@@ -371,7 +371,7 @@ export default function TeamPage() {
       </section>
 
       {/* Other Alumni */}
-      <section className="bg-gray-50/80 py-20">
+      <section className="py-20 bg-white/35 dark:bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <SectionHeader title="Other Alumni" badge="Alumni" />
           <motion.div
