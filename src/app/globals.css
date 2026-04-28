@@ -612,6 +612,18 @@ h3 {
   color: #64748b;
 }
 
+.clean-logo-filter {
+  /* This creates a 'choke' effect on the alpha channel: 
+     it slightly blurs the edges and then cranks up contrast 
+      to force semi-transparent white pixels to become fully transparent. */
+  filter: brightness(1.05) saturate(1.3) blur(0.3px) contrast(120%);
+}
+
+.dark .clean-logo-filter {
+  /* Aggressive cleanup for dark mode */
+  filter: brightness(1.1) saturate(1.5) blur(0.4px) contrast(180%) drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
+}
+
 /* ═══════ Reduced motion ═══════ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
