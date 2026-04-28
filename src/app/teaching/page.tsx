@@ -11,7 +11,6 @@ interface Course {
   name: string;
   semesters: string;
   level: 'undergraduate' | 'graduate';
-  rating?: number;
   note?: string;
 }
 
@@ -24,37 +23,8 @@ const uciCourses: Course[] = [
 ];
 
 const cornellCourses: Course[] = [
-  { code: 'ECE 5790', name: 'Advanced High-Speed and RF ICs', semesters: 'Spring 2014', level: 'graduate', rating: 4.80, note: 'TA Selected' },
-  { code: 'ECE 4330', name: 'Microwave Theory and Devices', semesters: 'Fall 2013', level: 'graduate', rating: 4.73, note: 'TA' },
-  { code: 'ECE 3150', name: 'Introduction to Microelectronics', semesters: 'Spring 2013', level: 'undergraduate', rating: 4.92, note: 'TA' },
+  { code: 'ECE 5790', name: 'Advanced High-Speed and RF ICs', semesters: 'Spring 2014', level: 'graduate', note: 'Instructor' },
 ];
-
-function StarRating({ rating }: { rating: number }) {
-  const fullStars = Math.floor(rating);
-  const partial = rating - fullStars;
-  return (
-    <div className="flex items-center gap-1">
-      {[...Array(5)].map((_, i) => (
-        <div key={i} className="relative w-4 h-4">
-          {/* Empty star */}
-          <svg className="w-4 h-4 text-gray-200 absolute" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-          </svg>
-          {/* Filled star */}
-          <div
-            className="absolute inset-0 overflow-hidden"
-            style={{ width: i < fullStars ? '100%' : i === fullStars ? `${partial * 100}%` : '0%' }}
-          >
-            <svg className="w-4 h-4 text-uci-gold" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-          </div>
-        </div>
-      ))}
-      <span className="ml-1.5 text-sm font-semibold text-gray-600">{rating.toFixed(2)}/5</span>
-    </div>
-  );
-}
 
 function CourseCard({ course, index, accentColor }: { course: Course; index: number; accentColor: 'blue' | 'red' }) {
   const isGrad = course.level === 'graduate';
@@ -99,8 +69,6 @@ function CourseCard({ course, index, accentColor }: { course: Course; index: num
             {course.note}
           </span>
         )}
-
-        {course.rating && <StarRating rating={course.rating} />}
       </div>
     </motion.div>
   );
@@ -161,7 +129,7 @@ export default function TeachingPage() {
             <Image src="/images/teaching/cornell-logo.png" alt="Cornell University logo" width={48} height={48} className="w-12 h-12 rounded-xl object-contain" />
             <div>
               <h3 className="text-2xl font-bold text-red-800">Cornell University</h3>
-              <p className="text-gray-500">Teaching Assistant, ECE Department</p>
+              <p className="text-gray-500">Instructor, ECE Department</p>
             </div>
           </motion.div>
 
@@ -170,25 +138,6 @@ export default function TeachingPage() {
               <CourseCard key={course.code} course={course} index={i} accentColor="red" />
             ))}
           </div>
-
-          {/* Teaching summary */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-10 glass rounded-xl p-6 border border-red-100"
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <svg className="w-5 h-5 text-uci-gold" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <h4 className="font-bold text-gray-800">Outstanding Teaching Evaluations</h4>
-            </div>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Consistently received excellent student evaluations across all TA positions at Cornell,
-              with ratings ranging from <span className="font-semibold text-eng-blue">4.73 to 4.92 out of 5.00</span>.
-            </p>
-          </motion.div>
         </div>
       </section>
     </PageWrapper>

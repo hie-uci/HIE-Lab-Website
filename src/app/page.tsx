@@ -52,7 +52,7 @@ const stagger = {
 /* ──────────────────────────── data ──────────────────────────── */
 
 const stats = [
-  { value: 50, suffix: '+', label: 'Publications' },
+  { value: 40, suffix: '+', label: 'Publications' },
   { value: 9, suffix: '', label: 'Active Members' },
   { value: 8, suffix: '', label: 'Awards & Honors' },
 ];
@@ -345,7 +345,7 @@ export default function HomePage() {
                   <div className="space-y-3 text-sm text-white/80 leading-relaxed">
                     <p className="leading-relaxed">Building next-generation mm-wave and terahertz circuits that push silicon beyond its limits.</p>
                     <div className="flex flex-wrap gap-2 pt-2">
-                      {['Cornell PhD', 'NSF CAREER Award', 'IEEE Senior Member', '50+ Publications'].map((tag) => (
+                      {['Cornell PhD', 'NSF CAREER Award', 'IEEE Senior Member', '40+ Publications'].map((tag) => (
                         <span key={tag} className="px-3 py-1 rounded-full text-xs bg-white/10 border border-white/15 font-medium">
                           {tag}
                         </span>
@@ -625,24 +625,11 @@ export default function HomePage() {
           />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.7 }}
-            className="inline-block mb-10"
-          >
-            <div className="text-7xl sm:text-8xl lg:text-9xl font-bold gradient-text leading-none">
-              <AnimatedCounter target={50} suffix="+" />
-            </div>
-            <p className="text-lg text-slate-900 dark:text-slate-200 mt-2">Peer-Reviewed Publications</p>
-          </motion.div>
-
-          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-40px' }}
             variants={stagger}
-            className="flex flex-wrap items-center justify-center gap-3 mb-10"
+            className="mt-12 flex flex-wrap items-center justify-center gap-3 mb-10"
           >
             {venues.map((venue, i) => (
               <motion.span

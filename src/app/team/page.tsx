@@ -36,7 +36,6 @@ const director = {
     'NSF CAREER Award (2025)',
     'NeurIPS ML4PS Reproducibility Award (2024)',
     'Best Invited Paper Award, IEEE CICC (2019)',
-    'IEEE TNANO "Article of the Month" (June 2016)',
     'Cornell Graduate Fellowship (2011)',
     'Jacobs Fellowship (2012)',
     'Cornell ECE Innovation Award (2013)',
@@ -304,14 +303,14 @@ export default function TeamPage() {
                 {/* Awards */}
                 <div className="mt-4">
                   <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">Awards & Honors</h4>
-                  <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                  <ul className="space-y-1.5">
                     {director.achievements.map((a) => (
-                      <span key={a} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-uci-gold/10 text-uci-gold-light border border-uci-gold/20">
-                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.286-3.957z" /></svg>
+                      <li key={a} className="text-sm text-gray-500 flex items-start gap-2">
+                        <span className="w-1 h-1 rounded-full bg-uci-gold mt-2 shrink-0" />
                         {a}
-                      </span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
               </div>
             </div>
