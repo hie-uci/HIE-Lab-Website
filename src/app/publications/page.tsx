@@ -142,6 +142,11 @@ const publications: Publication[] = [
   { authors: 'H. R. Aghasi', title: 'Cornell University – EDS Seminar Series', venue: 'Ithaca, NY', year: 2016, type: 'talk' },
 ];
 
+const workingPapers: Publication[] = [
+  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'Supervised Learning for Analog and RF Circuit Design: Benchmarks and Comparative Insights', venue: 'IEEE TCAD', year: 2024, type: 'journal', status: 'Under Review' },
+  { authors: 'M. Alesheikh, A. Montazar, H. R. Aghasi', title: 'Effect of Object Shape and Radar Topology on Directional Sensing in mm-Wave Leaky-Wave Radars', venue: 'IEEE MWTL', year: 2025, type: 'journal', status: 'Under Review' },
+];
+
 // --------------- helpers ---------------
 
 const filterTabs: { label: string; value: PubType | 'all' }[] = [
