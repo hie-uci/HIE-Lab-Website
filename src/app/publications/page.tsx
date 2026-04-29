@@ -24,17 +24,11 @@ interface Publication {
 // --------------- data ---------------
 
 const publications: Publication[] = [
-  // ===== SELECTED JOURNAL PUBLICATIONS (23) =====
+  // ===== SELECTED JOURNAL PUBLICATIONS (22) =====
   // #23
   { authors: 'X. Liu, Z. Zhang and H. Aghasi', title: 'A 25/75 GHz 2TX-4RX FMCW Radar Transceiver Utilizing Non-uniform Linear Arrays and Phase Dithering to Achieve 5.1° Angular Resolution', venue: 'IEEE TMTT', year: 2026, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/document/11483145' },
   // #22
   { authors: 'M. H. Maktoomi, X. Liu, H. R. Aghasi', title: 'A 19 dBm Psat 110-142 GHz Power Amplifier in 65-nm CMOS with Device-Centric Power Boosted Stage and a Dual-Coupled 4-Way Slotline Combiner', venue: 'IEEE JSSC', year: 2025, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/abstract/document/11389191' },
-  // #21
-  { authors: 'M. Alonso, X. Liu, H. R. Aghasi', title: 'Non-Linear Analog Processing in MIMO Systems with Coarse Quantization', venue: 'IEEE JSAIT', year: 2025, type: 'journal', status: 'Under Review' },
-  // #20
-  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'Supervised Learning for Analog and RF Circuit Design: Benchmarks and Comparative Insights', venue: 'IEEE TCAD', year: 2024, type: 'journal', status: 'Under Review' },
-  // #19
-  { authors: 'M. Alesheikh, A. Montazar, H. R. Aghasi', title: 'Effect of Object Shape and Radar Topology on Directional Sensing in mm-Wave Leaky-Wave Radars', venue: 'IEEE MWTL', year: 2025, type: 'journal', status: 'Under Review' },
   // #18
   { authors: 'J. Gruber, H. Alotaibi, A. Tabatabavakili, L. Chen, H. R. Aghasi, H. Naghavi, E. Afshari', title: 'Sub-THz Communication Systems in Silicon: Combating the f_max Barrier', venue: 'Nature Communications Engineering', year: 2025, type: 'journal', status: 'Published', link: 'https://www.nature.com/articles/s44172-025-00545-9' },
   // #17
@@ -60,11 +54,11 @@ const publications: Publication[] = [
   // #7
   { authors: 'H. R. Aghasi, E. Afshari', title: 'An 88 GHz Compact Fundamental Oscillator with 19.4% DC-to-RF Efficiency and 7.5 dBm Output Power in 130 nm SiGe BiCMOS', venue: 'IEEE SSCL', year: 2018, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/abstract/document/8490693' },
   // #6
-  { authors: 'H. R. Aghasi, A. Cathelin, E. Afshari', title: 'A 0.92 THz SiGe Power Radiator Based on a Nonlinear Harmonic Generation Theory', venue: 'IEEE JSSC', year: 2017, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/abstract/document/7819530' },
+  { authors: 'H. R. Aghasi, A. Cathelin, E. Afshari', title: 'A 0.92 THz SiGe Power radiator Based on a Nonlinear Harmonic Generation Theory', venue: 'IEEE JSSC', year: 2017, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/abstract/document/7819530' },
   // #5
   { authors: 'H. R. Aghasi, R. M. Iraei, A. Naeemi, E. Afshari', title: 'Smart Detector Cell: A Scalable All-Spin Circuit for Low Power Non-Boolean Pattern Recognition', venue: 'IEEE TNANO', year: 2016, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/abstract/document/7407630' },
   // #4
-  { authors: 'R. Han, C. Jiang, A. Mostajeran, M. Emadi, H. R. Aghasi, A. Cathelin, E. Afshari', title: 'A SiGe Terahertz Heterodyne Imaging Transmitter with 3.3 mW Radiated Power and Fully-Integrated Phase-Locked Loop', venue: 'IEEE JSSC', year: 2015, type: 'journal', status: 'Published' },
+  { authors: 'R. Han, C. Jiang, A. Mostajeran, M. Emadi, H. R. Aghasi, A. Cathelin, E. Afshari', title: 'A SiGe Terahertz Heterodyne Imaging Transmitter with 3.3 mW Radiated Power and Fully-Integrated Phase-Locked Loop', venue: 'IEEE JSSC', year: 2015, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/abstract/document/7109923' },
   // #3
   { authors: 'S. Saadat, H. R. Aghasi, E. Afshari, H. Mosallaei', title: 'Low Power Negative Inductance Integrated Circuit for GHz Applications', venue: 'IEEE MWCL', year: 2015, type: 'journal', status: 'Published', link: 'http://ieeexplore.ieee.org/abstract/document/7004068' },
   // #2
@@ -78,23 +72,23 @@ const publications: Publication[] = [
   // #2
   { authors: 'Y. Huang, A. Mehradfar, S. Avestimehr, H. R. Aghasi', title: 'EM-Aware Physical Synthesis: Neural Inductor Modeling and Intelligent Placement & Routing for RF Circuits', venue: 'IEEE ISCAS', year: 2026, type: 'conference', link: 'https://arxiv.org/abs/2602.11461' },
   // #3
-  { authors: 'M. Maktoomi, X. Liu, H. R. Aghasi', title: 'A 110-142 GHz 19 dBm Psat Power Amplifier with Enhanced-Power Cascode Stage and 4-Way Dual-Coupled Slotline Combiner in 65-nm CMOS', venue: 'IEEE RWW', year: 2025, type: 'conference', highlight: 'Best Student Paper Award nominee' },
+  { authors: 'M. Maktoomi, X. Liu, H. R. Aghasi', title: 'A 110-142 GHz 19 dBm Psat Power Amplifier with Enhanced-Power Cascode Stage and 4-Way Dual-Coupled Slotline Combiner in 65-nm CMOS', venue: 'IEEE RWW', year: 2025, type: 'conference', highlight: 'Best Student Paper Award nominee', link: 'https://ieeexplore.ieee.org/document/10431872' },
   // #4
-  { authors: 'A. Ding, Y. Huang, S. Jeung, X. Liu, H. R. Aghasi, M. Imani', title: 'Attention-Based Cognitive Beam Steering for 24 GHz FMCW Radar Systems', venue: 'IEEE RadarConf', year: 2025, type: 'conference', highlight: 'Best Student Paper Award nominee (Warsaw, Poland)' },
+  { authors: 'A. Ding, Y. Huang, S. Jeong, X. Liu, H. R. Aghasi, M. Imani', title: 'Attention-Based Cognitive Beam Steering for 24 GHz FMCW Radar Systems', venue: 'IEEE RadarConf', year: 2025, type: 'conference', highlight: 'Best Student Paper Award nominee (Warsaw, Poland)', link: 'https://ieeexplore.ieee.org/abstract/document/11204903' },
   // #5
-  { authors: 'A. Mehradfar, X. Zhao, Y. Huang, E. Ceyani, Y. Yang, S. Han, H. R. Aghasi, S. Avestimehr', title: 'FALCON: An ML Framework for Fully Automated Layout-Constrained Analog Circuit Design', venue: 'NeurIPS', year: 2025, type: 'conference' },
+  { authors: 'A. Mehradfar, X. Zhao, Y. Huang, E. Ceyani, Y. Yang, S. Han, H. R. Aghasi, S. Avestimehr', title: 'FALCON: An ML Framework for Fully Automated Layout-Constrained Analog Circuit Design', venue: 'NeurIPS', year: 2025, type: 'conference', link: 'https://openreview.net/pdf?id=c754bf4d521d056522fe6714603f142bfff249c4' },
   // #6
   { authors: 'H. R. Aghasi', title: 'Data-Efficient Supervised Learning for RF and mm-Wave Circuit Design: Techniques, Challenges, and Benefits', venue: 'IEEE APWC', year: 2025, type: 'conference', highlight: 'Invited Talk' },
   // #7
-  { authors: 'A. Montazar, X. Liu, H. R. Aghasi', title: 'A Hybrid CMOS-Polyimide Adaptive Force Radiometric Array with 3-5 GHz Wireless Connectivity', venue: 'IEEE IMS', year: 2025, type: 'conference' },
+  { authors: 'A. Montazar, X. Liu, Z. Zhang, H. R. Aghasi', title: 'A Hybrid CMOS-Polyimide Adaptive Force Radiometric Array with 3-5 GHz Wireless Connectivity', venue: 'IEEE IMS', year: 2025, type: 'conference' },
   // #8
   { authors: 'M. Alesheikh, S. Saadat, A. Montazar, H. R. Aghasi', title: 'A 55-65 GHz Half-Width Leaky Wave Antenna with Linear Beam-Steering Profile for Monostatic FMCW Radars', venue: 'IEEE APS', year: 2025, type: 'conference' },
   // #9
-  { authors: 'M. Alesheikh, S. Saadat, H. R. Aghasi', title: 'A Study on Curvature Effect of Flexible Antenna Arrays and Its Impact on 2D Beamforming Capability of 6G Wireless Systems', venue: 'IEEE APS', year: 2025, type: 'conference' },
+  { authors: 'M. Alesheikh, S. Saadat, H. R. Aghasi', title: 'A Study on Curvature Effect of Flexible Antenna Arrays and Its Impact on 2D Beamforming Capability of 6G Wireless Systems', venue: 'IEEE APS', year: 2025, type: 'conference', link: 'https://arxiv.org/abs/2409.09590' },
   // #10
-  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'AICircuit: A Multi-Level Dataset and Benchmark for AI-Driven Analog Integrated Circuit Design', venue: 'NeurIPS ML4PS Workshop', year: 2024, type: 'conference' },
+  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'AICircuit: A Multi-Level Dataset and Benchmark for AI-Driven Analog Integrated Circuit Design', venue: 'NeurIPS ML4PS Workshop', year: 2024, type: 'conference', link: 'https://ml4physicalsciences.github.io/2024/files/NeurIPS_ML4PS_2024_156.pdf' },
   // #11
-  { authors: 'M. Alesheikh, M. Maktoomi, S. Saadat, H. R. Aghasi', title: 'An Electronically Tunable 28-34 GHz 2D Steerable Leaky Wave Antenna', venue: 'IEEE APS', year: 2024, type: 'conference' },
+  { authors: 'M. Alesheikh, M. Maktoomi, S. Saadat, H. R. Aghasi', title: 'An Electronically Tunable 28-34 GHz 2D Steerable Leaky Wave Antenna', venue: 'IEEE APS', year: 2024, type: 'conference', link: 'https://ieeexplore.ieee.org/document/10636401' },
   // #12
   { authors: 'X. Liu, M. Maktoomi, M. Alesheikh, P. Heydari, H. R. Aghasi', title: 'A 49-63 GHz Phase-Locked FMCW Radar Transceiver for High Resolution Applications', venue: 'ESSCIRC', year: 2023, type: 'conference', link: 'https://ieeexplore.ieee.org/abstract/document/10268798' },
   // #13
@@ -106,17 +100,17 @@ const publications: Publication[] = [
   // #16
   { authors: 'B. Moradi, X. Liu, M. Green, H. R. Aghasi', title: 'A Compact CMOS 76-82 GHz Super-Harmonic VCO with 189 dBc/Hz FoM Based on Harmonic-Assisted ISF Manipulation', venue: 'IEEE RFIC', year: 2022, type: 'conference', link: 'https://ieeexplore.ieee.org/abstract/document/9863140' },
   // #17
-  { authors: 'H. Maktoomi, Z. Wang, H. Wang, S. Saadat, P. Heydari, H. R. Aghasi', title: 'A GSG-Excited Ultra-Wideband 103-147 GHz Stacked Patch Antenna on Flexible Printed Circuit', venue: 'IEEE APS', year: 2021, type: 'conference' },
+  { authors: 'H. Maktoomi, Z. Wang, H. Wang, S. Saadat, P. Heydari, H. R. Aghasi', title: 'A GSG-Excited Ultra-Wideband 103-147 GHz Stacked Patch Antenna on Flexible Printed Circuit', venue: 'IEEE APS', year: 2021, type: 'conference', link: 'https://ieeexplore.ieee.org/document/9703901' },
   // #18
-  { authors: 'A. Mostajeran, H. R. Aghasi, M. H. Naghavi, E. Afshari', title: 'Fully Integrated Solutions for High Resolution Terahertz Imaging', venue: 'IEEE CICC', year: 2019, type: 'conference' },
+  { authors: 'A. Mostajeran, H. R. Aghasi, M. H. Naghavi, E. Afshari', title: 'Fully Integrated Solutions for High Resolution Terahertz Imaging', venue: 'IEEE CICC', year: 2019, type: 'conference', link: 'https://ieeexplore.ieee.org/document/8780216' },
   // #19
   { authors: 'H. R. Aghasi, E. Afshari', title: 'Power-Efficient Terahertz Communication Circuits', venue: 'ACM NANOCOM', year: 2017, type: 'conference', link: 'https://dl.acm.org/citation.cfm?id=3122844' },
   // #20
   { authors: 'H. R. Aghasi, E. Afshari', title: 'Design of Broadband mm-Wave and Terahertz Frequency Doublers', venue: 'ESSCIRC', year: 2016, type: 'conference', link: 'http://ieeexplore.ieee.org/abstract/document/7598318' },
   // #21
-  { authors: 'R. Han, C. Jiang, A. Mostajeran, M. Emadi, H. R. Aghasi, A. Cathelin, E. Afshari', title: 'A 320 GHz Phase-Locked Transmitter with 3.3 mW Radiated Power and 22.5 dBm EIRP for Heterodyne THz Imaging Systems', venue: 'IEEE ISSCC', year: 2015, type: 'conference' },
+  { authors: 'R. Han, C. Jiang, A. Mostajeran, M. Emadi, H. R. Aghasi, A. Cathelin, E. Afshari', title: 'A 320 GHz Phase-Locked Transmitter with 3.3 mW Radiated Power and 22.5 dBm EIRP for Heterodyne THz Imaging Systems', venue: 'IEEE ISSCC', year: 2015, type: 'conference', link: 'https://ieeexplore.ieee.org/document/7067008' },
   // #22
-  { authors: 'H. R. Aghasi, M. Hashemi, B. H. Khalaj', title: 'Source Localization Through Adaptive Signal Attenuation Model and Time Delay Estimation', venue: 'IEEE ICT', year: 2011, type: 'conference' },
+  { authors: 'H. R. Aghasi, M. Hashemi, B. H. Khalaj', title: 'Source Localization Through Adaptive Signal Attenuation Model and Time Delay Estimation', venue: 'IEEE ICT', year: 2011, type: 'conference', link: 'https://ieeexplore.ieee.org/document/5898231' },
 
   // ===== PENDING PATENTS AND INVENTIONS (2) =====
   { authors: 'A. Montazar, X. Liu, H. R. Aghasi', title: 'Hybrid CMOS-Polyimide Force Radiometric Array with GHz Wireless Link', venue: 'US Patent', year: 2025, type: 'patent' },
