@@ -30,9 +30,7 @@ const publications: Publication[] = [
   // #22
   { authors: 'M. H. Maktoomi, X. Liu, H. R. Aghasi', title: 'A 19 dBm Psat 110-142 GHz Power Amplifier in 65-nm CMOS with Device-Centric Power Boosted Stage and a Dual-Coupled 4-Way Slotline Combiner', venue: 'IEEE JSSC', year: 2025, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/abstract/document/11389191' },
   // #20
-  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'Supervised Learning for Analog and RF Circuit Design: Benchmarks and Comparative Insights', venue: 'IEEE TCAD', year: 2024, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/document/11190414' },
-  // #19
-  { authors: 'M. Alesheikh, A. Montazar, H. R. Aghasi', title: 'Effect of Object Shape and Radar Topology on Directional Sensing in mm-Wave Leaky-Wave Radars', venue: 'IEEE MWTL', year: 2024, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/document/11266191' },
+  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'Supervised Learning for Analog and RF Circuit Design: Benchmarks and Comparative Insights', venue: 'IEEE TCAD', year: 2025, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/document/10844444' },
   // #18
   { authors: 'J. Gruber, H. Alotaibi, A. Tabatabavakili, L. Chen, H. R. Aghasi, H. Naghavi, E. Afshari', title: 'Sub-THz Communication Systems in Silicon: Combating the f_max Barrier', venue: 'Nature Communications Engineering', year: 2025, type: 'journal', status: 'Published', link: 'https://www.nature.com/articles/s44172-025-00545-9' },
   // #17
@@ -80,13 +78,13 @@ const publications: Publication[] = [
   // #4
   { authors: 'A. Ding, Y. Huang, S. Jeong, X. Liu, H. R. Aghasi, M. Imani', title: 'Attention-Based Cognitive Beam Steering for 24 GHz FMCW Radar Systems', venue: 'IEEE RadarConf', year: 2025, type: 'conference', highlight: 'Best Student Paper Award nominee (Warsaw, Poland)', link: 'https://ieeexplore.ieee.org/abstract/document/11204903' },
   // #5
-  { authors: 'A. Mehradfar, X. Zhao, Y. Huang, E. Ceyani, Y. Yang, S. Han, H. R. Aghasi, S. Avestimehr', title: 'FALCON: An ML Framework for Fully Automated Layout-Constrained Analog Circuit Design', venue: 'NeurIPS', year: 2025, type: 'conference', link: 'https://openreview.net/forum?id=HUUQmnwUIx' },
+  { authors: 'A. Mehradfar, X. Zhao, Y. Huang, E. Ceyani, Yankai Yang, Shihao Han, Hamidreza Aghasi, Salman Avestimehr', title: 'FALCON: An ML Framework for Fully Automated Layout-Constrained Analog Circuit Design', venue: 'NeurIPS', year: 2025, type: 'conference', link: 'https://openreview.net/forum?id=HUUQmnwUIx' },
   // #6
-  { authors: 'H. R. Aghasi', title: 'Data-Efficient Supervised Learning for RF and mm-Wave Circuit Design: Techniques, Challenges, and Benefits', venue: 'IEEE APWC', year: 2025, type: 'conference', highlight: 'Invited Talk' },
+  { authors: 'H. R. Aghasi', title: 'Data-Efficient Supervised Learning for RF and mm-Wave Circuit Design: Techniques, Challenges, and Benefits', venue: 'IEEE APWC', year: 2025, type: 'conference', highlight: 'Invited Talk', link: 'https://ieeexplore.ieee.org/document/11190414' },
   // #7
   { authors: 'A. Montazar, X. Liu, Z. Zhang, H. R. Aghasi', title: 'A Hybrid CMOS-Polyimide Adaptive Force Radiometric Array with 3-5 GHz Wireless Connectivity', venue: 'IEEE IMS', year: 2025, type: 'conference' },
   // #8
-  { authors: 'M. Alesheikh, S. Saadat, A. Montazar, H. R. Aghasi', title: 'A 55-65 GHz Half-Width Leaky Wave Antenna with Linear Beam-Steering Profile for Monostatic FMCW Radars', venue: 'IEEE APS', year: 2025, type: 'conference' },
+  { authors: 'M. Alesheikh, S. Saadat, A. Montazar, H. R. Aghasi', title: 'A 55-65 GHz Half-Width Leaky Wave Antenna with Linear Beam-Steering Profile for Monostatic FMCW Radars', venue: 'IEEE APS', year: 2025, type: 'conference', link: 'https://ieeexplore.ieee.org/document/11266191' },
   // #9
   { authors: 'M. Alesheikh, S. Saadat, H. R. Aghasi', title: 'A Study on Curvature Effect of Flexible Antenna Arrays and Its Impact on 2D Beamforming Capability of 6G Wireless Systems', venue: 'IEEE APS', year: 2025, type: 'conference', link: 'https://arxiv.org/abs/2409.09590' },
   // #10
