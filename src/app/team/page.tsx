@@ -219,7 +219,7 @@ export default function TeamPage() {
             <div className="bg-white rounded-[22px] p-8 sm:p-10 flex flex-col md:flex-row gap-8 items-center md:items-start">
               {/* Avatar */}
               <div className="shrink-0">
-                <Image src={director.image} alt={director.name} width={160} height={160} className="w-44 h-44 rounded-full object-cover shadow-xl ring-4 ring-white" />
+                <Image src={director.image} alt={director.name} width={160} height={160} className="w-44 h-44 rounded-full object-cover object-top shadow-xl ring-4 ring-white" />
               </div>
               {/* Info */}
               <div className="flex-1 text-center md:text-left">
