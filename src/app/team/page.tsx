@@ -110,9 +110,9 @@ const cardVariants = {
 
 function MemberCard({ member, label = 'PhD Student' }: { member: Member; index: number; label?: string }) {
   const tags = member.focus.split(/,\s*and\s*|,\\s*|\\s+and\\s+/);
-  // Allen (Yilun) Huang stays at default center, others move down slightly
   const isAllen = member.name.includes('Allen') || member.name.includes('Yilun');
-  const imgPosition = isAllen ? 'object-center' : 'object-[center_15%]';
+  const isBehnam = member.name.includes('Behnam');
+  const imgPosition = isAllen ? 'object-center' : (isBehnam ? 'object-[center_25%]' : 'object-[center_15%]');
 
   return (
     <motion.div
@@ -155,7 +155,8 @@ function MemberCard({ member, label = 'PhD Student' }: { member: Member; index: 
 function AlumnusCard({ alumnus, large = false }: { alumnus: Alumnus; large?: boolean }) {
   const imgSize = large ? 'w-24 h-24 sm:w-28 sm:h-28' : 'w-14 h-14';
   const isAllen = alumnus.name.includes('Allen') || alumnus.name.includes('Yilun');
-  const imgPosition = isAllen ? 'object-center' : 'object-[center_15%]';
+  const isBehnam = alumnus.name.includes('Behnam');
+  const imgPosition = isAllen ? 'object-center' : (isBehnam ? 'object-[center_25%]' : 'object-[center_15%]');
 
   return (
     <motion.div
@@ -194,6 +195,7 @@ function AlumnusCard({ alumnus, large = false }: { alumnus: Alumnus; large?: boo
 export default function TeamPage() {
   return (
     <PageWrapper>
+      {/* Hero */}
       <section className="relative bg-gradient-to-b from-eng-blue via-navy to-eng-blue py-24 overflow-hidden">
         <CircuitBackground density={50} />
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
@@ -201,6 +203,7 @@ export default function TeamPage() {
         </div>
       </section>
 
+      {/* Director */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 -mt-16 relative z-20">
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="rounded-3xl overflow-hidden shadow-2xl">
           <div className="p-[2px] rounded-3xl bg-gradient-to-r from-uci-blue via-uci-gold to-eecs-teal">
@@ -248,7 +251,7 @@ export default function TeamPage() {
                 </div>
                 <div className="mt-3">
                   <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Memberships</h4>
-                  <div className="flex wrap gap-2">
+                  <div className="flex flex-wrap gap-2">
                     {director.memberships.map((m) => (
                       <span key={m} className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-navy/5 text-navy border border-navy/10">
                         {m}
@@ -273,6 +276,7 @@ export default function TeamPage() {
         </motion.div>
       </section>
 
+      {/* PhD Students */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-24">
         <SectionHeader title="PhD Students" subtitle="Current doctoral researchers advancing the frontiers of integrated electronics." badge="Researchers" />
         <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -282,6 +286,7 @@ export default function TeamPage() {
         </motion.div>
       </section>
 
+      {/* Undergraduate Researchers */}
       <section className="py-20 bg-white/35 dark:bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <SectionHeader title="Undergraduate Researchers" badge="Undergrads" />
@@ -293,6 +298,7 @@ export default function TeamPage() {
         </div>
       </section>
 
+      {/* PhD / Postdoc Alumni */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-24">
         <SectionHeader title="PhD & Postdoc Alumni" badge="Alumni" />
         <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -302,6 +308,7 @@ export default function TeamPage() {
         </motion.div>
       </section>
 
+      {/* Other Alumni */}
       <section className="py-20 bg-white/35 dark:bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <SectionHeader title="Other Alumni" badge="Alumni" />
