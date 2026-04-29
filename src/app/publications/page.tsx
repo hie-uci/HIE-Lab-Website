@@ -29,6 +29,10 @@ const publications: Publication[] = [
   { authors: 'X. Liu, Z. Zhang and H. Aghasi', title: 'A 25/75 GHz 2TX-4RX FMCW Radar Transceiver Utilizing Non-uniform Linear Arrays and Phase Dithering to Achieve 5.1° Angular Resolution', venue: 'IEEE TMTT', year: 2026, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/document/11483145' },
   // #22
   { authors: 'M. H. Maktoomi, X. Liu, H. R. Aghasi', title: 'A 19 dBm Psat 110-142 GHz Power Amplifier in 65-nm CMOS with Device-Centric Power Boosted Stage and a Dual-Coupled 4-Way Slotline Combiner', venue: 'IEEE JSSC', year: 2025, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/abstract/document/11389191' },
+  // #20
+  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'Supervised Learning for Analog and RF Circuit Design: Benchmarks and Comparative Insights', venue: 'IEEE TCAD', year: 2024, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/document/11190414' },
+  // #19
+  { authors: 'M. Alesheikh, A. Montazar, H. R. Aghasi', title: 'Effect of Object Shape and Radar Topology on Directional Sensing in mm-Wave Leaky-Wave Radars', venue: 'IEEE MWTL', year: 2024, type: 'journal', status: 'Published', link: 'https://ieeexplore.ieee.org/document/11266191' },
   // #18
   { authors: 'J. Gruber, H. Alotaibi, A. Tabatabavakili, L. Chen, H. R. Aghasi, H. Naghavi, E. Afshari', title: 'Sub-THz Communication Systems in Silicon: Combating the f_max Barrier', venue: 'Nature Communications Engineering', year: 2025, type: 'journal', status: 'Published', link: 'https://www.nature.com/articles/s44172-025-00545-9' },
   // #17
@@ -76,7 +80,7 @@ const publications: Publication[] = [
   // #4
   { authors: 'A. Ding, Y. Huang, S. Jeong, X. Liu, H. R. Aghasi, M. Imani', title: 'Attention-Based Cognitive Beam Steering for 24 GHz FMCW Radar Systems', venue: 'IEEE RadarConf', year: 2025, type: 'conference', highlight: 'Best Student Paper Award nominee (Warsaw, Poland)', link: 'https://ieeexplore.ieee.org/abstract/document/11204903' },
   // #5
-  { authors: 'A. Mehradfar, X. Zhao, Y. Huang, E. Ceyani, Y. Yang, S. Han, H. R. Aghasi, S. Avestimehr', title: 'FALCON: An ML Framework for Fully Automated Layout-Constrained Analog Circuit Design', venue: 'NeurIPS', year: 2025, type: 'conference', link: 'https://openreview.net/pdf?id=c754bf4d521d056522fe6714603f142bfff249c4' },
+  { authors: 'A. Mehradfar, X. Zhao, Y. Huang, E. Ceyani, Y. Yang, S. Han, H. R. Aghasi, S. Avestimehr', title: 'FALCON: An ML Framework for Fully Automated Layout-Constrained Analog Circuit Design', venue: 'NeurIPS', year: 2025, type: 'conference', link: 'https://openreview.net/forum?id=HUUQmnwUIx' },
   // #6
   { authors: 'H. R. Aghasi', title: 'Data-Efficient Supervised Learning for RF and mm-Wave Circuit Design: Techniques, Challenges, and Benefits', venue: 'IEEE APWC', year: 2025, type: 'conference', highlight: 'Invited Talk' },
   // #7
@@ -134,11 +138,6 @@ const publications: Publication[] = [
   { authors: 'H. R. Aghasi', title: 'Analog Photonics Inc.', venue: 'Boston, MA', year: 2017, type: 'talk' },
   { authors: 'H. R. Aghasi', title: 'University of Massachusetts', venue: 'Amherst, MA', year: 2017, type: 'talk' },
   { authors: 'H. R. Aghasi', title: 'Cornell University – EDS Seminar Series', venue: 'Ithaca, NY', year: 2016, type: 'talk' },
-];
-
-const workingPapers: Publication[] = [
-  { authors: 'A. Mahdavifar, X. Zhao, Y. Niu, M. Alesheikh, H. R. Aghasi, S. Avestimehr', title: 'Supervised Learning for Analog and RF Circuit Design: Benchmarks and Comparative Insights', venue: 'IEEE TCAD', year: 2024, type: 'journal', status: 'Under Review' },
-  { authors: 'M. Alesheikh, A. Montazar, H. R. Aghasi', title: 'Effect of Object Shape and Radar Topology on Directional Sensing in mm-Wave Leaky-Wave Radars', venue: 'IEEE MWTL', year: 2025, type: 'journal', status: 'Under Review' },
 ];
 
 // --------------- helpers ---------------
@@ -366,30 +365,6 @@ export default function PublicationsPage() {
           </AnimatePresence>
         </div>
       </section>
-
-      {/* Working Papers */}
-      {(filter === 'all' || filter === 'journal') && !search && (
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-24 border-t border-gray-100 pt-16">
-          <div className="flex items-center gap-4 mb-10">
-            <h2 className="text-2xl font-bold text-eng-blue">Working Papers</h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-gray-200 to-transparent" />
-            <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-500 text-xs font-bold uppercase tracking-widest">Under Review</span>
-          </div>
-          
-          <div className="grid grid-cols-1 gap-4">
-            {workingPapers.map((pub) => (
-              <div key={pub.title} className="glass rounded-xl p-5 border-l-4 border-l-uci-gold/30">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="px-2 py-0.5 rounded-full bg-uci-blue/5 text-uci-blue text-[10px] font-bold border border-uci-blue/10">{pub.venue}</span>
-                  <span className="px-2 py-0.5 rounded-full bg-yellow-50 text-yellow-700 text-[10px] font-bold border border-yellow-100">Under Review</span>
-                </div>
-                <h3 className="text-base font-semibold text-eng-blue mb-1">{pub.title}</h3>
-                <p className="text-xs text-gray-400">{pub.authors}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
     </PageWrapper>
   );
 }
