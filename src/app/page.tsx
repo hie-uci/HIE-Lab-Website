@@ -11,6 +11,7 @@ import SectionHeader from "@/components/SectionHeader";
 import ChipMarquee from '@/components/ChipMarquee';
 import FluidPlasmaBackground from '@/components/FluidPlasmaBackground';
 import ResearchVisual from '@/components/ResearchVisual';
+import MagneticWrapper from '@/components/MagneticWrapper';
 
 /* ──────────────────────────── helpers ──────────────────────────── */
 
@@ -216,24 +217,28 @@ export default function HomePage() {
             transition={{ delay: 0.8, duration: 0.5 }}
             className="flex flex-wrap items-center justify-center gap-4 pointer-events-auto"
           >
-            <Link
-              href="/research"
-              className="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-uci-blue to-eng-blue text-white font-semibold rounded-xl shadow-lg shadow-uci-blue/25 hover:shadow-xl hover:shadow-uci-blue/30 transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5"
-            >
-              Explore Research
-              <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-            <Link
-              href="/contact#positions"
-              className="group inline-flex items-center gap-2 px-7 py-3.5 glass-ios text-foreground font-semibold rounded-xl transition-transform duration-300 hover:-translate-y-0.5"
-            >
-              Join Our Team
-              <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-              </svg>
-            </Link>
+            <MagneticWrapper strength={0.4}>
+              <Link
+                href="/research"
+                className="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-uci-blue to-eng-blue text-white font-semibold rounded-xl shadow-lg shadow-uci-blue/25 hover:shadow-xl hover:shadow-uci-blue/30 transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5"
+              >
+                Explore Research
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </MagneticWrapper>
+            <MagneticWrapper strength={0.4}>
+              <Link
+                href="/contact#positions"
+                className="group inline-flex items-center gap-2 px-7 py-3.5 glass-ios text-foreground font-semibold rounded-xl transition-transform duration-300 hover:-translate-y-0.5"
+              >
+                Join Our Team
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+              </Link>
+            </MagneticWrapper>
           </motion.div>
         </motion.div>
 

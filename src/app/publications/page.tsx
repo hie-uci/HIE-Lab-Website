@@ -1,10 +1,51 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useMemo, useEffect } from 'react';
+import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
 import PageWrapper from '@/components/PageWrapper';
 import SectionHeader from '@/components/SectionHeader';
 import CircuitBackground from '@/components/CircuitBackground';
+
+// --------------- components ---------------
+
+function AnimatedCounter({ value }: { value: number }) {
+  const spring = useSpring(0, { stiffness: 40, damping: 20 });
+  const displayValue = useTransform(spring, (v) => Math.floor(v));
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    spring.set(value);
+    return displayValue.on('change', (v) => setCurrent(v));
+  }, [value, spring, displayValue]);
+
+  return <>{current}</>;
+}
+
+function Sparkline({ data, color }: { data: number[]; color: string }) {
+  const max = Math.max(...data, 1);
+  const points = data.map((v, i) => ({
+    x: (i / (data.length - 1)) * 100,
+    y: 100 - (v / max) * 100,
+  }));
+
+  const path = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+
+  return (
+    <svg viewBox="0 0 100 100" className="w-16 h-8 opacity-40">
+      <motion.path
+        d={path}
+        fill="none"
+        stroke={color}
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+      />
+    </svg>
+  );
+}
 
 // --------------- types ---------------
 
@@ -222,22 +263,47 @@ export default function PublicationsPage() {
             light
           />
 
-          {/* Stats */}
+          {/* Stats Dashboard */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="flex justify-center gap-6 sm:gap-10 mt-2"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mt-10 max-w-4xl mx-auto"
           >
             {[
-              { label: 'Journals', count: stats.journals, color: 'text-uci-gold' },
-              { label: 'Conferences', count: stats.conferences, color: 'text-eecs-teal-light' },
-              { label: 'Patents', count: stats.patents, color: 'text-uci-gold' },
-              { label: 'Talks', count: stats.talks, color: 'text-purple-300' },
+              { 
+                label: 'Journals', 
+                count: stats.journals, 
+                color: 'text-uci-gold',
+                sparkData: [2, 3, 2, 4, 5, 6, 8] // Mock trend data
+              },
+              { 
+                label: 'Conferences', 
+                count: stats.conferences, 
+                color: 'text-eecs-teal-light',
+                sparkData: [3, 4, 3, 5, 8, 10, 12] 
+              },
+              { 
+                label: 'Patents', 
+                count: stats.patents, 
+                color: 'text-uci-gold',
+                sparkData: [0, 0, 1, 0, 1, 1, 2]
+              },
+              { 
+                label: 'Talks', 
+                count: stats.talks, 
+                color: 'text-purple-300',
+                sparkData: [1, 2, 2, 3, 4, 5, 17]
+              },
             ].map((s) => (
-              <div key={s.label} className="text-center">
-                <p className={`text-3xl sm:text-4xl font-bold ${s.color}`}>{s.count}</p>
-                <p className="text-white/60 text-xs uppercase tracking-wider mt-1">{s.label}</p>
+              <div key={s.label} className="relative glass-ios p-4 rounded-2xl flex flex-col items-center group hover:bg-white/10 transition-colors">
+                <div className="flex items-end gap-2 mb-2">
+                  <p className={`text-3xl sm:text-4xl font-bold ${s.color}`}>
+                    <AnimatedCounter value={s.count} />
+                  </p>
+                  <Sparkline data={s.sparkData} color="currentColor" />
+                </div>
+                <p className="text-white/60 text-[10px] uppercase tracking-widest font-bold">{s.label}</p>
               </div>
             ))}
           </motion.div>
