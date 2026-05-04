@@ -97,6 +97,29 @@ export default function FluidPlasmaBackground({ className = '' }: { className?: 
     window.addEventListener('touchmove', handlePointerMove, { passive: false });
     window.addEventListener('mouseleave', handlePointerLeave);
 
+    const handlePointerDown = (e: MouseEvent | TouchEvent) => {
+      const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+      const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+      
+      // Create a massive outward burst
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const dx = p.x - clientX;
+        const dy = p.y - clientY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 300) {
+          const force = (300 - dist) / 300;
+          const angle = Math.atan2(dy, dx);
+          const strength = 15; // Impulse strength
+          p.vx += Math.cos(angle) * force * strength;
+          p.vy += Math.sin(angle) * force * strength;
+        }
+      }
+    };
+
+    window.addEventListener('mousedown', handlePointerDown);
+
     let time = 0;
 
     const render = () => {
