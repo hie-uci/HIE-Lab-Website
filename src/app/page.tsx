@@ -218,7 +218,7 @@ export default function HomePage() {
           >
             <Link
               href="/research"
-              className="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-uci-blue to-eng-blue text-white font-semibold rounded-xl shadow-lg shadow-uci-blue/25 hover:shadow-xl hover:shadow-uci-blue/30 transition-all duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-uci-blue to-eng-blue text-white font-semibold rounded-xl shadow-lg shadow-uci-blue/25 hover:shadow-xl hover:shadow-uci-blue/30 transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5"
             >
               Explore Research
               <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -227,7 +227,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/contact#positions"
-              className="group inline-flex items-center gap-2 px-7 py-3.5 glass-ios text-foreground font-semibold rounded-xl transition-all duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2 px-7 py-3.5 glass-ios text-foreground font-semibold rounded-xl transition-transform duration-300 hover:-translate-y-0.5"
             >
               Join Our Team
               <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
