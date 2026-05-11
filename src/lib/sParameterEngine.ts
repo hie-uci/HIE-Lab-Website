@@ -117,13 +117,48 @@ export const sToZ = (S: Complex[][], z0: number): Complex[][] | null => {
   return mScale(Z, { real: z0, imag: 0 });
 };
 
+// Converts 4-port single-ended S-parameters to Mixed-Mode S-parameters.
+// Assumes Ports 1,2 = Diff Port 1; Ports 3,4 = Diff Port 2.
+export const sToMixedMode = (S: Complex[][]): Complex[][] | null => {
+  if (S.length !== 4) return null;
+  
+  const M_vals = [
+    [ 1, -1,  0,  0 ], // Sdd1
+    [ 0,  0,  1, -1 ], // Sdd2
+    [ 1,  1,  0,  0 ], // Scc1
+    [ 0,  0,  1,  1 ]  // Scc2
+  ];
+  const s2 = 1.0 / Math.sqrt(2);
+  
+  const M: Complex[][] = [];
+  const M_inv: Complex[][] = []; // for orthogonal matrix, M_inv = M_transpose
+  
+  for (let i=0; i<4; i++) {
+    M.push([]);
+    M_inv.push([]);
+    for (let j=0; j<4; j++) {
+      M[i].push({ real: M_vals[i][j] * s2, imag: 0 });
+      M_inv[i].push({ real: M_vals[j][i] * s2, imag: 0 }); // Transpose
+    }
+  }
+
+  // S_mm = M * S * M_inv
+  const MS = mMul(M, S);
+  return mMul(MS, M_inv);
+};
+
 export interface SParamMatrix {
   frequency: number; // Hz
   matrix: Complex[][]; // NxN
   z0: number;
 }
 
-export function parseTouchstone(content: string, numPorts: number): SParamMatrix[] {
+export interface ParseResult {
+  points: SParamMatrix[];
+  isPassive: boolean;
+}
+
+export function parseTouchstone(content: string, numPorts: number): ParseResult {
   const lines = content.split('\n');
   let optionLine = '';
   const dataTokens: string[] = [];
@@ -172,17 +207,13 @@ export function parseTouchstone(content: string, numPorts: number): SParamMatrix
   const tokensPerPoint = 1 + 2 * numPorts * numPorts;
   
   let i = 0;
-  let lastFreq = -1;
+  let isPassive = true;
 
   while (i + tokensPerPoint <= dataTokens.length) {
     const fVal = parseFloat(dataTokens[i]);
     if (isNaN(fVal)) break; // Malformed data
 
     const f = fVal * freqMultiplier;
-    
-    // Check if it's noise data (frequency usually increases in S-param blocks, if it drops, it might be noise data. 
-    // Wait, some files are ordered descending. Let's just check if it's the exact same or if the number of remaining tokens is not enough.)
-    // Actually, noise data has 5 columns. Let's just parse as long as we can extract full S-parameters.
 
     const matrix: Complex[][] = [];
     for (let r = 0; r < numPorts; r++) {
@@ -204,10 +235,20 @@ export function parseTouchstone(content: string, numPorts: number): SParamMatrix
         }
       }
     }
+    
+    // Check passivity (+0.1 dB margin = 1.011579 linear mag)
+    for (let r = 0; r < numPorts; r++) {
+      for (let c = 0; c < numPorts; c++) {
+        if (cMag(matrix[r][c]) > 1.011579) {
+          isPassive = false;
+        }
+      }
+    }
+
     points.push({ frequency: f, matrix, z0 });
     i += tokensPerPoint;
   }
-  return points;
+  return { points, isPassive };
 }
 
 function createComplex(v1: string, v2: string, format: string): Complex {

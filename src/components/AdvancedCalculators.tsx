@@ -25,44 +25,62 @@ export function ImpedanceMatchingCalculator() {
     if (isNaN(Rs) || isNaN(Xs) || isNaN(Rl) || isNaN(Xl) || isNaN(fGHz) || Rs <= 0 || Rl <= 0 || fGHz <= 0) return [];
 
     const omega = 2.0 * Math.PI * (fGHz * 1e9);
-    const solutions = [];
+    const solutions: any[] = [];
 
-    // Topology 1: Series-L, Shunt-C (when Rs > Rl)
-    if (Rs > Rl) {
-      const q = Math.sqrt(Rs / Rl - 1.0);
-      
-      // Sol A (Low-Pass)
-      const xShunt = Rs / q;
-      const xSeries = q * Rl - Xl;
-      const shuntC = 1.0 / (omega * xShunt);
-      const seriesL = (xSeries - Xs) / omega;
-      if (seriesL > 0 && shuntC > 0) solutions.push({ type: 'Low-Pass', series: `L = ${(seriesL * 1e9).toFixed(2)} nH`, shunt: `C = ${(shuntC * 1e12).toFixed(2)} pF`, shuntPos: 'Source Side', seriesL, shuntC, shuntL: 0, seriesC: 0 });
+    const RpL = (Rl * Rl + Xl * Xl) / Rl;
+    const RpS = (Rs * Rs + Xs * Xs) / Rs;
 
-      // Sol B (High-Pass)
-      const xShunt2 = -Rs / q;
-      const xSeries2 = -q * Rl - Xl;
-      const shuntL = Math.abs(xShunt2) / omega;
-      const seriesC = 1.0 / (omega * Math.abs(xSeries2 - Xs));
-      if (shuntL > 0 && seriesC > 0) solutions.push({ type: 'High-Pass', series: `C = ${(seriesC * 1e12).toFixed(2)} pF`, shunt: `L = ${(shuntL * 1e9).toFixed(2)} nH`, shuntPos: 'Source Side', seriesL: 0, shuntC: 0, shuntL, seriesC });
+    // Topology A: Shunt at Load, Series at Source
+    // Valid if RpL >= Rs
+    if (RpL >= Rs) {
+      const underRoot = (Rl / Rs) * (Rl * Rl + Xl * Xl) - Rl * Rl;
+      if (underRoot >= 0) {
+        const root = Math.sqrt(underRoot);
+        const den = Rl * Rl + Xl * Xl;
+        
+        // Sol A1 (+ root)
+        const B1 = (Xl + root) / den;
+        const X1 = (B1 * den - Xl) / (Rl / Rs) - Xs;
+        
+        // Output components
+        let compSeries1 = X1 > 0 ? `L = ${(X1 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X1) * 1e12).toFixed(2)} pF`;
+        let compShunt1 = B1 > 0 ? `C = ${(B1 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B1) * 1e9).toFixed(2)} nH`;
+        solutions.push({ type: 'Sol A1 (Shunt at Load)', series: compSeries1, shunt: compShunt1, shuntPos: 'Load Side', seriesX: X1, shuntB: B1 });
+
+        // Sol A2 (- root)
+        const B2 = (Xl - root) / den;
+        const X2 = (B2 * den - Xl) / (Rl / Rs) - Xs;
+        
+        let compSeries2 = X2 > 0 ? `L = ${(X2 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X2) * 1e12).toFixed(2)} pF`;
+        let compShunt2 = B2 > 0 ? `C = ${(B2 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B2) * 1e9).toFixed(2)} nH`;
+        solutions.push({ type: 'Sol A2 (Shunt at Load)', series: compSeries2, shunt: compShunt2, shuntPos: 'Load Side', seriesX: X2, shuntB: B2 });
+      }
     }
 
-    // Topology 2: Shunt-first (when Rl > Rs)
-    if (Rl > Rs) {
-      const q = Math.sqrt(Rl / Rs - 1.0);
+    // Topology B: Shunt at Source, Series at Load
+    // Valid if RpS >= Rl
+    if (RpS >= Rl) {
+      const underRoot = (Rl / Rs) * (Rs * Rs + Xs * Xs) - Rl * Rl;
+      if (underRoot >= 0) {
+        const root = Math.sqrt(underRoot);
+        const den = Rs * Rs + Xs * Xs;
+        
+        // Sol B1 (+ root)
+        const X1 = -Xl + root;
+        const B1 = (Xs + (X1 + Xl) / (Rl / Rs)) / den;
+        
+        let compSeries1 = X1 > 0 ? `L = ${(X1 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X1) * 1e12).toFixed(2)} pF`;
+        let compShunt1 = B1 > 0 ? `C = ${(B1 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B1) * 1e9).toFixed(2)} nH`;
+        solutions.push({ type: 'Sol B1 (Shunt at Source)', series: compSeries1, shunt: compShunt1, shuntPos: 'Source Side', seriesX: X1, shuntB: B1 });
 
-      // Sol A (Low-Pass)
-      const xShunt = Rl / q;
-      const xSeries = q * Rs - Xs;
-      const shuntC = 1.0 / (omega * xShunt);
-      const seriesL = xSeries / omega;
-      if (seriesL > 0 && shuntC > 0) solutions.push({ type: 'Low-Pass', series: `L = ${(seriesL * 1e9).toFixed(2)} nH`, shunt: `C = ${(shuntC * 1e12).toFixed(2)} pF`, shuntPos: 'Load Side', seriesL, shuntC, shuntL: 0, seriesC: 0 });
-
-      // Sol B (High-Pass)
-      const xShunt2 = -Rl / q;
-      const xSeries2 = -q * Rs - Xs;
-      const shuntL = Math.abs(xShunt2) / omega;
-      const seriesC = 1.0 / (omega * Math.abs(xSeries2));
-      if (shuntL > 0 && seriesC > 0) solutions.push({ type: 'High-Pass', series: `C = ${(seriesC * 1e12).toFixed(2)} pF`, shunt: `L = ${(shuntL * 1e9).toFixed(2)} nH`, shuntPos: 'Load Side', seriesL: 0, shuntC: 0, shuntL, seriesC });
+        // Sol B2 (- root)
+        const X2 = -Xl - root;
+        const B2 = (Xs + (X2 + Xl) / (Rl / Rs)) / den;
+        
+        let compSeries2 = X2 > 0 ? `L = ${(X2 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X2) * 1e12).toFixed(2)} pF`;
+        let compShunt2 = B2 > 0 ? `C = ${(B2 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B2) * 1e9).toFixed(2)} nH`;
+        solutions.push({ type: 'Sol B2 (Shunt at Source)', series: compSeries2, shunt: compShunt2, shuntPos: 'Source Side', seriesX: X2, shuntB: B2 });
+      }
     }
 
     return solutions;
@@ -89,30 +107,24 @@ export function ImpedanceMatchingCalculator() {
   
   if (validPoints && solutions.length > 0) {
     const sol = solutions[0];
-    const omega = 2.0 * Math.PI * (parseFloat(freq) * 1e9);
     
     if (sol.shuntPos === 'Load Side') {
-      // Shunt component is connected to Load.
-      // Y_load = 1 / Z_load
+      // Shunt is at load
       const den = Math.pow(parseFloat(rl), 2) + Math.pow(parseFloat(xl), 2);
       const gLoad = parseFloat(rl) / den;
       let bLoad = -parseFloat(xl) / den;
       
-      // Add Shunt Admittance
-      if (sol.shuntC > 0) bLoad += omega * sol.shuntC;
-      if (sol.shuntL > 0) bLoad -= 1.0 / (omega * sol.shuntL);
+      bLoad += sol.shuntB; // add susceptance
       
-      // Convert back to Impedance Z_mid = 1 / Y_mid
       const denY = gLoad * gLoad + bLoad * bLoad;
       midR = (gLoad / denY) / z0;
       midX = (-bLoad / denY) / z0;
     } else {
-      // Series component is connected to Load.
+      // Series is at load
       const zReal = parseFloat(rl);
       let zImag = parseFloat(xl);
       
-      if (sol.seriesL > 0) zImag += omega * sol.seriesL;
-      if (sol.seriesC > 0) zImag -= 1.0 / (omega * sol.seriesC);
+      zImag += sol.seriesX; // add reactance
       
       midR = zReal / z0;
       midX = zImag / z0;

@@ -270,28 +270,48 @@ export function MicrostripCalculator() {
   const [er, setEr] = useState<string>('4.4');
   const [height, setHeight] = useState<string>('1.6');
   const [width, setWidth] = useState<string>('3.0');
+  const [freq, setFreq] = useState<string>('2.45');
 
-  // Hammerstad-Jensen approximation for Z0
+  // Hammerstad-Jensen approximation for Z0 (Static)
+  // Kirschning and Jansen model for dispersion
   const calcMicrostrip = () => {
     const w = parseFloat(width);
     const h = parseFloat(height);
     const e = parseFloat(er);
+    const fGHz = parseFloat(freq);
     
-    if (isNaN(w) || isNaN(h) || isNaN(e) || w <= 0 || h <= 0 || e < 1) return null;
+    if (isNaN(w) || isNaN(h) || isNaN(e) || isNaN(fGHz) || w <= 0 || h <= 0 || e < 1 || fGHz <= 0) return null;
 
     const u = w / h;
     
-    // Effective permittivity (simplified static)
-    const eEff = ((e + 1) / 2) + ((e - 1) / 2) * Math.pow(1 + 12 * (h / w), -0.5);
+    // Quasi-static effective permittivity (Hammerstad & Jensen)
+    const eEff0 = ((e + 1) / 2) + ((e - 1) / 2) * Math.pow(1 + 12 * (1 / u), -0.5);
     
-    let z0 = 0;
+    // Static Z0
+    let z0_static = 0;
     if (u <= 1) {
-      z0 = (60 / Math.sqrt(eEff)) * Math.log(8 / u + 0.25 * u);
+      z0_static = (60 / Math.sqrt(eEff0)) * Math.log(8 / u + 0.25 * u);
     } else {
-      z0 = (120 * Math.PI / Math.sqrt(eEff)) / (u + 1.393 + 0.667 * Math.log(u + 1.444));
+      z0_static = (120 * Math.PI / Math.sqrt(eEff0)) / (u + 1.393 + 0.667 * Math.log(u + 1.444));
     }
 
-    return { z0, eEff };
+    // Kirschning and Jansen Dispersion Model
+    const fn = fGHz * h; // normalized frequency
+    
+    const P1 = 0.27488 + (0.6315 + 0.525 / Math.pow(1 + 0.0157 * fn, 20)) * u - 0.065683 * Math.exp(-0.5 * u);
+    const P2 = 0.33622 * (1 - Math.exp(-0.03442 * e));
+    const P3 = 0.0363 * Math.exp(-4.6 * u) * (1 - Math.exp(-Math.pow(fn / 38.7, 4.97)));
+    const P4 = 1 + 2.751 * (1 - Math.exp(-Math.pow(e / 15.916, 8)));
+    
+    const P_f = P1 * P2 * Math.pow((0.1844 + P3 * P4) * fn, 1.5763);
+    
+    // Frequency dependent effective permittivity
+    const eEff_f = e - (e - eEff0) / (1 + P_f);
+    
+    // Frequency dependent Z0
+    const z0_f = z0_static * Math.sqrt(eEff0 / eEff_f);
+
+    return { z0_static, eEff0, z0_f, eEff_f };
   };
 
   const results = calcMicrostrip();
@@ -317,21 +337,31 @@ export function MicrostripCalculator() {
                 className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono"
               />
             </div>
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Trace Width (mm)</label>
-            <input
-              type="number" step="0.1" value={width} onChange={(e) => setWidth(e.target.value)}
-              className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono"
-            />
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Trace Width (mm)</label>
+              <input
+                type="number" step="0.1" value={width} onChange={(e) => setWidth(e.target.value)}
+                className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Frequency (GHz)</label>
+              <input
+                type="number" step="0.1" value={freq} onChange={(e) => setFreq(e.target.value)}
+                className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono"
+              />
+            </div>
           </div>
 
-          <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-xl border border-gray-100 dark:border-gray-800 space-y-3 mt-4">
-            <h5 className="font-semibold text-sm text-gray-500 uppercase tracking-wider mb-2">Results</h5>
+          <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-xl border border-gray-100 dark:border-gray-800 space-y-3 mt-4 relative overflow-hidden">
+            <h5 className="font-semibold text-sm text-gray-500 uppercase tracking-wider mb-2">Results (with Dispersion)</h5>
             {results ? (
               <>
-                <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-400">Characteristic Impedance (Z₀)</span> <span className="font-mono font-medium text-uci-blue dark:text-blue-400 text-lg">{results.z0.toFixed(2)} Ω</span></div>
-                <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-400">Effective Permittivity (εeff)</span> <span className="font-mono font-medium">{results.eEff.toFixed(4)}</span></div>
+                <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-400">Z₀ (High-Freq)</span> <span className="font-mono font-medium text-uci-blue dark:text-blue-400 text-lg">{results.z0_f.toFixed(2)} Ω</span></div>
+                <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-400">εeff (High-Freq)</span> <span className="font-mono font-medium">{results.eEff_f.toFixed(4)}</span></div>
+                <hr className="border-gray-200 dark:border-gray-800 my-2" />
+                <div className="flex justify-between items-center text-xs opacity-60"><span className="text-gray-600 dark:text-gray-400">Z₀ (Static/DC)</span> <span className="font-mono">{results.z0_static.toFixed(2)} Ω</span></div>
+                <div className="flex justify-between items-center text-xs opacity-60"><span className="text-gray-600 dark:text-gray-400">εeff (Static/DC)</span> <span className="font-mono">{results.eEff0.toFixed(4)}</span></div>
               </>
             ) : (
               <div className="text-sm text-gray-400">Invalid input values</div>
@@ -826,6 +856,9 @@ export function PCBViaCalculator() {
           ) : (
             <div className="text-sm text-gray-400">Invalid input values (Ensure Anti-pad &gt; Pad)</div>
           )}
+          <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg text-xs font-medium border border-red-200 dark:border-red-800/30">
+            <strong>⚠️ High Frequency Warning:</strong> Lumped via models (like Goldfarb) break down and become highly inaccurate at mmWave frequencies (&gt; 5 GHz). Full 3D EM simulation is strictly required for high-frequency via design.
+          </div>
         </div>
       </div>
     </div>
