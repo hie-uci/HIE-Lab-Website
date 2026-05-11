@@ -1,0 +1,377 @@
+'use client';
+
+import React, { useState } from 'react';
+import 'katex/dist/katex.min.css';
+import { BlockMath } from 'react-katex';
+import { vswrTable, dielectricsTable, waveguideTable, freqBandsTable } from './data';
+import PageWrapper from '@/components/PageWrapper';
+import SectionHeader from '@/components/SectionHeader';
+import { VSWRCalculator, DBCalculator, MicrostripCalculator, WaveguideCalculator, StriplineCalculator, CPWCalculator, SkinDepthCalculator, PCBViaCalculator } from '@/components/Calculators';
+import { ImpedanceMatchingCalculator, ReceiverCascadeCalculator, PatchAntennaCalculator } from '@/components/AdvancedCalculators';
+
+const CATEGORIES = [
+  { id: 'pcb_design', name: 'PCB & Transmission Lines', desc: 'Board-level trace design, substrates, and via parasitics.' },
+  { id: 'antennas_matching', name: 'Antennas & Matching', desc: 'Patch antenna synthesis and automated impedance matching.' },
+  { id: 'system_fundamentals', name: 'System & Fundamentals', desc: 'Cascade analysis, power conversions, and frequency bands.' },
+  { id: 'components_waveguides', name: 'Components & Waveguides', desc: 'Passive component reactance, attenuators, and waveguides.' },
+];
+
+export default function RFToolboxPage() {
+  const [activeTab, setActiveTab] = useState(CATEGORIES[0].id);
+
+  return (
+    <PageWrapper>
+      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 bg-background min-h-screen z-10 overflow-hidden">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,100,164,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,100,164,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            badge="Engineering Resources"
+            title="RF & Microwave Toolbox"
+            subtitle="Professional calculators and reference formulas for high-frequency hardware design."
+          />
+
+          <div className="mt-12 flex flex-col lg:flex-row gap-8">
+            {/* Sidebar Navigation */}
+            <aside className="w-full lg:w-64 shrink-0">
+              <nav className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 sticky top-24">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveTab(cat.id)}
+                    className={`whitespace-nowrap text-left px-5 py-3 rounded-xl transition-all duration-300 ${
+                      activeTab === cat.id
+                        ? 'bg-uci-blue text-white shadow-md shadow-uci-blue/20 translate-x-1'
+                        : 'bg-white/50 dark:bg-slate-900/50 text-slate-600 dark:text-slate-400 hover:bg-white dark:hover:bg-slate-800 hover:text-uci-blue'
+                    }`}
+                  >
+                    <div className="font-bold text-sm">{cat.name}</div>
+                    <div className={`text-xs mt-1 whitespace-normal leading-relaxed ${activeTab === cat.id ? 'text-blue-100' : 'text-slate-500 dark:text-slate-400'}`}>{cat.desc}</div>
+                  </button>
+                ))}
+              </nav>
+            </aside>
+
+            {/* Content Area */}
+            <main className="flex-1 min-w-0 glass-ios rounded-3xl p-6 sm:p-10 border border-white/40 dark:border-white/10">
+              {activeTab === 'pcb_design' && <PCBDesignSection />}
+              {activeTab === 'antennas_matching' && <AntennasMatchingSection />}
+              {activeTab === 'system_fundamentals' && <SystemFundamentalsSection />}
+              {activeTab === 'components_waveguides' && <ComponentsWaveguidesSection />}
+            </main>
+          </div>
+        </div>
+      </section>
+    </PageWrapper>
+  );
+}
+
+/* ──────────────────────────── SECTIONS ──────────────────────────── */
+
+function AntennasMatchingSection() {
+  return (
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Automated Impedance Matching</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Synthesize ideal L-Network topologies between complex source and load impedances.</p>
+        <ImpedanceMatchingCalculator />
+      </div>
+
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Microstrip Patch Antenna Synthesis</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Calculate optimal physical dimensions and edge input impedance for patch antennas.</p>
+        <PatchAntennaCalculator />
+      </div>
+    </div>
+  );
+}
+
+function PCBDesignSection() {
+  return (
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Transmission Line Calculators</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Interactive 3D trace impedance and substrate calculators using empirical conformal mapping models.</p>
+        <MicrostripCalculator />
+        <StriplineCalculator />
+        <CPWCalculator />
+      </div>
+
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">PCB Via Parasitics</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Calculate inductance and capacitance of through-hole vias using the Goldfarb model.</p>
+        <PCBViaCalculator />
+      </div>
+
+      <DielectricSection />
+      <CoaxSection />
+    </div>
+  );
+}
+
+function SystemFundamentalsSection() {
+  return (
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">System Level Calculators</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Tools for signal power, impedance mismatch, and receiver cascade analysis.</p>
+        <ReceiverCascadeCalculator />
+        <DBCalculator />
+        <VSWRCalculator />
+        <SkinDepthCalculator />
+      </div>
+
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-6 flex items-center gap-3">
+          Reflection & Mismatch Formulas
+        </h3>
+        <div className="grid sm:grid-cols-2 gap-6">
+          <FormulaCard title="Reflection Coefficient (Γ)">
+            <BlockMath math="\Gamma = \frac{Z_L - Z_0}{Z_L + Z_0}" />
+          </FormulaCard>
+          <FormulaCard title="Voltage Standing Wave Ratio (VSWR)">
+            <BlockMath math="VSWR = \frac{1 + |\Gamma|}{1 - |\Gamma|}" />
+          </FormulaCard>
+          <FormulaCard title="Return Loss (RL)">
+            <BlockMath math="RL (dB) = -20 \log_{10} |\Gamma|" />
+          </FormulaCard>
+          <FormulaCard title="Mismatch Loss (ML)">
+            <BlockMath math="ML (dB) = -10 \log_{10} \left( 1 - |\Gamma|^2 \right)" />
+          </FormulaCard>
+          <FormulaCard title="Total Mismatch Loss (Both Ends)">
+            <BlockMath math="ML = -10 \log_{10} \left[ \frac{(1 - |\Gamma_S|^2)(1 - |\Gamma_L|^2)}{|1 - \Gamma_S \Gamma_L|^2} \right]" />
+          </FormulaCard>
+          <FormulaCard title="Wavelength & Phase">
+            <BlockMath math="\lambda = \frac{c}{f \sqrt{\epsilon_r \mu_r}}, \quad \phi = -360 f T_D" />
+          </FormulaCard>
+        </div>
+      </div>
+
+      <VSWRSection />
+      <BandsSection />
+    </div>
+  );
+}
+
+function ComponentsWaveguidesSection() {
+  return (
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Waveguide Tools</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Cutoff frequency calculators and standard reference tables for rectangular waveguides.</p>
+        <WaveguideCalculator />
+      </div>
+      
+      <WaveguideSection />
+
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-6 flex items-center gap-3">
+          Component Reactance Formulas
+        </h3>
+        <div className="grid sm:grid-cols-2 gap-6">
+          <FormulaCard title="Parallel Plate Capacitance">
+            <BlockMath math="C_{pp} = \frac{A \epsilon_r \epsilon_0}{h}" />
+          </FormulaCard>
+          <FormulaCard title="Equivalent Parallel Capacitance">
+            <BlockMath math="C_p = \frac{jB}{\omega}" />
+          </FormulaCard>
+          <FormulaCard title="Inductive Reactance (X_L)">
+            <BlockMath math="X_L = 2\pi f L = 6.28 \cdot f_{GHz} \cdot L_{nH}" />
+          </FormulaCard>
+          <FormulaCard title="Capacitive Reactance (X_C)">
+            <BlockMath math="X_C = \frac{1}{2\pi f C} \approx \frac{0.159}{f_{GHz} \cdot C_{pF}}" />
+          </FormulaCard>
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-6 flex items-center gap-3">
+          Attenuator Formulas
+        </h3>
+        <div className="grid sm:grid-cols-2 gap-6">
+          <FormulaCard title="Attenuator Power Dissipation">
+            <BlockMath math="P_d = P_{in} \left( 1 - 10^{\frac{-dB}{10}} \right)" />
+          </FormulaCard>
+          <FormulaCard title="T-Pad Attenuator (N = 10^{dB/10})">
+            <BlockMath math="R_1 = Z \frac{\sqrt{N}-1}{\sqrt{N}+1}, \ R_3 = \frac{2Z\sqrt{N}}{N-1}" />
+          </FormulaCard>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ──────────────────────────── HELPER SECTIONS ──────────────────────────── */
+
+function CoaxSection() {
+  return (
+    <div>
+      <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-6">Coaxial Line Formulas</h3>
+      <div className="grid sm:grid-cols-2 gap-6 mb-6">
+        <FormulaCard title="Characteristic Impedance (Z₀)">
+          <BlockMath math="Z_0 \approx \frac{59.959}{\sqrt{\epsilon_r}} \ln\left(\frac{b}{a}\right)" />
+        </FormulaCard>
+        <FormulaCard title="Cutoff Frequency (f_c)">
+          <BlockMath math="f_c = \frac{c}{\pi (a + b) \sqrt{\mu_r \epsilon_r}}" />
+        </FormulaCard>
+        <FormulaCard title="Capacitance per Unit Length (C)">
+          <BlockMath math="C = \frac{2 \pi \epsilon_0 \epsilon_r}{\ln(b/a)}" />
+        </FormulaCard>
+        <FormulaCard title="Inductance per Unit Length (L)">
+          <BlockMath math="L = \frac{\mu_0 \mu_r}{2 \pi} \ln\left(\frac{b}{a}\right)" />
+        </FormulaCard>
+      </div>
+      <div className="bg-white/60 dark:bg-slate-900/60 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 text-sm">
+        <p><strong>a:</strong> Inner conductor outer radius (m)</p>
+        <p><strong>b:</strong> Outer conductor inner radius (m)</p>
+        <p><strong>ε_r:</strong> Relative permittivity of the dielectric</p>
+      </div>
+    </div>
+  );
+}
+
+function VSWRSection() {
+  return (
+    <div>
+      <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-6">VSWR & Power Transmission Table</h3>
+      <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800">
+        <table className="w-full text-sm text-left">
+          <thead className="bg-gray-50 dark:bg-slate-900/80 text-gray-900 dark:text-gray-100 font-semibold">
+            <tr>
+              <th className="px-6 py-4">VSWR</th>
+              <th className="px-6 py-4">Return Loss (dB)</th>
+              <th className="px-6 py-4">Trans. Loss (dB)</th>
+              <th className="px-6 py-4">Refl. Coeff (Γ)</th>
+              <th className="px-6 py-4">Trans. Power (%)</th>
+              <th className="px-6 py-4">Refl. Power (%)</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white/40 dark:bg-slate-950/40">
+            {vswrTable.map((row, i) => (
+              <tr key={i} className="hover:bg-white/80 dark:hover:bg-slate-900 transition-colors">
+                <td className="px-6 py-3 font-medium text-uci-blue dark:text-blue-400">{row.vswr}</td>
+                <td className="px-6 py-3">{row.rl}</td>
+                <td className="px-6 py-3">{row.transLoss}</td>
+                <td className="px-6 py-3">{row.reflCoeff}</td>
+                <td className="px-6 py-3">{row.transPower}</td>
+                <td className="px-6 py-3 text-red-600 dark:text-red-400">{row.reflPower}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function WaveguideSection() {
+  return (
+    <div>
+      <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-6">Standard Rectangular Waveguides Table</h3>
+      <div className="mb-6 bg-uci-blue/5 border border-uci-blue/20 rounded-xl p-5">
+        <h4 className="font-semibold text-eng-blue dark:text-blue-300 mb-2">Cutoff Frequencies (TE10 Mode)</h4>
+        <BlockMath math="f_c = \frac{c}{2a} \approx \frac{149.9}{a} \text{ GHz (for a in mm)}" />
+      </div>
+      <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800">
+        <table className="w-full text-sm text-left">
+          <thead className="bg-gray-50 dark:bg-slate-900/80 text-gray-900 dark:text-gray-100 font-semibold">
+            <tr>
+              <th className="px-6 py-4">GB/T Model</th>
+              <th className="px-6 py-4">EIA (WR)</th>
+              <th className="px-6 py-4">Frequency (GHz)</th>
+              <th className="px-6 py-4">Width a (mm)</th>
+              <th className="px-6 py-4">Height b (mm)</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white/40 dark:bg-slate-950/40">
+            {waveguideTable.map((row, i) => (
+              <tr key={i} className="hover:bg-white/80 dark:hover:bg-slate-900 transition-colors">
+                <td className="px-6 py-3">{row.gb}</td>
+                <td className="px-6 py-3 font-medium text-eecs-teal">{row.wr}</td>
+                <td className="px-6 py-3">{row.freq}</td>
+                <td className="px-6 py-3">{row.a}</td>
+                <td className="px-6 py-3">{row.b}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function DielectricSection() {
+  return (
+    <div>
+      <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-6">Common Substrate Materials</h3>
+      <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800">
+        <table className="w-full text-sm text-left">
+          <thead className="bg-gray-50 dark:bg-slate-900/80 text-gray-900 dark:text-gray-100 font-semibold">
+            <tr>
+              <th className="px-6 py-4">Material / Product</th>
+              <th className="px-6 py-4">Dielectric Const (εr)</th>
+              <th className="px-6 py-4">Loss Tangent (tan δ)</th>
+              <th className="px-6 py-4">Common Thicknesses</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white/40 dark:bg-slate-950/40">
+            {dielectricsTable.map((row, i) => (
+              <tr key={i} className="hover:bg-white/80 dark:hover:bg-slate-900 transition-colors">
+                <td className="px-6 py-3 font-medium">{row.name}</td>
+                <td className="px-6 py-3 text-uci-blue dark:text-blue-400">{row.er}</td>
+                <td className="px-6 py-3 text-eecs-teal">{row.tand}</td>
+                <td className="px-6 py-3 text-gray-600 dark:text-gray-400">{row.thickness}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function BandsSection() {
+  return (
+    <div>
+      <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-6">Frequency Bands & Applications</h3>
+      <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800">
+        <table className="w-full text-sm text-left">
+          <thead className="bg-gray-50 dark:bg-slate-900/80 text-gray-900 dark:text-gray-100 font-semibold">
+            <tr>
+              <th className="px-6 py-4">Band Name</th>
+              <th className="px-6 py-4">Frequency Range</th>
+              <th className="px-6 py-4">Wavelength</th>
+              <th className="px-6 py-4">Typical Applications</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white/40 dark:bg-slate-950/40">
+            {freqBandsTable.map((row, i) => (
+              <tr key={i} className="hover:bg-white/80 dark:hover:bg-slate-900 transition-colors">
+                <td className="px-6 py-3 font-medium text-uci-blue dark:text-blue-400">{row.band}</td>
+                <td className="px-6 py-3 font-mono">{row.freq}</td>
+                <td className="px-6 py-3 text-gray-600 dark:text-gray-400">{row.wavelength}</td>
+                <td className="px-6 py-3">{row.applications}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/* ──────────────────────────── HELPERS ──────────────────────────── */
+
+function FormulaCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="bg-white/70 dark:bg-slate-900/70 rounded-2xl p-6 border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md hover:border-uci-blue/30 transition-all duration-300">
+      <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-4 tracking-wide uppercase">{title}</h4>
+      <div className="flex justify-center items-center text-lg overflow-x-auto py-2">
+        {children}
+      </div>
+    </div>
+  );
+}

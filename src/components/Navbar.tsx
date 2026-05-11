@@ -10,6 +10,7 @@ import ThemeSwitcher from '@/components/ThemeSwitcher';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Research', href: '/research' },
+  { name: 'RF Toolbox', href: '/rf-toolbox' },
   { name: 'Publications', href: '/publications' },
   { name: 'Team', href: '/team' },
   { name: 'Chip Gallery', href: '/chip-gallery' },
