@@ -54,13 +54,34 @@ Deeply extracted and translated the algorithms from the lab's proprietary Swift 
 
 The current platform is incredibly solid, but there is immense potential to grow the **RF Toolbox** into the absolute gold-standard web suite for RF/mmWave engineers globally. 
 
-### ✅ Recently Completed
+### ✅ Recently Completed (Session 2 - Advanced Engine & System Analysis)
 - **Interactive Drag-and-Drop Smith Chart Matching 🎯:** Upgraded the toolbox with an interactive canvas. Users can literally "drag" a node along constant resistance/conductance circles. The math maps SVG screen coordinates back to $\Gamma$ and $Z/Y$, instantly outputting the exact series/shunt L or C value required to make that move in real-time.
+- **Analytic Complex-to-Complex L-Network Engine:** Replaced the legacy "absorption method" with exact, analytic polynomial roots for matching arbitrary $Z_L$ to $Z_S^*$. This eliminates previous "no solution" errors caused by highly reactive parasitics at mmWave frequencies.
 - **System Cascade Chain Builder (Block Diagram Tool) ⛓️:** Expanded the Receiver Calculator into a visual drag-and-drop block diagram (powered by `@xyflow/react`). Users can drop blocks (LNA, Mixer, Filter, PA) with Gain, NF, and OIP3. The engine automatically cascades the formulas (Friis equation for Noise Figure, cascade IP3 formulas) and displays the total system performance dynamically based on edge connections.
-- **S-Parameter (.sNp) File Viewer & Calculator 📊:** Built a robust engine to upload and parse Touchstone `.sNp` files (up to 12 ports) supporting RI, MA, and DB formats. Rendered interactive Smith Charts and Rectangular Bode Plots (via `recharts`). Automatically converts S-Parameters to Z-Parameters to extract and plot precise Inductance ($L$) and Quality Factor ($Q$) across frequencies for arbitrary RF structures.
+- **Advanced S-Parameter (.sNp) Analysis Hub 📊:** Built a robust, independent tab to upload and parse Touchstone `.sNp` files (up to 12 ports). Added `Recharts Brush` for deep frequency zooming. Extractable metrics now include:
+  - *System:* Magnitude/Phase, VSWR, Group Delay (with strict phase unwrapping), Rollett's Stability Factor ($K$).
+  - *Impedance:* Conversion to full Y-Parameters and Z-Parameters.
+  - *Components:* Inductance ($L$), Capacitance ($C$), Quality Factor ($Q$), Equivalent Series Resistance (ESR), and Parallel Resistance ($R_p$).
+  - *Mixed-Mode:* Orthogonal matrix transformation for 4-port networks ($S_{dd}$, $S_{cc}$, $S_{cd}$, $S_{dc}$).
+- **High-Frequency Dispersion Modeling:** Integrated the rigorous Kirschning and Jansen (1982) dispersion model into the Microstrip Calculator for exact $\epsilon_{eff}(f)$ and $Z_0(f)$ calculation >10 GHz. Added explicit mmWave inaccuracy warnings to lumped Via models.
+
+---
+
+## 🔮 Future Directions & Handoff (State Saved)
+
+The current mathematical foundation is incredibly rigorous. To evolve the **RF Toolbox** into an undeniable, world-class web EDA suite, the next session should focus on **Tool Synergy** and **Signal Integrity (SI/PI)** features.
 
 When you return to this project, consider tackling these **High-Priority Future Features**:
 
-1. **PLL & Synthesizer Calculator 📻**
+1. **Swept-Frequency Cascade Simulation (Tool Synergy) ⛓️+📊**
+   - *Concept:* Upgrade the new `SystemCascadeBuilder`. Instead of static, flat "Gain=15dB" blocks, allow users to **drag and drop an `.s2p` file directly onto an LNA or Filter block**. 
+   - *Execution:* Link the `sParameterEngine` to the Cascade Engine. The Cascade system will iterate across frequency points, applying the Friis and IP3 formulas *per frequency bin*, rendering a swept-frequency bode plot of the entire cascaded system performance.
+2. **S-Parameter Trajectories on the Interactive Smith Chart 🎯+📊**
+   - *Concept:* Connect the S-Parameter Hub to the `InteractiveSmithChart`.
+   - *Execution:* Add a "View on Smith Chart" button in the S-Parameter Viewer. Plot the complex $S_{11}$ and $S_{22}$ arrays directly onto the SVG Smith Chart as continuous frequency trajectories, mimicking VNA screen behavior.
+3. **Time-Domain Reflectometry (TDR) via IFFT (SI/PI Feature) ⏱️**
+   - *Concept:* Signal Integrity engineers use TDR to find impedance mismatches (like bad vias or connectors) over physical distance.
+   - *Execution:* Add a "Time Domain" tab to the S-Parameter Hub. Implement an Inverse Fast Fourier Transform (IFFT) in TypeScript. Convert frequency-domain $S_{11}$ data into a time-domain impulse/step response, calculating the impedance profile $Z(t)$ along the transmission line.
+4. **PLL & Synthesizer Calculator 📻**
    - *Concept:* Loop filter design tool.
    - *Execution:* Input phase margin, loop bandwidth, and VCO $K_{vco}$. Output the values for a 2nd or 3rd order passive loop filter (C1, C2, R1).
