@@ -8,6 +8,9 @@ import PageWrapper from '@/components/PageWrapper';
 import SectionHeader from '@/components/SectionHeader';
 import { VSWRCalculator, DBCalculator, MicrostripCalculator, WaveguideCalculator, StriplineCalculator, CPWCalculator, SkinDepthCalculator, PCBViaCalculator } from '@/components/Calculators';
 import { ImpedanceMatchingCalculator, ReceiverCascadeCalculator, PatchAntennaCalculator, PhasedArrayCalculator } from '@/components/AdvancedCalculators';
+import { InteractiveSmithChart } from '@/components/InteractiveSmithChart';
+import SystemCascadeBuilder from '@/components/SystemCascadeBuilder';
+import SParameterViewer from '@/components/SParameterViewer';
 
 const CATEGORIES = [
   { id: 'pcb_design', name: 'PCB & Transmission Lines', desc: 'Board-level trace design, substrates, and via parasitics.' },
@@ -81,6 +84,12 @@ function AntennasMatchingSection() {
       </div>
 
       <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Interactive Drag-and-Drop Smith Chart</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Visually build matching networks by dragging nodes along constant resistance and conductance circles.</p>
+        <InteractiveSmithChart />
+      </div>
+
+      <div>
         <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Phased Array & Antenna Synthesis</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Calculate optimal physical dimensions for patch antennas and visualize array factor patterns.</p>
         <PatchAntennaCalculator />
@@ -116,6 +125,12 @@ function PCBDesignSection() {
 function SystemFundamentalsSection() {
   return (
     <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">System Cascade Chain Builder</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Interactive drag-and-drop block diagram for cascade Gain, Noise Figure, and OIP3/IIP3 analysis.</p>
+        <SystemCascadeBuilder />
+      </div>
+
       <div>
         <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">System Level Calculators</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Tools for signal power, impedance mismatch, and receiver cascade analysis.</p>
@@ -160,6 +175,12 @@ function SystemFundamentalsSection() {
 function ComponentsWaveguidesSection() {
   return (
     <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">S-Parameter (.sNp) Viewer & Calculator</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Upload Touchstone files (up to 12 ports) to interactively plot S-parameters, Inductance (L), and Quality Factor (Q).</p>
+        <SParameterViewer />
+      </div>
+
       <div>
         <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Waveguide Tools</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Cutoff frequency calculators and standard reference tables for rectangular waveguides.</p>
