@@ -7,7 +7,7 @@ import { vswrTable, dielectricsTable, waveguideTable, freqBandsTable } from './d
 import PageWrapper from '@/components/PageWrapper';
 import SectionHeader from '@/components/SectionHeader';
 import { VSWRCalculator, DBCalculator, MicrostripCalculator, WaveguideCalculator, StriplineCalculator, CPWCalculator, SkinDepthCalculator, PCBViaCalculator } from '@/components/Calculators';
-import { ImpedanceMatchingCalculator, ReceiverCascadeCalculator, PatchAntennaCalculator } from '@/components/AdvancedCalculators';
+import { ImpedanceMatchingCalculator, ReceiverCascadeCalculator, PatchAntennaCalculator, PhasedArrayCalculator } from '@/components/AdvancedCalculators';
 
 const CATEGORIES = [
   { id: 'pcb_design', name: 'PCB & Transmission Lines', desc: 'Board-level trace design, substrates, and via parasitics.' },
@@ -81,9 +81,10 @@ function AntennasMatchingSection() {
       </div>
 
       <div>
-        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Microstrip Patch Antenna Synthesis</h3>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Calculate optimal physical dimensions and edge input impedance for patch antennas.</p>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Phased Array & Antenna Synthesis</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Calculate optimal physical dimensions for patch antennas and visualize array factor patterns.</p>
         <PatchAntennaCalculator />
+        <PhasedArrayCalculator />
       </div>
     </div>
   );
