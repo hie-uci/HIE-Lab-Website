@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { SmithChart } from './SmithChart';
 
 /* =========================================================================
    Impedance Matching Synthesizer (L-Match)
@@ -68,6 +69,15 @@ export function ImpedanceMatchingCalculator() {
 
   const solutions = calcLMatch();
 
+  // Normalize for Smith Chart
+  const z0 = 50;
+  const sourceR = parseFloat(rs) / z0;
+  const sourceX = parseFloat(xs) / z0;
+  const loadR = parseFloat(rl) / z0;
+  const loadX = parseFloat(xl) / z0;
+
+  const validPoints = !isNaN(sourceR) && !isNaN(sourceX) && !isNaN(loadR) && !isNaN(loadX);
+
   return (
     <div className="bg-white/70 dark:bg-slate-900/70 p-6 rounded-2xl border border-white/50 dark:border-white/10 shadow-sm mt-8">
       <h4 className="text-lg font-bold text-eng-blue dark:text-blue-300 mb-6">L-Network Impedance Matching Synthesizer</h4>
@@ -96,20 +106,37 @@ export function ImpedanceMatchingCalculator() {
               <input type="number" step="0.1" value={freq} onChange={(e) => setFreq(e.target.value)} className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono" />
             </div>
           </div>
+
+          <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-xl border border-gray-100 dark:border-gray-800 space-y-4">
+            <h5 className="font-semibold text-sm text-gray-500 uppercase tracking-wider mb-2">Synthesized Networks</h5>
+            {solutions.length > 0 ? (
+              solutions.map((sol, i) => (
+                <div key={i} className="p-4 bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg">
+                  <div className="text-xs font-bold text-uci-blue uppercase tracking-wide mb-2">{sol.type} Solution</div>
+                  <div className="flex justify-between items-center text-sm mb-1"><span className="text-gray-600 dark:text-gray-400">Series Component</span> <span className="font-mono font-medium">{sol.series}</span></div>
+                  <div className="flex justify-between items-center text-sm"><span className="text-gray-600 dark:text-gray-400">Shunt Component ({sol.shuntPos})</span> <span className="font-mono font-medium text-eecs-teal">{sol.shunt}</span></div>
+                </div>
+              ))
+            ) : (
+              <div className="text-sm text-gray-400">No valid L-match solution. Source and Load might be identical or invalid input.</div>
+            )}
+          </div>
         </div>
 
-        <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-xl border border-gray-100 dark:border-gray-800 space-y-4">
-          <h5 className="font-semibold text-sm text-gray-500 uppercase tracking-wider mb-2">Synthesized Networks</h5>
-          {solutions.length > 0 ? (
-            solutions.map((sol, i) => (
-              <div key={i} className="p-4 bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg">
-                <div className="text-xs font-bold text-uci-blue uppercase tracking-wide mb-2">{sol.type} Solution</div>
-                <div className="flex justify-between items-center text-sm mb-1"><span className="text-gray-600 dark:text-gray-400">Series Component</span> <span className="font-mono font-medium">{sol.series}</span></div>
-                <div className="flex justify-between items-center text-sm"><span className="text-gray-600 dark:text-gray-400">Shunt Component ({sol.shuntPos})</span> <span className="font-mono font-medium text-eecs-teal">{sol.shunt}</span></div>
-              </div>
-            ))
+        <div className="flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-gray-200 dark:border-gray-700 p-4 min-h-[300px]">
+          <h5 className="font-semibold text-sm text-gray-500 uppercase tracking-wider mb-4 w-full text-left">Interactive Smith Chart</h5>
+          {validPoints ? (
+            <SmithChart 
+              points={[
+                { r: sourceR, x: sourceX, label: 'Z_S', color: '#e03b24' },
+                { r: loadR, x: loadX, label: 'Z_L', color: '#0064a4' }
+              ]}
+              paths={[
+                { start: { r: sourceR, x: sourceX }, end: { r: loadR, x: loadX }, color: '#94a3b8' }
+              ]}
+            />
           ) : (
-            <div className="text-sm text-gray-400">No valid L-match solution. Source and Load might be identical or invalid input.</div>
+            <div className="text-sm text-gray-400">Waiting for valid inputs to plot.</div>
           )}
         </div>
       </div>
