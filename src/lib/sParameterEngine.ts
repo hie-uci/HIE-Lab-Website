@@ -59,7 +59,7 @@ export const mScale = (A: Complex[][], scalar: Complex): Complex[][] =>
 // Matrix inverse via Gaussian elimination with partial pivoting
 export const mInverse = (A: Complex[][]): Complex[][] | null => {
   const n = A.length;
-  let M: Complex[][] = [];
+  const M: Complex[][] = [];
   for (let i = 0; i < n; i++) {
     M.push([...A[i], ...mIdentity(n)[i]]);
   }
@@ -117,6 +117,19 @@ export const sToZ = (S: Complex[][], z0: number): Complex[][] | null => {
   return mScale(Z, { real: z0, imag: 0 });
 };
 
+export const sToY = (S: Complex[][], z0: number): Complex[][] | null => {
+  const n = S.length;
+  const I = mIdentity(n);
+  const I_minus_S = mSub(I, S);
+  const I_plus_S = mAdd(I, S);
+  
+  const inv = mInverse(I_plus_S);
+  if (!inv) return null;
+
+  const Y = mMul(I_minus_S, inv);
+  return mScale(Y, { real: 1 / z0, imag: 0 });
+};
+
 // Converts 4-port single-ended S-parameters to Mixed-Mode S-parameters.
 // Assumes Ports 1,2 = Diff Port 1; Ports 3,4 = Diff Port 2.
 export const sToMixedMode = (S: Complex[][]): Complex[][] | null => {
@@ -151,6 +164,13 @@ export interface SParamMatrix {
   frequency: number; // Hz
   matrix: Complex[][]; // NxN
   z0: number;
+  vswr?: number[];
+  Y?: Complex[][];
+  Z?: Complex[][];
+  ESR?: number[];
+  Rp?: number[];
+  K?: number;
+  groupDelay?: number; // in seconds
 }
 
 export interface ParseResult {
@@ -163,7 +183,7 @@ export function parseTouchstone(content: string, numPorts: number): ParseResult 
   let optionLine = '';
   const dataTokens: string[] = [];
 
-  for (let line of lines) {
+  for (const line of lines) {
     let raw = line.trim();
     if (!raw) continue;
     const commentIdx = raw.indexOf('!');
@@ -248,6 +268,68 @@ export function parseTouchstone(content: string, numPorts: number): ParseResult 
     points.push({ frequency: f, matrix, z0 });
     i += tokensPerPoint;
   }
+
+  // Post-process metrics (Y, Z, VSWR, ESR, Rp, K, Group Delay)
+  let prevPhase: number | null = null;
+  for (let k = 0; k < points.length; k++) {
+    const S = points[k].matrix;
+    const f = points[k].frequency;
+    
+    const vswr: number[] = [];
+    for (let p = 0; p < numPorts; p++) {
+      const mag = cMag(S[p][p]);
+      vswr.push((1 + mag) / (1 - mag + 1e-15));
+    }
+    points[k].vswr = vswr;
+
+    const Y = sToY(S, z0);
+    const Z = sToZ(S, z0);
+    points[k].Y = Y || undefined;
+    points[k].Z = Z || undefined;
+
+    const esr: number[] = [];
+    const rp: number[] = [];
+    if (Z && Y) {
+      for (let p = 0; p < numPorts; p++) {
+        esr.push(Z[p][p].real);
+        rp.push(1 / (Y[p][p].real || 1e-15));
+      }
+    }
+    points[k].ESR = esr.length ? esr : undefined;
+    points[k].Rp = rp.length ? rp : undefined;
+
+    if (numPorts === 2) {
+      const s11 = S[0][0], s21 = S[1][0], s12 = S[0][1], s22 = S[1][1];
+      const delta = cSub(cMul(s11, s22), cMul(s12, s21));
+      const magS11_2 = Math.pow(cMag(s11), 2);
+      const magS22_2 = Math.pow(cMag(s22), 2);
+      const magDelta_2 = Math.pow(cMag(delta), 2);
+      const den = 2 * cMag(cMul(s12, s21));
+      points[k].K = (1 - magS11_2 - magS22_2 + magDelta_2) / (den + 1e-15);
+
+      const currentPhase = cPhase(s21) * 180 / Math.PI;
+      if (prevPhase === null) {
+        points[k].groupDelay = 0;
+      } else {
+        let dPhase = currentPhase - prevPhase;
+        while (dPhase > 180) dPhase -= 360;
+        while (dPhase < -180) dPhase += 360;
+        
+        const df = f - points[k-1].frequency;
+        if (df !== 0) {
+          points[k].groupDelay = - (1 / 360) * (dPhase / df);
+        } else {
+          points[k].groupDelay = 0;
+        }
+      }
+      prevPhase = currentPhase;
+    }
+  }
+
+  if (numPorts === 2 && points.length > 1) {
+    points[0].groupDelay = points[1].groupDelay;
+  }
+
   return { points, isPassive };
 }
 

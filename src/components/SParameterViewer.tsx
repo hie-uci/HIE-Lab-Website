@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useMemo, ChangeEvent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Brush } from 'recharts';
 import { UploadCloud, FileText, AlertCircle, Trash2, ShieldAlert } from 'lucide-react';
-import { parseTouchstone, sToZ, sToMixedMode, cDB, cPhase } from '../lib/sParameterEngine';
+import { parseTouchstone, sToMixedMode, cDB, cPhase, cMag } from '../lib/sParameterEngine';
 
 const colors = [
   '#ef4444', // red-500
@@ -22,8 +22,9 @@ export default function SParameterViewer() {
   const [error, setError] = useState<string>('');
   const [isPassive, setIsPassive] = useState<boolean>(true);
   
-  const [chartType, setChartType] = useState<'S' | 'L' | 'Q' | 'C'>('S');
-  const [sParamViewType, setSParamViewType] = useState<'Magnitude' | 'Phase'>('Magnitude');
+  const [analysisGroup, setAnalysisGroup] = useState<'S' | 'ZY' | 'Comp' | 'Sys'>('S');
+  const [chartType, setChartType] = useState<'S' | 'Z' | 'Y' | 'L' | 'C' | 'Q' | 'ESR' | 'Rp' | 'VSWR' | 'GD' | 'K'>('S');
+  const [sParamViewType, setSParamViewType] = useState<'Magnitude' | 'Phase' | 'Real' | 'Imag'>('Magnitude');
   const [sParamMode, setSParamMode] = useState<'Single' | 'Mixed'>('Single');
   
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -61,9 +62,6 @@ export default function SParameterViewer() {
         const S = pt.matrix;
         const N = S.length;
         
-        const z0 = pt.z0 || 50;
-        const Z = sToZ(S, z0);
-      
         const dataPoint: any = {
           frequency: f,
           fGHz: parseFloat(fGHz.toFixed(4)),
@@ -72,8 +70,10 @@ export default function SParameterViewer() {
         // Standard Single-Ended S-Parameters
         for (let i = 0; i < N; i++) {
           for (let j = 0; j < N; j++) {
-            dataPoint[`S${i+1}${j+1}_Mag`] = parseFloat(cDB(S[i][j]).toFixed(4));
+            dataPoint[`S${i+1}${j+1}_Magnitude`] = parseFloat(cDB(S[i][j]).toFixed(4));
             dataPoint[`S${i+1}${j+1}_Phase`] = parseFloat((cPhase(S[i][j]) * 180 / Math.PI).toFixed(4));
+            dataPoint[`S${i+1}${j+1}_Real`] = parseFloat(S[i][j].real.toFixed(4));
+            dataPoint[`S${i+1}${j+1}_Imag`] = parseFloat(S[i][j].imag.toFixed(4));
           }
         }
 
@@ -81,40 +81,80 @@ export default function SParameterViewer() {
         if (N === 4) {
           const S_mm = sToMixedMode(S);
           if (S_mm) {
-            // S_mm is 4x4. Map back to Sdd11, Sdd21, Scc, etc.
-            // 0: dd1, 1: dd2, 2: cc1, 3: cc2
             const mmLabels = ['dd1', 'dd2', 'cc1', 'cc2'];
             for (let i = 0; i < 4; i++) {
               for (let j = 0; j < 4; j++) {
-                const label = `S${mmLabels[i][0]}${mmLabels[j][0]}${mmLabels[i][2]}${mmLabels[j][2]}`; // e.g., Sdd11
-                dataPoint[`${label}_Mag`] = parseFloat(cDB(S_mm[i][j]).toFixed(4));
+                const label = `S${mmLabels[i][0]}${mmLabels[j][0]}${mmLabels[i][2]}${mmLabels[j][2]}`;
+                dataPoint[`${label}_Magnitude`] = parseFloat(cDB(S_mm[i][j]).toFixed(4));
                 dataPoint[`${label}_Phase`] = parseFloat((cPhase(S_mm[i][j]) * 180 / Math.PI).toFixed(4));
+                dataPoint[`${label}_Real`] = parseFloat(S_mm[i][j].real.toFixed(4));
+                dataPoint[`${label}_Imag`] = parseFloat(S_mm[i][j].imag.toFixed(4));
               }
             }
           }
         }
       
-        if (Z) {
+        if (pt.Z) {
           for (let i = 0; i < N; i++) {
             for (let j = 0; j < N; j++) {
-              const zij = Z[i][j];
+              const zij = pt.Z[i][j];
+              dataPoint[`Z${i+1}${j+1}_Magnitude`] = parseFloat(cMag(zij).toFixed(4));
+              dataPoint[`Z${i+1}${j+1}_Phase`] = parseFloat((cPhase(zij) * 180 / Math.PI).toFixed(4));
+              dataPoint[`Z${i+1}${j+1}_Real`] = parseFloat(zij.real.toFixed(4));
+              dataPoint[`Z${i+1}${j+1}_Imag`] = parseFloat(zij.imag.toFixed(4));
+              
               if (i === j) {
-                // L in nH, C in pF
                 dataPoint[`L${i+1}${i+1}`] = parseFloat(((zij.imag / w) * 1e9).toFixed(4));
                 dataPoint[`C${i+1}${i+1}`] = zij.imag !== 0 ? parseFloat(((-1 / (w * zij.imag)) * 1e12).toFixed(4)) : 0;
                 dataPoint[`Q${i+1}${i+1}`] = zij.real !== 0 ? parseFloat((zij.imag / zij.real).toFixed(4)) : 0;
               }
             }
           }
-      
           if (N >= 2) {
-            // Differential L, C, and Q for ports 1 and 2
-            const zdiff_real = Z[0][0].real + Z[1][1].real - Z[0][1].real - Z[1][0].real;
-            const zdiff_imag = Z[0][0].imag + Z[1][1].imag - Z[0][1].imag - Z[1][0].imag;
+            const zdiff_real = pt.Z[0][0].real + pt.Z[1][1].real - pt.Z[0][1].real - pt.Z[1][0].real;
+            const zdiff_imag = pt.Z[0][0].imag + pt.Z[1][1].imag - pt.Z[0][1].imag - pt.Z[1][0].imag;
             dataPoint['L_diff'] = parseFloat(((zdiff_imag / w) * 1e9).toFixed(4));
             dataPoint['C_diff'] = zdiff_imag !== 0 ? parseFloat(((-1 / (w * zdiff_imag)) * 1e12).toFixed(4)) : 0;
             dataPoint['Q_diff'] = zdiff_real !== 0 ? parseFloat((zdiff_imag / zdiff_real).toFixed(4)) : 0;
           }
+        }
+
+        if (pt.Y) {
+          for (let i = 0; i < N; i++) {
+            for (let j = 0; j < N; j++) {
+              const yij = pt.Y[i][j];
+              dataPoint[`Y${i+1}${j+1}_Magnitude`] = parseFloat(cMag(yij).toFixed(4));
+              dataPoint[`Y${i+1}${j+1}_Phase`] = parseFloat((cPhase(yij) * 180 / Math.PI).toFixed(4));
+              dataPoint[`Y${i+1}${j+1}_Real`] = parseFloat(yij.real.toFixed(4));
+              dataPoint[`Y${i+1}${j+1}_Imag`] = parseFloat(yij.imag.toFixed(4));
+            }
+          }
+        }
+
+        if (pt.vswr) {
+          for (let i = 0; i < N; i++) {
+            dataPoint[`VSWR${i+1}`] = parseFloat(pt.vswr[i].toFixed(4));
+          }
+        }
+
+        if (pt.ESR) {
+          for (let i = 0; i < N; i++) {
+            dataPoint[`ESR${i+1}`] = parseFloat(pt.ESR[i].toFixed(4));
+          }
+        }
+
+        if (pt.Rp) {
+          for (let i = 0; i < N; i++) {
+            dataPoint[`Rp${i+1}`] = parseFloat(pt.Rp[i].toFixed(4));
+          }
+        }
+
+        if (pt.groupDelay !== undefined) {
+          dataPoint[`GD21`] = parseFloat((pt.groupDelay * 1e12).toFixed(4)); // seconds to ps
+        }
+
+        if (pt.K !== undefined) {
+          dataPoint[`K`] = parseFloat(pt.K.toFixed(4));
         }
       
         return dataPoint;
@@ -123,6 +163,7 @@ export default function SParameterViewer() {
       setData(plotData);
       setSParamMode('Single');
       setSParamViewType('Magnitude');
+      setAnalysisGroup('S');
 
       if (ports >= 2) {
         setSelectedKeys(['S11', 'S21']);
@@ -146,41 +187,56 @@ export default function SParameterViewer() {
 
   const availableKeys = useMemo(() => {
     if (data.length === 0) return [];
-    if (chartType === 'S') {
-      if (sParamMode === 'Mixed') {
+    if (chartType === 'S' || chartType === 'Z' || chartType === 'Y') {
+      if (sParamMode === 'Mixed' && chartType === 'S') {
         return ['Sdd11', 'Sdd21', 'Sdd12', 'Sdd22', 'Scc11', 'Scc21', 'Scc12', 'Scc22', 'Scd11', 'Sdc11'];
       }
       const keys = [];
       for (let i = 1; i <= numPorts; i++) {
         for (let j = 1; j <= numPorts; j++) {
-          keys.push(`S${i}${j}`);
+          keys.push(`${chartType}${i}${j}`);
         }
       }
       return keys;
-    } else if (chartType === 'L') {
-      return Object.keys(data[0]).filter(k => k.startsWith('L'));
-    } else if (chartType === 'C') {
-      return Object.keys(data[0]).filter(k => k.startsWith('C'));
-    } else if (chartType === 'Q') {
-      return Object.keys(data[0]).filter(k => k.startsWith('Q'));
+    } else if (chartType === 'L' || chartType === 'C' || chartType === 'Q' || chartType === 'ESR' || chartType === 'Rp' || chartType === 'VSWR') {
+      return Object.keys(data[0]).filter(k => k.startsWith(chartType));
+    } else if (chartType === 'GD') {
+      return ['GD21'];
+    } else if (chartType === 'K') {
+      return ['K'];
     }
     return [];
   }, [data, chartType, sParamMode, numPorts]);
 
-  const handleChartTypeChange = (type: 'S' | 'L' | 'Q' | 'C') => {
+  const handleChartTypeChange = (type: 'S' | 'Z' | 'Y' | 'L' | 'C' | 'Q' | 'ESR' | 'Rp' | 'VSWR' | 'GD' | 'K') => {
     setChartType(type);
     if (data.length > 0) {
-      if (type === 'S') {
-        if (sParamMode === 'Mixed') setSelectedKeys(['Sdd11', 'Sdd21']);
-        else setSelectedKeys(numPorts >= 2 ? ['S11', 'S21'] : ['S11']);
+      if (type === 'S' || type === 'Z' || type === 'Y') {
+        if (sParamMode === 'Mixed' && type === 'S') setSelectedKeys(['Sdd11', 'Sdd21']);
+        else setSelectedKeys(numPorts >= 2 ? [`${type}11`, `${type}21`] : [`${type}11`]);
       } else if (type === 'L') {
         setSelectedKeys(numPorts >= 2 ? ['L_diff', 'L11'] : ['L11']);
       } else if (type === 'C') {
         setSelectedKeys(numPorts >= 2 ? ['C_diff', 'C11'] : ['C11']);
       } else if (type === 'Q') {
         setSelectedKeys(numPorts >= 2 ? ['Q_diff', 'Q11'] : ['Q11']);
+      } else if (type === 'ESR' || type === 'Rp' || type === 'VSWR') {
+        setSelectedKeys([`${type}1`]);
+      } else if (type === 'GD') {
+        setSelectedKeys(['GD21']);
+      } else if (type === 'K') {
+        setSelectedKeys(['K']);
       }
     }
+  };
+
+  const handleGroupChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const group = e.target.value as 'S' | 'ZY' | 'Comp' | 'Sys';
+    setAnalysisGroup(group);
+    if (group === 'S') handleChartTypeChange('S');
+    else if (group === 'ZY') handleChartTypeChange('Z');
+    else if (group === 'Comp') handleChartTypeChange('L');
+    else if (group === 'Sys') handleChartTypeChange('VSWR');
   };
 
   const handleModeChange = (mode: 'Single' | 'Mixed') => {
@@ -201,12 +257,21 @@ export default function SParameterViewer() {
         <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3 rounded-lg shadow-lg">
           <p className="text-sm font-medium text-slate-800 dark:text-slate-200 mb-2">{`${label} GHz`}</p>
           {payload.map((entry: any, index: number) => {
-            // Reconstruct name for display if it's an S-parameter
-            const isS = entry.dataKey.includes('_Mag') || entry.dataKey.includes('_Phase');
-            const name = isS ? entry.dataKey.split('_')[0] : entry.name;
-            const unit = chartType === 'S' 
-              ? (sParamViewType === 'Magnitude' ? 'dB' : '°') 
-              : chartType === 'L' ? 'nH' : chartType === 'C' ? 'pF' : '';
+            const isComplex = entry.dataKey.includes('_Magnitude') || entry.dataKey.includes('_Phase') || entry.dataKey.includes('_Real') || entry.dataKey.includes('_Imag');
+            const name = isComplex ? entry.dataKey.split('_')[0] : entry.name;
+            
+            let unit = '';
+            if (chartType === 'S') unit = sParamViewType === 'Magnitude' ? 'dB' : sParamViewType === 'Phase' ? '°' : '';
+            else if (chartType === 'Z' || chartType === 'Y' || chartType === 'ESR' || chartType === 'Rp') {
+              if (chartType === 'Y') unit = 'S';
+              else unit = 'Ω';
+              if (isComplex && (sParamViewType === 'Phase')) unit = '°';
+            }
+            else if (chartType === 'L') unit = 'nH';
+            else if (chartType === 'C') unit = 'pF';
+            else if (chartType === 'GD') unit = 'ps';
+            else if (chartType === 'VSWR' || chartType === 'K' || chartType === 'Q') unit = '';
+
             return (
               <p key={index} className="text-sm font-medium" style={{ color: entry.color }}>
                 {name}: {entry.value} {unit}
@@ -264,120 +329,184 @@ export default function SParameterViewer() {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
             
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div className="flex gap-2 p-1.5 bg-slate-200/60 dark:bg-slate-900/80 rounded-lg overflow-x-auto w-full md:w-auto">
-                {(['S', 'L', 'C', 'Q'] as const).map(type => (
-                  <button
-                    key={type}
-                    onClick={() => handleChartTypeChange(type)}
-                    className={`px-4 py-2 rounded-md text-sm font-semibold transition-all whitespace-nowrap ${
-                      chartType === type 
-                        ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' 
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800'
-                    }`}
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                <div className="flex items-center gap-2 p-1.5 bg-slate-200/60 dark:bg-slate-900/80 rounded-lg overflow-x-auto w-full lg:w-auto">
+                  <select
+                    value={analysisGroup}
+                    onChange={handleGroupChange}
+                    className="bg-transparent text-sm font-semibold text-slate-800 dark:text-slate-200 focus:outline-none cursor-pointer px-2"
                   >
-                    {type === 'S' ? 'S-Params' : type === 'L' ? 'Inductance' : type === 'C' ? 'Capacitance' : 'Q-Factor'}
-                  </button>
-                ))}
+                    <option value="S">S-Parameters</option>
+                    <option value="ZY">Z / Y Parameters</option>
+                    <option value="Comp">Component Extraction</option>
+                    <option value="Sys">System Metrics</option>
+                  </select>
+                  <div className="w-px h-6 bg-slate-300 dark:bg-slate-700 mx-2 shrink-0"></div>
+                  
+                  {analysisGroup === 'S' && (
+                    <button
+                      onClick={() => handleChartTypeChange('S')}
+                      className="px-4 py-2 rounded-md text-sm font-semibold transition-all whitespace-nowrap bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm"
+                    >
+                      S-Params
+                    </button>
+                  )}
+                  {analysisGroup === 'ZY' && (['Z', 'Y'] as const).map(type => (
+                    <button
+                      key={type}
+                      onClick={() => handleChartTypeChange(type)}
+                      className={`px-4 py-2 rounded-md text-sm font-semibold transition-all whitespace-nowrap ${
+                        chartType === type 
+                          ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' 
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      {type}-Params
+                    </button>
+                  ))}
+                  {analysisGroup === 'Comp' && (['L', 'C', 'Q', 'ESR', 'Rp'] as const).map(type => (
+                    <button
+                      key={type}
+                      onClick={() => handleChartTypeChange(type)}
+                      className={`px-4 py-2 rounded-md text-sm font-semibold transition-all whitespace-nowrap ${
+                        chartType === type 
+                          ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' 
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      {type === 'L' ? 'Inductance' : type === 'C' ? 'Capacitance' : type === 'Q' ? 'Q-Factor' : type}
+                    </button>
+                  ))}
+                  {analysisGroup === 'Sys' && (['VSWR', 'GD', 'K'] as const).map(type => (
+                    <button
+                      key={type}
+                      onClick={() => handleChartTypeChange(type)}
+                      className={`px-4 py-2 rounded-md text-sm font-semibold transition-all whitespace-nowrap ${
+                        chartType === type 
+                          ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' 
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      {type === 'GD' ? 'Group Delay' : type === 'K' ? 'K-Factor' : type}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex gap-2 overflow-x-auto w-full lg:w-auto">
+                  {chartType === 'S' && numPorts === 4 && (
+                    <div className="flex gap-2 p-1.5 bg-slate-200/60 dark:bg-slate-900/80 rounded-lg shrink-0">
+                      {(['Single', 'Mixed'] as const).map(mode => (
+                        <button
+                          key={mode}
+                          onClick={() => handleModeChange(mode)}
+                          className={`px-3 py-1.5 rounded-md text-xs font-bold uppercase transition-all ${
+                            sParamMode === mode 
+                              ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' 
+                              : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800'
+                          }`}
+                        >
+                          {mode}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {(chartType === 'S' || chartType === 'Z' || chartType === 'Y') && (
+                    <div className="flex gap-2 p-1.5 bg-slate-200/60 dark:bg-slate-900/80 rounded-lg shrink-0">
+                      {(['Magnitude', 'Phase', 'Real', 'Imag'] as const).map(view => (
+                        <button
+                          key={view}
+                          onClick={() => setSParamViewType(view)}
+                          className={`px-3 py-1.5 rounded-md text-xs font-bold uppercase transition-all ${
+                            sParamViewType === view 
+                              ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm' 
+                              : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800'
+                          }`}
+                        >
+                          {view}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
-              {chartType === 'S' && numPorts === 4 && (
-                <div className="flex gap-2 p-1.5 bg-slate-200/60 dark:bg-slate-900/80 rounded-lg">
-                  {(['Single', 'Mixed'] as const).map(mode => (
-                    <button
-                      key={mode}
-                      onClick={() => handleModeChange(mode)}
-                      className={`px-3 py-1.5 rounded-md text-xs font-bold uppercase transition-all ${
-                        sParamMode === mode 
-                          ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm' 
-                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800'
-                      }`}
-                    >
-                      {mode}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {chartType === 'S' && (
-                <div className="flex gap-2 p-1.5 bg-slate-200/60 dark:bg-slate-900/80 rounded-lg">
-                  {(['Magnitude', 'Phase'] as const).map(view => (
-                    <button
-                      key={view}
-                      onClick={() => setSParamViewType(view)}
-                      className={`px-3 py-1.5 rounded-md text-xs font-bold uppercase transition-all ${
-                        sParamViewType === view 
-                          ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm' 
-                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800'
-                      }`}
-                    >
-                      {view}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-x-4 gap-y-2 items-center bg-white dark:bg-slate-900 px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1">Plot:</span>
-              {availableKeys.map(key => (
-                <label key={key} className="flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  <input 
-                    type="checkbox" 
-                    checked={selectedKeys.includes(key)} 
-                    onChange={() => toggleKey(key)}
-                    className="w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500 dark:bg-slate-800 transition-colors cursor-pointer"
-                  />
-                  {key}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="h-[450px] w-full mt-2 bg-white dark:bg-slate-900 rounded-xl">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data} margin={{ top: 10, right: 30, left: 10, bottom: 20 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#94a3b8" opacity={0.3} />
-                <XAxis 
-                  dataKey="fGHz" 
-                  type="number"
-                  domain={['dataMin', 'dataMax']}
-                  tickCount={10}
-                  label={{ value: 'Frequency (GHz)', position: 'bottom', offset: 0, fill: '#64748b' }}
-                  tick={{ fill: '#64748b', fontSize: 12 }}
-                  tickFormatter={(val) => val.toFixed(2)}
-                  stroke="#94a3b8"
-                />
-                <YAxis 
-                  label={{ 
-                    value: chartType === 'S' ? (sParamViewType === 'Magnitude' ? 'Magnitude (dB)' : 'Phase (Degrees)') : chartType === 'L' ? 'Inductance (nH)' : chartType === 'C' ? 'Capacitance (pF)' : 'Quality Factor', 
-                    angle: -90, 
-                    position: 'insideLeft',
-                    offset: 15,
-                    fill: '#64748b'
-                  }}
-                  tick={{ fill: '#64748b', fontSize: 12 }}
-                  domain={['auto', 'auto']}
-                  stroke="#94a3b8"
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend verticalAlign="top" height={40} wrapperStyle={{ fontSize: '14px', fontWeight: 500 }} />
-                {selectedKeys.map((key, i) => (
-                  <Line 
-                    key={key} 
-                    type="monotone" 
-                    dataKey={chartType === 'S' ? `${key}_${sParamViewType}` : key}
-                    name={key}
-                    stroke={colors[i % colors.length]} 
-                    strokeWidth={2.5}
-                    dot={false}
-                    activeDot={{ r: 5, strokeWidth: 0 }}
-                    isAnimationActive={false}
-                  />
+              <div className="flex flex-wrap gap-x-4 gap-y-2 items-center bg-white dark:bg-slate-900 px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mr-1">Plot:</span>
+                {availableKeys.map(key => (
+                  <label key={key} className="flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                    <input 
+                      type="checkbox" 
+                      checked={selectedKeys.includes(key)} 
+                      onChange={() => toggleKey(key)}
+                      className="w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500 dark:bg-slate-800 transition-colors cursor-pointer"
+                    />
+                    {key}
+                  </label>
                 ))}
-              </LineChart>
-            </ResponsiveContainer>
+              </div>
+            </div>
           </div>
+
+          <div className="h-[500px] w-full mt-2 bg-white dark:bg-slate-900 rounded-xl">
+            <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={data} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#94a3b8" opacity={0.3} />
+                  <XAxis 
+                    dataKey="fGHz" 
+                    type="number"
+                    domain={['dataMin', 'dataMax']}
+                    tickCount={10}
+                    label={{ value: 'Frequency (GHz)', position: 'bottom', offset: 0, fill: '#64748b' }}
+                    tick={{ fill: '#64748b', fontSize: 12 }}
+                    tickFormatter={(val) => val.toFixed(2)}
+                    stroke="#94a3b8"
+                  />
+                  <YAxis 
+                    label={{ 
+                      value: chartType === 'S' ? (sParamViewType === 'Magnitude' ? 'Magnitude (dB)' : sParamViewType === 'Phase' ? 'Phase (°)' : sParamViewType) :
+                             (chartType === 'Z' || chartType === 'Y') ? (sParamViewType === 'Magnitude' ? `Magnitude (${chartType === 'Z' ? 'Ω' : 'S'})` : sParamViewType === 'Phase' ? 'Phase (°)' : sParamViewType) :
+                             chartType === 'L' ? 'Inductance (nH)' : 
+                             chartType === 'C' ? 'Capacitance (pF)' : 
+                             chartType === 'GD' ? 'Group Delay (ps)' :
+                             (chartType === 'ESR' || chartType === 'Rp') ? 'Resistance (Ω)' :
+                             chartType === 'Q' ? 'Quality Factor' : 
+                             chartType === 'VSWR' ? 'VSWR' : 'K-Factor', 
+                      angle: -90, 
+                      position: 'insideLeft',
+                      offset: 0,
+                      fill: '#64748b'
+                    }}
+                    tick={{ fill: '#64748b', fontSize: 12 }}
+                    domain={['auto', 'auto']}
+                    stroke="#94a3b8"
+                  />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend verticalAlign="top" height={40} wrapperStyle={{ fontSize: '14px', fontWeight: 500 }} />
+                  {selectedKeys.map((key, i) => (
+                    <Line 
+                      key={key} 
+                      type="monotone" 
+                      dataKey={(chartType === 'S' || chartType === 'Z' || chartType === 'Y') ? `${key}_${sParamViewType}` : key}
+                      name={key}
+                      stroke={colors[i % colors.length]} 
+                      strokeWidth={2.5}
+                      dot={false}
+                      activeDot={{ r: 5, strokeWidth: 0 }}
+                      isAnimationActive={false}
+                    />
+                  ))}
+                  <Brush 
+                    dataKey="fGHz" 
+                    height={30} 
+                    stroke="#8884d8" 
+                    tickFormatter={(val) => val.toFixed(2)} 
+                    y={460}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
         </div>
       )}
     </div>

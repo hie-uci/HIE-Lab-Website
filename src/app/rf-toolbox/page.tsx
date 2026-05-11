@@ -15,6 +15,7 @@ import SParameterViewer from '@/components/SParameterViewer';
 const CATEGORIES = [
   { id: 'pcb_design', name: 'PCB & Transmission Lines', desc: 'Board-level trace design, substrates, and via parasitics.' },
   { id: 'antennas_matching', name: 'Antennas & Matching', desc: 'Patch antenna synthesis and automated impedance matching.' },
+  { id: 's_parameter_tools', name: 'S-Parameter Analysis', desc: 'Touchstone (.sNp) file parsing, charting, and network extraction.' },
   { id: 'system_fundamentals', name: 'System & Fundamentals', desc: 'Cascade analysis, power conversions, and frequency bands.' },
   { id: 'components_waveguides', name: 'Components & Waveguides', desc: 'Passive component reactance, attenuators, and waveguides.' },
 ];
@@ -62,6 +63,7 @@ export default function RFToolboxPage() {
             <main className="flex-1 min-w-0 glass-ios rounded-3xl p-6 sm:p-10 border border-white/40 dark:border-white/10">
               {activeTab === 'pcb_design' && <PCBDesignSection />}
               {activeTab === 'antennas_matching' && <AntennasMatchingSection />}
+              {activeTab === 's_parameter_tools' && <SParameterSection />}
               {activeTab === 'system_fundamentals' && <SystemFundamentalsSection />}
               {activeTab === 'components_waveguides' && <ComponentsWaveguidesSection />}
             </main>
@@ -172,15 +174,21 @@ function SystemFundamentalsSection() {
   );
 }
 
+function SParameterSection() {
+  return (
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="w-full max-w-5xl mx-auto">
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">S-Parameter (.sNp) Analysis Hub</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Upload Touchstone files (up to 12 ports) to interactively plot and extract advanced network parameters including Y/Z parameters, Group Delay, Rollett's Stability Factor, and equivalent circuit models.</p>
+        <SParameterViewer />
+      </div>
+    </div>
+  );
+}
+
 function ComponentsWaveguidesSection() {
   return (
     <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div>
-        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">S-Parameter (.sNp) Viewer & Calculator</h3>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Upload Touchstone files (up to 12 ports) to interactively plot S-parameters, Inductance (L), and Quality Factor (Q).</p>
-        <SParameterViewer />
-      </div>
-
       <div>
         <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">Waveguide Tools</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Cutoff frequency calculators and standard reference tables for rectangular waveguides.</p>
