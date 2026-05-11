@@ -36,14 +36,14 @@ export function ImpedanceMatchingCalculator() {
       const xSeries = q * Rl - Xl;
       const shuntC = 1.0 / (omega * xShunt);
       const seriesL = (xSeries - Xs) / omega;
-      if (seriesL > 0 && shuntC > 0) solutions.push({ type: 'Low-Pass', series: `L = ${(seriesL * 1e9).toFixed(2)} nH`, shunt: `C = ${(shuntC * 1e12).toFixed(2)} pF`, shuntPos: 'Load Side', seriesL, shuntC, shuntL: 0, seriesC: 0 });
+      if (seriesL > 0 && shuntC > 0) solutions.push({ type: 'Low-Pass', series: `L = ${(seriesL * 1e9).toFixed(2)} nH`, shunt: `C = ${(shuntC * 1e12).toFixed(2)} pF`, shuntPos: 'Source Side', seriesL, shuntC, shuntL: 0, seriesC: 0 });
 
       // Sol B (High-Pass)
       const xShunt2 = -Rs / q;
       const xSeries2 = -q * Rl - Xl;
       const shuntL = Math.abs(xShunt2) / omega;
       const seriesC = 1.0 / (omega * Math.abs(xSeries2 - Xs));
-      if (shuntL > 0 && seriesC > 0) solutions.push({ type: 'High-Pass', series: `C = ${(seriesC * 1e12).toFixed(2)} pF`, shunt: `L = ${(shuntL * 1e9).toFixed(2)} nH`, shuntPos: 'Load Side', seriesL: 0, shuntC: 0, shuntL, seriesC });
+      if (shuntL > 0 && seriesC > 0) solutions.push({ type: 'High-Pass', series: `C = ${(seriesC * 1e12).toFixed(2)} pF`, shunt: `L = ${(shuntL * 1e9).toFixed(2)} nH`, shuntPos: 'Source Side', seriesL: 0, shuntC: 0, shuntL, seriesC });
     }
 
     // Topology 2: Shunt-first (when Rl > Rs)
@@ -55,14 +55,14 @@ export function ImpedanceMatchingCalculator() {
       const xSeries = q * Rs - Xs;
       const shuntC = 1.0 / (omega * xShunt);
       const seriesL = xSeries / omega;
-      if (seriesL > 0 && shuntC > 0) solutions.push({ type: 'Low-Pass', series: `L = ${(seriesL * 1e9).toFixed(2)} nH`, shunt: `C = ${(shuntC * 1e12).toFixed(2)} pF`, shuntPos: 'Source Side', seriesL, shuntC, shuntL: 0, seriesC: 0 });
+      if (seriesL > 0 && shuntC > 0) solutions.push({ type: 'Low-Pass', series: `L = ${(seriesL * 1e9).toFixed(2)} nH`, shunt: `C = ${(shuntC * 1e12).toFixed(2)} pF`, shuntPos: 'Load Side', seriesL, shuntC, shuntL: 0, seriesC: 0 });
 
       // Sol B (High-Pass)
       const xShunt2 = -Rl / q;
       const xSeries2 = -q * Rs - Xs;
       const shuntL = Math.abs(xShunt2) / omega;
       const seriesC = 1.0 / (omega * Math.abs(xSeries2));
-      if (shuntL > 0 && seriesC > 0) solutions.push({ type: 'High-Pass', series: `C = ${(seriesC * 1e12).toFixed(2)} pF`, shunt: `L = ${(shuntL * 1e9).toFixed(2)} nH`, shuntPos: 'Source Side', seriesL: 0, shuntC: 0, shuntL, seriesC });
+      if (shuntL > 0 && seriesC > 0) solutions.push({ type: 'High-Pass', series: `C = ${(seriesC * 1e12).toFixed(2)} pF`, shunt: `L = ${(shuntL * 1e9).toFixed(2)} nH`, shuntPos: 'Load Side', seriesL: 0, shuntC: 0, shuntL, seriesC });
     }
 
     return solutions;
