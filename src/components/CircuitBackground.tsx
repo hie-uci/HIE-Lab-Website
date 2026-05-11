@@ -293,7 +293,18 @@ export default function CircuitBackground({
       frame = requestAnimationFrame(draw);
     };
 
-    draw();
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!frame) draw();
+        } else {
+          cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(canvas);
 
     return () => {
       window.removeEventListener('resize', resize);
@@ -302,6 +313,7 @@ export default function CircuitBackground({
         canvas.removeEventListener('mouseleave', handleMouseLeave);
       }
       cancelAnimationFrame(frame);
+      observer.disconnect();
     };
   }, [density, variant, interactive, handleMouseMove, handleMouseLeave]);
 

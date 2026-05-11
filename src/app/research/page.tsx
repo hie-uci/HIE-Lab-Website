@@ -467,8 +467,8 @@ export default function ResearchPage() {
       {/* ═══════ COLLABORATION CTA ═══════ */}
       <section className="relative py-20 lg:py-24 bg-gradient-to-br from-eng-blue via-navy to-eng-blue overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/4 w-80 h-80 bg-uci-blue/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-uci-gold/5 rounded-full blur-3xl" />
+          <div className="absolute top-0 left-1/4 w-80 h-80 rounded-full" style={{ background: 'radial-gradient(circle, rgba(0,100,164,0.1) 0%, transparent 70%)' }} />
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full" style={{ background: 'radial-gradient(circle, rgba(255,210,0,0.05) 0%, transparent 70%)' }} />
         </div>
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

@@ -30,11 +30,11 @@ export default function FluidPlasmaBackground({ className = '' }: { className?: 
     let particles: Particle[] = [];
 
     // Physics parameters
-    const MOUSE_RADIUS = 200;    // How far the mouse pushes
-    const MOUSE_FORCE = 0.8;     // How strongly the mouse pushes
-    const SPRING_STIFFNESS = 0.03; // How fast they return (lower = more fluid/viscous)
-    const FRICTION = 0.85;       // How quickly they lose velocity
-    const SPACING = 40;          // Density of the grid (increased for less density)
+    const MOUSE_RADIUS = 180;    // Reduced slightly
+    const MOUSE_FORCE = 0.7;     // Reduced slightly
+    const SPRING_STIFFNESS = 0.03; 
+    const FRICTION = 0.88;       
+    const SPACING = 55;          // Increased spacing significantly (fewer particles)
 
     // Clean, modern light mode colors (water/glass feel) - extremely subtle
     const colorsLight = ['rgba(0, 100, 164, 0.15)', 'rgba(82, 129, 136, 0.12)', 'rgba(0, 164, 255, 0.1)'];
@@ -189,6 +189,7 @@ export default function FluidPlasmaBackground({ className = '' }: { className?: 
       window.removeEventListener('mousemove', handlePointerMove);
       window.removeEventListener('touchmove', handlePointerMove);
       window.removeEventListener('mouseleave', handlePointerLeave);
+      window.removeEventListener('mousedown', handlePointerDown);
       cancelAnimationFrame(animationId);
     };
   }, [theme]);

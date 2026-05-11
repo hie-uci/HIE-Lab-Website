@@ -56,9 +56,9 @@ export default function PageWrapper({ children, className = '' }: PageWrapperPro
       <motion.div
         initial={{ scaleY: 0, opacity: 0 }}
         animate={{ scaleY: [0, 1, 1], opacity: [0, 1, 0], y: ['-100%', '0%', '100%'] }}
-        transition={{ duration: 0.8, ease: "easeInOut" }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
         className="fixed inset-0 z-[100] pointer-events-none bg-gradient-to-b from-transparent via-uci-blue/30 to-transparent"
-        style={{ height: '4px' }}
+        style={{ height: '2px' }}
       />
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(0,100,164,0.12),transparent_34%),radial-gradient(circle_at_82%_12%,rgba(255,210,0,0.10),transparent_30%),radial-gradient(circle_at_72%_78%,rgba(82,129,136,0.14),transparent_38%)] dark:bg-[radial-gradient(circle_at_18%_18%,rgba(56,189,248,0.16),transparent_34%),radial-gradient(circle_at_82%_12%,rgba(255,210,0,0.08),transparent_30%),radial-gradient(circle_at_72%_78%,rgba(82,129,136,0.16),transparent_38%)]" />

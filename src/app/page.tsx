@@ -111,9 +111,9 @@ export default function HomePage() {
       
       {/* Glowing Orbs for visionOS Glassmorphism Refraction */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-         <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-uci-blue/10 dark:bg-uci-blue/30 blur-[120px] mix-blend-normal dark:mix-blend-screen opacity-60 dark:opacity-50 animate-pulse" style={{ animationDuration: '8s' }} />
-         <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-eecs-teal/20 dark:bg-eecs-teal/30 blur-[150px] mix-blend-normal dark:mix-blend-screen opacity-50 dark:opacity-40 animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }} />
-         <div className="absolute top-[40%] left-[60%] w-[40vw] h-[40vw] rounded-full bg-uci-gold/10 dark:bg-uci-gold/15 blur-[100px] mix-blend-normal dark:mix-blend-screen opacity-40 dark:opacity-30 animate-pulse" style={{ animationDuration: '10s', animationDelay: '4s' }} />
+         <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full mix-blend-normal dark:mix-blend-screen opacity-60 dark:opacity-50 animate-pulse" style={{ animationDuration: '8s', background: 'radial-gradient(circle, var(--color-uci-blue) 0%, transparent 70%)' }} />
+         <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full mix-blend-normal dark:mix-blend-screen opacity-50 dark:opacity-40 animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s', background: 'radial-gradient(circle, var(--color-eecs-teal) 0%, transparent 70%)' }} />
+         <div className="absolute top-[40%] left-[60%] w-[40vw] h-[40vw] rounded-full mix-blend-normal dark:mix-blend-screen opacity-40 dark:opacity-30 animate-pulse" style={{ animationDuration: '10s', animationDelay: '4s', background: 'radial-gradient(circle, var(--color-uci-gold) 0%, transparent 70%)' }} />
       </div>
 
       {/* ═══════ HERO ═══════ */}
@@ -124,43 +124,43 @@ export default function HomePage() {
         {/* Floating chip die photos — decorative background mosaic */}
         <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
           {/* Top-left cluster */}
-          <Image src="/images/chips/individual/sheet1-01-pmcw-radar.png" alt="" width={240} height={240} unoptimized
+          <Image src="/images/chips/individual/sheet1-01-pmcw-radar.png" alt="" width={240} height={240} 
             className="absolute top-[6%] left-[3%] opacity-[0.16] blur-[0.5px] rotate-[-8deg]" />
-          <Image src="/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png" alt="" width={160} height={160} unoptimized
+          <Image src="/images/chips/individual/sheet1-05-3.1-4.7-ghz-class-d-vco.png" alt="" width={160} height={160} 
             className="absolute top-[22%] left-[12%] opacity-[0.12] blur-[1px] rotate-[5deg]" />
 
           {/* Top-right cluster */}
-          <Image src="/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png" alt="" width={200} height={200} unoptimized
+          <Image src="/images/chips/individual/sheet1-06-174-232-ghz-sige-vco.png" alt="" width={200} height={200} 
             className="absolute top-[4%] right-[6%] opacity-[0.15] blur-[0.5px] rotate-[12deg]" />
-          <Image src="/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png" alt="" width={170} height={170} unoptimized
+          <Image src="/images/chips/individual/sheet2-01-23-27-and-69-81-ghz-mimo-fmcw-radar.png" alt="" width={170} height={170} 
             className="absolute top-[18%] right-[18%] opacity-[0.11] blur-[1px] rotate-[-4deg]" />
 
           {/* Middle-left */}
-          <Image src="/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png" alt="" width={190} height={190} unoptimized
+          <Image src="/images/chips/individual/sheet1-03-110-143-ghz-pa-in-65nm-cmos.png" alt="" width={190} height={190} 
             className="absolute top-[42%] left-[2%] opacity-[0.14] blur-[0.5px] rotate-[3deg]" />
-          <Image src="/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png" alt="" width={140} height={140} unoptimized
+          <Image src="/images/chips/individual/sheet3-02-90-ghz-efficient-oscillator.png" alt="" width={140} height={140} 
             className="absolute top-[55%] left-[14%] opacity-[0.10] blur-[1.5px] rotate-[-10deg]" />
 
           {/* Middle-right */}
-          <Image src="/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png" alt="" width={210} height={210} unoptimized
+          <Image src="/images/chips/individual/sheet1-02-low-noise-76-82-ghz-vco.png" alt="" width={210} height={210} 
             className="absolute top-[38%] right-[3%] opacity-[0.16] blur-[0.5px] rotate-[-5deg]" />
-          <Image src="/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png" alt="" width={150} height={150} unoptimized
+          <Image src="/images/chips/individual/sheet2-4-channel-tia-for-mems-pnt.png" alt="" width={150} height={150} 
             className="absolute top-[52%] right-[16%] opacity-[0.11] blur-[1px] rotate-[7deg]" />
 
           {/* Bottom-left */}
-          <Image src="/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png" alt="" width={180} height={180} unoptimized
+          <Image src="/images/chips/individual/sheet2-0.48-thz-frequency-doubler.png" alt="" width={180} height={180} 
             className="absolute bottom-[18%] left-[6%] opacity-[0.13] blur-[1px] rotate-[9deg]" />
 
           {/* Bottom-right cluster */}
-          <Image src="/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png" alt="" width={260} height={260} unoptimized
+          <Image src="/images/chips/individual/sheet2-0.32-thz-sige-transmitter.png" alt="" width={260} height={260} 
             className="absolute bottom-[8%] right-[5%] opacity-[0.18] blur-[0.3px] rotate-[6deg]" />
-          <Image src="/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png" alt="" width={150} height={150} unoptimized
+          <Image src="/images/chips/individual/sheet1-04-49-63-ghz-fmcw-radar.png" alt="" width={150} height={150} 
             className="absolute bottom-[25%] right-[22%] opacity-[0.10] blur-[1.5px] rotate-[-12deg]" />
 
           {/* Center-bottom accent */}
-          <Image src="/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png" alt="" width={170} height={170} unoptimized
+          <Image src="/images/chips/individual/sheet2-02-monostatic-50-60-ghz-fmcw-radar.png" alt="" width={170} height={170} 
             className="absolute bottom-[12%] left-[38%] opacity-[0.09] blur-[1.5px] rotate-[3deg]" />
-          <Image src="/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png" alt="" width={130} height={130} unoptimized
+          <Image src="/images/chips/individual/sheet2-0.92-thz-sige-quadrupler.png" alt="" width={130} height={130} 
             className="absolute bottom-[30%] left-[28%] opacity-[0.08] blur-[2px] rotate-[-6deg]" />
         </div>
 
@@ -436,7 +436,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
             variants={stagger}
-            className="grid md:grid-cols-2 lg:grid-cols-6 gap-5 mt-4"
+            className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 mt-12"
           >
             {researchAreas.map((area, i) => (
               <motion.div
@@ -444,10 +444,10 @@ export default function HomePage() {
                 variants={fadeUp}
                 custom={i}
                 whileHover={{
-                  y: -8,
+                  y: -10,
                 }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
-                className={`group relative flex min-h-[430px] flex-col overflow-hidden rounded-lg border border-white/70 bg-white/85 shadow-[0_18px_60px_rgba(0,56,109,0.10)] backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-500 dark:border-white/10 dark:bg-slate-950/70 dark:shadow-[0_18px_60px_rgba(0,0,0,0.30)] hover:border-uci-blue/35 hover:shadow-[0_24px_70px_rgba(0,100,164,0.18)] ${
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className={`group relative flex min-h-[460px] flex-col overflow-hidden rounded-2xl border border-white/70 bg-white/85 shadow-[0_18px_60px_rgba(0,56,109,0.10)] backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-500 dark:border-white/10 dark:bg-slate-950/70 dark:shadow-[0_18px_60px_rgba(0,0,0,0.30)] hover:border-uci-blue/35 hover:shadow-[0_24px_70px_rgba(0,100,164,0.18)] ${
                   i < 2 ? 'lg:col-span-3' : 'lg:col-span-2'
                 } ${
                   i === 4 ? 'md:col-span-2 lg:col-span-2' : ''
@@ -621,8 +621,8 @@ export default function HomePage() {
       <section className="relative py-24 lg:py-32 bg-gradient-to-br from-eng-blue via-navy to-eng-blue overflow-hidden z-10">
         {/* Decorative elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-uci-blue/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-uci-gold/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
+          <div className="absolute top-0 left-0 w-96 h-96 rounded-full -translate-x-1/2 -translate-y-1/2" style={{ background: 'radial-gradient(circle, rgba(0,100,164,0.2) 0%, transparent 70%)' }} />
+          <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full translate-x-1/3 translate-y-1/3" style={{ background: 'radial-gradient(circle, rgba(255,210,0,0.1) 0%, transparent 70%)' }} />
         </div>
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <svg width="100%" height="100%">

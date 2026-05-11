@@ -5,7 +5,7 @@ export default function GradientMesh({ className = '' }: { className?: string })
     <div className={`absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
       {/* UCI Blue orb */}
       <div
-        className="absolute w-[600px] h-[600px] rounded-full opacity-30 blur-[120px]"
+        className="absolute w-[600px] h-[600px] rounded-full opacity-30"
         style={{
           background: 'radial-gradient(circle, #0064a4 0%, transparent 70%)',
           top: '10%',
@@ -15,7 +15,7 @@ export default function GradientMesh({ className = '' }: { className?: string })
       />
       {/* UCI Gold orb */}
       <div
-        className="absolute w-[500px] h-[500px] rounded-full opacity-20 blur-[100px]"
+        className="absolute w-[500px] h-[500px] rounded-full opacity-20"
         style={{
           background: 'radial-gradient(circle, #ffd200 0%, transparent 70%)',
           top: '40%',
@@ -25,7 +25,7 @@ export default function GradientMesh({ className = '' }: { className?: string })
       />
       {/* EECS Teal orb */}
       <div
-        className="absolute w-[550px] h-[550px] rounded-full opacity-25 blur-[110px]"
+        className="absolute w-[550px] h-[550px] rounded-full opacity-25"
         style={{
           background: 'radial-gradient(circle, #528188 0%, transparent 70%)',
           bottom: '5%',
