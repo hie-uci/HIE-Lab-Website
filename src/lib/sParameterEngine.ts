@@ -385,12 +385,12 @@ export function computeTDR(points: SParamMatrix[], portIndex: number = 0): TDRPo
   const df = points[1].frequency - points[0].frequency;
   if (df <= 0) return []; 
 
-  let f0 = points[0].frequency;
+  const f0 = points[0].frequency;
   const s11Points: Complex[] = [];
   
   let dcVal = { real: points[0].matrix[portIndex][portIndex].real, imag: 0 };
   
-  let startIdx = Math.round(f0 / df);
+  const startIdx = Math.round(f0 / df);
   if (startIdx === 0) {
     dcVal = points[0].matrix[portIndex][portIndex]; 
     s11Points.push(dcVal);
@@ -448,7 +448,7 @@ export function computeTDR(points: SParamMatrix[], portIndex: number = 0): TDRPo
     if (rho > 0.999) rho = 0.999;
     if (rho < -0.999) rho = -0.999;
 
-    let impedance = z0 * (1 + rho) / (1 - rho);
+    const impedance = z0 * (1 + rho) / (1 - rho);
 
     tdr.push({
       time,

@@ -34,6 +34,7 @@ function getGainAtFreq(block: CascadeBlock, targetFreq: number): number {
   const points = block.sParamData.points;
   const numPorts = points[0].matrix.length;
   // If 2-port use S21, if 1-port use S11
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getMag = (pt: any) => cMag(numPorts > 1 ? pt.matrix[1][0] : pt.matrix[0][0]);
   
   if (targetFreq <= points[0].frequency) {
@@ -100,7 +101,7 @@ export function calculateCascade(blocks: CascadeBlock[]): CascadeResult {
   const cascadedOIP3DBm = cascadedIIP3DBm + totalGainDB;
 
   // Now calculate swept results if any block has sParamData
-  let frequencies = new Set<number>();
+  const frequencies = new Set<number>();
   blocks.forEach(b => {
     if (b.sParamData) {
       b.sParamData.points.forEach(p => frequencies.add(p.frequency));

@@ -180,7 +180,7 @@ function SParameterSection() {
     <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="w-full max-w-5xl mx-auto">
         <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">S-Parameter (.sNp) Analysis Hub</h3>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Upload Touchstone files (up to 12 ports) to interactively plot and extract advanced network parameters including Y/Z parameters, Group Delay, Rollett's Stability Factor, and equivalent circuit models.</p>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Upload Touchstone files (up to 12 ports) to interactively plot and extract advanced network parameters including Y/Z parameters, Group Delay, Rollett&apos;s Stability Factor, and equivalent circuit models.</p>
         <SParameterViewer />
       </div>
     </div>

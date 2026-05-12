@@ -152,6 +152,7 @@ export default function SystemCascadeBuilder() {
   // Compute cascade path and results
   useEffect(() => {
     if (nodes.length === 0) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       setCascadeResult(null);
       return;
     }

@@ -43,16 +43,16 @@ export function ImpedanceMatchingCalculator() {
         const X1 = (B1 * den - Xl) / (Rl / Rs) - Xs;
         
         // Output components
-        let compSeries1 = X1 > 0 ? `L = ${(X1 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X1) * 1e12).toFixed(2)} pF`;
-        let compShunt1 = B1 > 0 ? `C = ${(B1 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B1) * 1e9).toFixed(2)} nH`;
+        const compSeries1 = X1 > 0 ? `L = ${(X1 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X1) * 1e12).toFixed(2)} pF`;
+        const compShunt1 = B1 > 0 ? `C = ${(B1 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B1) * 1e9).toFixed(2)} nH`;
         solutions.push({ type: 'Sol A1 (Shunt at Load)', series: compSeries1, shunt: compShunt1, shuntPos: 'Load Side', seriesX: X1, shuntB: B1 });
 
         // Sol A2 (- root)
         const B2 = (Xl - root) / den;
         const X2 = (B2 * den - Xl) / (Rl / Rs) - Xs;
         
-        let compSeries2 = X2 > 0 ? `L = ${(X2 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X2) * 1e12).toFixed(2)} pF`;
-        let compShunt2 = B2 > 0 ? `C = ${(B2 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B2) * 1e9).toFixed(2)} nH`;
+        const compSeries2 = X2 > 0 ? `L = ${(X2 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X2) * 1e12).toFixed(2)} pF`;
+        const compShunt2 = B2 > 0 ? `C = ${(B2 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B2) * 1e9).toFixed(2)} nH`;
         solutions.push({ type: 'Sol A2 (Shunt at Load)', series: compSeries2, shunt: compShunt2, shuntPos: 'Load Side', seriesX: X2, shuntB: B2 });
       }
     }
@@ -69,16 +69,16 @@ export function ImpedanceMatchingCalculator() {
         const X1 = -Xl + root;
         const B1 = (Xs + (X1 + Xl) / (Rl / Rs)) / den;
         
-        let compSeries1 = X1 > 0 ? `L = ${(X1 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X1) * 1e12).toFixed(2)} pF`;
-        let compShunt1 = B1 > 0 ? `C = ${(B1 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B1) * 1e9).toFixed(2)} nH`;
+        const compSeries1 = X1 > 0 ? `L = ${(X1 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X1) * 1e12).toFixed(2)} pF`;
+        const compShunt1 = B1 > 0 ? `C = ${(B1 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B1) * 1e9).toFixed(2)} nH`;
         solutions.push({ type: 'Sol B1 (Shunt at Source)', series: compSeries1, shunt: compShunt1, shuntPos: 'Source Side', seriesX: X1, shuntB: B1 });
 
         // Sol B2 (- root)
         const X2 = -Xl - root;
         const B2 = (Xs + (X2 + Xl) / (Rl / Rs)) / den;
         
-        let compSeries2 = X2 > 0 ? `L = ${(X2 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X2) * 1e12).toFixed(2)} pF`;
-        let compShunt2 = B2 > 0 ? `C = ${(B2 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B2) * 1e9).toFixed(2)} nH`;
+        const compSeries2 = X2 > 0 ? `L = ${(X2 / omega * 1e9).toFixed(2)} nH` : `C = ${(-1 / (omega * X2) * 1e12).toFixed(2)} pF`;
+        const compShunt2 = B2 > 0 ? `C = ${(B2 / omega * 1e12).toFixed(2)} pF` : `L = ${(-1 / (omega * B2) * 1e9).toFixed(2)} nH`;
         solutions.push({ type: 'Sol B2 (Shunt at Source)', series: compSeries2, shunt: compShunt2, shuntPos: 'Source Side', seriesX: X2, shuntB: B2 });
       }
     }
