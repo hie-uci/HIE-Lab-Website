@@ -181,7 +181,7 @@ export default function MeasurementTutorialPage() {
               </div>
             </div>
 
-            {/* Module 4: EDA Workflow */}
+            {/* Module 4: Antenna PCB Integration */}
             <div className="glass-ios rounded-3xl p-6 sm:p-10 border border-white/40 dark:border-white/10">
               <div className="grid lg:grid-cols-2 gap-10 items-center">
                 <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-800 lg:order-1 order-2">
@@ -189,19 +189,19 @@ export default function MeasurementTutorialPage() {
                 </div>
                 <div className="space-y-6 lg:order-2 order-1">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-500 text-xs font-bold uppercase tracking-wider">
-                    <Layers className="w-4 h-4" /> EDA Workflow
+                    <Layers className="w-4 h-4" /> Antenna PCB Integration
                   </div>
                   <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
                     Export HFSS Antenna Design to KiCad
                   </h3>
                   <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
-                    A crucial step in hardware realization: taking a validated 3D electromagnetic simulation and converting it into manufacturing files. This bridges the gap between EM physics and PCB fabrication.
+                    A crucial step in hardware realization: taking a validated 3D electromagnetic antenna simulation and integrating it onto a PCB structure. This bridges the gap between EM physics and physical PCB fabrication.
                   </p>
                   
                   <div className="bg-white/50 dark:bg-slate-900/50 p-5 rounded-xl border border-slate-200 dark:border-slate-700/50">
                     <h4 className="font-semibold text-sm text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
                       <FileCode2 className="w-4 h-4 text-amber-500" />
-                      Workflow Timeline
+                      Integration Timeline
                     </h4>
                     <div className="space-y-4">
                       <div className="flex items-center gap-4">
