@@ -151,7 +151,7 @@ export default function MeasurementTutorialPage() {
                     3.1GHz - 4.66GHz VCO Measurement
                   </h3>
                   <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
-                    Validating the performance of a wideband Voltage-Controlled Oscillator (VCO) intended for a TCAS-I paper submission. This type of measurement is critical for characterizing the purity of the local oscillator (LO) signal, verifying both phase noise and output power under room temperature conditions.
+                    Validating the performance of a wideband Voltage-Controlled Oscillator (VCO) intended for a TCAS-I paper submission. This type of measurement is critical for characterizing the purity of the local oscillator (LO) signal, verifying both phase noise and output power under specific thermal conditions (e.g., 69°C).
                   </p>
                   
                   <div className="bg-white/50 dark:bg-slate-900/50 p-5 rounded-xl border border-slate-200 dark:border-slate-700/50">
