@@ -1,4 +1,4 @@
-import { ParseResult, cMag } from './sParameterEngine';
+import { ParseResult, cMag, SParamMatrix } from './sParameterEngine';
 
 export interface CascadeBlock {
   id: string;
@@ -34,8 +34,7 @@ function getGainAtFreq(block: CascadeBlock, targetFreq: number): number {
   const points = block.sParamData.points;
   const numPorts = points[0].matrix.length;
   // If 2-port use S21, if 1-port use S11
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const getMag = (pt: any) => cMag(numPorts > 1 ? pt.matrix[1][0] : pt.matrix[0][0]);
+  const getMag = (pt: SParamMatrix) => cMag(numPorts > 1 ? pt.matrix[1][0] : pt.matrix[0][0]);
   
   if (targetFreq <= points[0].frequency) {
     return 20 * Math.log10(getMag(points[0]) + 1e-15);

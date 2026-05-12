@@ -19,23 +19,35 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { calculateCascade, CascadeBlock, CascadeResult } from '@/lib/cascadeMath';
-import { parseTouchstone } from '@/lib/sParameterEngine';
+import { parseTouchstone, ParseResult } from '@/lib/sParameterEngine';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+interface RFBlockNodeData {
+  name: string;
+  gain: number;
+  nf: number;
+  oip3: number;
+  onChange?: (id: string, field: string, value: number) => void;
+  onFileLoad?: (id: string, content: string, fileName: string) => void;
+  sParamData?: ParseResult;
+  sParamFileName?: string;
+  [key: string]: unknown; // For ReactFlow internal usage if needed
+}
+
 // Custom Node for RF Block
-const RFBlockNode = ({ data, id }: NodeProps) => {
+const RFBlockNode = ({ data, id }: NodeProps<Node<RFBlockNodeData>>) => {
   return (
     <div className="bg-white dark:bg-gray-800 border-2 border-blue-500 rounded-lg p-3 shadow-md min-w-[170px] text-gray-900 dark:text-gray-100 font-sans">
       <Handle type="target" position={Position.Left} className="w-3 h-3 bg-blue-500 border-none" />
-      <div className="font-bold text-center border-b border-gray-200 dark:border-gray-700 pb-2 mb-3">{data.name as string}</div>
+      <div className="font-bold text-center border-b border-gray-200 dark:border-gray-700 pb-2 mb-3">{data.name}</div>
       <div className="flex flex-col gap-2.5 text-xs">
         <div className="flex justify-between items-center gap-3">
           <label className="text-gray-600 dark:text-gray-400 font-medium">Gain (dB)</label>
           <input 
             type="number" 
             className="w-16 p-1 border rounded bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-600 text-right focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" 
-            value={data.gain as number}
-            onChange={(e) => (data.onChange as Function)(id, 'gain', parseFloat(e.target.value) || 0)}
+            value={data.gain}
+            onChange={(e) => data.onChange?.(id, 'gain', parseFloat(e.target.value) || 0)}
             disabled={!!data.sParamData}
             title={data.sParamData ? "Gain is driven by S-Parameter file" : ""}
           />
@@ -45,8 +57,8 @@ const RFBlockNode = ({ data, id }: NodeProps) => {
           <input 
             type="number" 
             className="w-16 p-1 border rounded bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-600 text-right focus:outline-none focus:ring-2 focus:ring-blue-500" 
-            value={data.nf as number}
-            onChange={(e) => (data.onChange as Function)(id, 'nf', parseFloat(e.target.value) || 0)}
+            value={data.nf}
+            onChange={(e) => data.onChange?.(id, 'nf', parseFloat(e.target.value) || 0)}
           />
         </div>
         <div className="flex justify-between items-center gap-3">
@@ -54,8 +66,8 @@ const RFBlockNode = ({ data, id }: NodeProps) => {
           <input 
             type="number" 
             className="w-16 p-1 border rounded bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-600 text-right focus:outline-none focus:ring-2 focus:ring-blue-500" 
-            value={data.oip3 as number}
-            onChange={(e) => (data.onChange as Function)(id, 'oip3', parseFloat(e.target.value) || 0)}
+            value={data.oip3}
+            onChange={(e) => data.onChange?.(id, 'oip3', parseFloat(e.target.value) || 0)}
           />
         </div>
         <div className="flex flex-col gap-1 mt-1 border-t border-gray-200 dark:border-gray-700 pt-2">
@@ -70,7 +82,7 @@ const RFBlockNode = ({ data, id }: NodeProps) => {
                 const reader = new FileReader();
                 reader.onload = (ev) => {
                   if (ev.target?.result) {
-                    (data.onFileLoad as Function)(id, ev.target.result as string, file.name);
+                    data.onFileLoad?.(id, ev.target.result as string, file.name);
                   }
                 };
                 reader.readAsText(file);
@@ -85,7 +97,7 @@ const RFBlockNode = ({ data, id }: NodeProps) => {
   );
 };
 
-const initialNodes: Node[] = [
+const initialNodes: Node<RFBlockNodeData>[] = [
   { id: '1', type: 'rfBlock', position: { x: 50, y: 150 }, data: { name: 'LNA', gain: 15, nf: 1.5, oip3: 20 } },
   { id: '2', type: 'rfBlock', position: { x: 300, y: 150 }, data: { name: 'Filter', gain: -2, nf: 2, oip3: 100 } },
   { id: '3', type: 'rfBlock', position: { x: 550, y: 150 }, data: { name: 'Mixer', gain: -6, nf: 6, oip3: 15 } },
@@ -97,9 +109,8 @@ const initialEdges: Edge[] = [
 ];
 
 export default function SystemCascadeBuilder() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node<RFBlockNodeData>>(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [cascadeResult, setCascadeResult] = useState<CascadeResult | null>(null);
 
   const onNodeDataChange = useCallback((id: string, field: string, value: number) => {
     setNodes((nds) =>
@@ -141,7 +152,7 @@ export default function SystemCascadeBuilder() {
   }, [setNodes]);
 
   const nodeTypes = useMemo(() => {
-    const RFBlockNodeWrapper = (props: NodeProps) => {
+    const RFBlockNodeWrapper = (props: NodeProps<Node<RFBlockNodeData>>) => {
       return <RFBlockNode {...props} data={{...props.data, onChange: onNodeDataChange, onFileLoad}} />
     };
     return { rfBlock: RFBlockNodeWrapper };
@@ -150,11 +161,9 @@ export default function SystemCascadeBuilder() {
   const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge({ ...params, animated: true }, eds)), [setEdges]);
 
   // Compute cascade path and results
-  useEffect(() => {
+  const cascadeResult = useMemo(() => {
     if (nodes.length === 0) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      setCascadeResult(null);
-      return;
+      return null;
     }
 
     const incomingEdgeCount: Record<string, number> = {};
@@ -190,28 +199,26 @@ export default function SystemCascadeBuilder() {
       if (node) {
         chain.push({
           id: node.id,
-          name: node.data.name as string,
-          gain: node.data.gain as number,
-          nf: node.data.nf as number,
-          oip3: node.data.oip3 as number,
-          sParamData: node.data.sParamData as any,
-          sParamFileName: node.data.sParamFileName as string,
+          name: node.data.name,
+          gain: node.data.gain,
+          nf: node.data.nf,
+          oip3: node.data.oip3,
+          sParamData: node.data.sParamData,
+          sParamFileName: node.data.sParamFileName,
         });
       }
       currentNodeId = outgoingEdges[currentNodeId];
     }
 
     if (chain.length > 0) {
-      const result = calculateCascade(chain);
-      setCascadeResult(result);
-    } else {
-      setCascadeResult(null);
-    }
+      return calculateCascade(chain);
+    } 
+    return null;
   }, [nodes, edges]);
 
   const addBlock = (name: string) => {
     const newNodeId = `node_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
-    const newNode: Node = {
+    const newNode: Node<RFBlockNodeData> = {
       id: newNodeId,
       type: 'rfBlock',
       position: { x: Math.random() * 100 + 100, y: Math.random() * 100 + 100 },
@@ -284,7 +291,7 @@ export default function SystemCascadeBuilder() {
                       <Tooltip 
                         contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', fontSize: '12px', color: '#f3f4f6' }}
                         labelFormatter={(val) => `Freq: ${(Number(val) / 1e9).toFixed(2)} GHz`}
-                        formatter={(val: any, name: any) => [Number(val).toFixed(2) + ' dB/dBm', String(name)]}
+                        formatter={(val: number | string) => [Number(val).toFixed(2) + ' dB/dBm']}
                       />
                       <Legend wrapperStyle={{ fontSize: '10px' }} />
                       <Line type="monotone" dataKey="cascadedGain" name="Gain" stroke="#3b82f6" dot={false} strokeWidth={2} />

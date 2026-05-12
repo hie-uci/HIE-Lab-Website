@@ -8,6 +8,15 @@ import { PolarPlot } from './PolarPlot';
    Impedance Matching Synthesizer (L-Match)
    ========================================================================= */
 
+interface LMatchSolution {
+  type: string;
+  series: string;
+  shunt: string;
+  shuntPos: 'Load Side' | 'Source Side';
+  seriesX: number;
+  shuntB: number;
+}
+
 export function ImpedanceMatchingCalculator() {
   const [rs, setRs] = useState<string>('10');
   const [xs, setXs] = useState<string>('-15');
@@ -15,7 +24,7 @@ export function ImpedanceMatchingCalculator() {
   const [xl, setXl] = useState<string>('0');
   const [freq, setFreq] = useState<string>('2.45');
 
-  const calcLMatch = () => {
+  const calcLMatch = (): LMatchSolution[] => {
     const Rs = parseFloat(rs);
     const Xs = parseFloat(xs);
     const Rl = parseFloat(rl);
@@ -25,7 +34,7 @@ export function ImpedanceMatchingCalculator() {
     if (isNaN(Rs) || isNaN(Xs) || isNaN(Rl) || isNaN(Xl) || isNaN(fGHz) || Rs <= 0 || Rl <= 0 || fGHz <= 0) return [];
 
     const omega = 2.0 * Math.PI * (fGHz * 1e9);
-    const solutions: any[] = [];
+    const solutions: LMatchSolution[] = [];
 
     const RpL = (Rl * Rl + Xl * Xl) / Rl;
     const RpS = (Rs * Rs + Xs * Xs) / Rs;

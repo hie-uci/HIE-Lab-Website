@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, useMemo } from 'react';
 
 // --- Math Helpers ---
 const zToGamma = (r: number, x: number) => {
@@ -42,26 +42,29 @@ export function InteractiveSmithChart({
   // --- Calculations ---
   const omega = 2 * Math.PI * freqGHz * 1e9;
   
-  const points = [{ r: initialLoad.r, x: initialLoad.x }];
-  operations.forEach(op => {
-    const lastPt = points[points.length - 1];
-    if (op.type === 'series') {
-      const unnormX = lastPt.x * z0 + op.value;
-      points.push({ r: lastPt.r, x: unnormX / z0 });
-    } else {
-      const y = zToY(lastPt.r, lastPt.x);
-      const unnormY = { g: y.g / z0, b: y.b / z0 };
-      unnormY.b += op.value;
-      const newYNorm = { g: unnormY.g * z0, b: unnormY.b * z0 };
-      
-      const den = newYNorm.g * newYNorm.g + newYNorm.b * newYNorm.b;
-      if (den < 1e-6) {
-        points.push({ r: 9999, x: 0 });
+  const points = useMemo(() => {
+    const pts = [{ r: initialLoad.r, x: initialLoad.x }];
+    operations.forEach(op => {
+      const lastPt = pts[pts.length - 1];
+      if (op.type === 'series') {
+        const unnormX = lastPt.x * z0 + op.value;
+        pts.push({ r: lastPt.r, x: unnormX / z0 });
       } else {
-        points.push({ r: newYNorm.g / den, x: -newYNorm.b / den });
+        const y = zToY(lastPt.r, lastPt.x);
+        const unnormY = { g: y.g / z0, b: y.b / z0 };
+        unnormY.b += op.value;
+        const newYNorm = { g: unnormY.g * z0, b: unnormY.b * z0 };
+        
+        const den = newYNorm.g * newYNorm.g + newYNorm.b * newYNorm.b;
+        if (den < 1e-6) {
+          pts.push({ r: 9999, x: 0 });
+        } else {
+          pts.push({ r: newYNorm.g / den, x: -newYNorm.b / den });
+        }
       }
-    }
-  });
+    });
+    return pts;
+  }, [initialLoad, operations, z0]);
 
   // --- Drag Handling ---
   const getMouseGamma = (e: React.PointerEvent | PointerEvent) => {

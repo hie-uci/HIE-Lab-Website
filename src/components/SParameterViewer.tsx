@@ -17,8 +17,14 @@ const colors = [
   '#14b8a6', // teal-500
 ];
 
+interface PlotDataPoint {
+  frequency: number;
+  fGHz: number;
+  [key: string]: number | string;
+}
+
 export default function SParameterViewer() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<PlotDataPoint[]>([]);
   const [tdrData, setTdrData] = useState<TDRPoint[]>([]);
   const [viewMode, setViewMode] = useState<'Frequency' | 'Time' | 'SmithChart'>('Frequency');
   const [fileName, setFileName] = useState<string>('');
@@ -65,7 +71,7 @@ export default function SParameterViewer() {
         const S = pt.matrix;
         const N = S.length;
         
-        const dataPoint: any = {
+        const dataPoint: PlotDataPoint = {
           frequency: f,
           fGHz: parseFloat(fGHz.toFixed(4)),
         };
@@ -176,8 +182,8 @@ export default function SParameterViewer() {
       }
       setChartType('S');
 
-    } catch (err: any) {
-      setError(err.message || 'Error parsing Touchstone file.');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error parsing Touchstone file.');
       setData([]);
     }
   };
@@ -256,12 +262,12 @@ export default function SParameterViewer() {
     );
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: { dataKey: string; name: string; value: number; color: string }[]; label?: number | string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3 rounded-lg shadow-lg">
           <p className="text-sm font-medium text-slate-800 dark:text-slate-200 mb-2">{`${label} GHz`}</p>
-          {payload.map((entry: any, index: number) => {
+          {payload.map((entry, index) => {
             const isComplex = entry.dataKey.includes('_Magnitude') || entry.dataKey.includes('_Phase') || entry.dataKey.includes('_Real') || entry.dataKey.includes('_Imag');
             const name = isComplex ? entry.dataKey.split('_')[0] : entry.name;
             
@@ -591,8 +597,8 @@ export default function SParameterViewer() {
                       stroke="#94a3b8"
                     />
                     <Tooltip 
-                      formatter={(val: any, name: any) => [typeof val === 'number' ? val.toFixed(2) : val, name === 'impedance' ? 'Z(t) [Ω]' : name]}
-                      labelFormatter={(label: any) => typeof label === 'number' ? `${label.toFixed(3)} ns` : label}
+                      formatter={(val: number | string, name: string) => [typeof val === 'number' ? val.toFixed(2) : val, name === 'impedance' ? 'Z(t) [Ω]' : name]}
+                      labelFormatter={(label: number | string) => typeof label === 'number' ? `${label.toFixed(3)} ns` : label}
                     />
                     <Legend verticalAlign="top" height={40} />
                     <Line 
