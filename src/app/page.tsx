@@ -417,6 +417,70 @@ export default function HomePage() {
 
       <WaveformDivider color="blue" />
 
+      {/* ═══════ TUTORIALS PREVIEW ═══════ */}
+      <section className="relative scroll-mt-24 py-20 lg:py-24 bg-background z-10">
+        <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,100,164,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,100,164,0.1)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            badge="Resources"
+            title="Measurements & Design Tutorials"
+            subtitle="Explore our video guides covering VNA calibration, active circuit characterization, radar demos, and HFSS to PCB workflows."
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {[
+              { title: "60GHz Radar Antenna Pattern", img: "GuXS8jPgpSQ" },
+              { title: "24GHz Radar Target Demo", img: "jyqjmBx2frc" },
+              { title: "Wideband VCO Characterization", img: "lKwzEgkpngI" },
+              { title: "HFSS Antenna PCB Integration", img: "cpQM-97AvMA" }
+            ].map((video, idx) => (
+               <Link key={idx} href="/measurement-tutorial" className="group relative rounded-2xl overflow-hidden glass-ios border border-white/40 dark:border-white/10 hover:shadow-lg hover:border-uci-blue/30 transition-all duration-300">
+                  <div className="aspect-video bg-slate-200 dark:bg-slate-800 relative">
+                     {/* Using unoptimized Image or img tag for external YouTube thumbnails to avoid next/image domain config issues */}
+                     <img 
+                       src={`https://img.youtube.com/vi/${video.img}/maxresdefault.jpg`} 
+                       alt={video.title} 
+                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                     />
+                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
+                        <svg className="w-12 h-12 text-white/80 group-hover:text-white group-hover:scale-110 transition-all duration-300 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                     </div>
+                  </div>
+                  <div className="p-4">
+                     <h4 className="font-semibold text-sm text-slate-800 dark:text-slate-200 line-clamp-2 group-hover:text-uci-blue transition-colors">{video.title}</h4>
+                  </div>
+               </Link>
+            ))}
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="text-center mt-10"
+          >
+            <Link
+              href="/measurement-tutorial"
+              className="inline-flex items-center gap-2 text-sm font-medium text-uci-blue dark:text-blue-400 hover:text-eng-blue transition-colors animated-underline"
+            >
+              Watch full tutorials
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      <WaveformDivider color="teal" />
+
       {/* ═══════ RESEARCH HIGHLIGHTS ═══════ */}
       <section id="research-highlights" className="relative scroll-mt-24 py-24 lg:py-32 bg-slate-warm dark:bg-transparent z-10 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none opacity-70 dark:opacity-40">
