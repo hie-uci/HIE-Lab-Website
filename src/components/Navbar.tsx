@@ -11,7 +11,7 @@ const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Research', href: '/research' },
   { name: 'RF Toolbox', href: '/rf-toolbox' },
-  { name: 'Tutorials', href: '/measurement-tutorial' },
+  { name: 'Measurements & Design', href: '/measurement-tutorial' },
   { name: 'Publications', href: '/publications' },
   { name: 'Team', href: '/team' },
   { name: 'Chip Gallery', href: '/chip-gallery' },
