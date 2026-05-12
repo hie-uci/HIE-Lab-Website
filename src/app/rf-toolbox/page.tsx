@@ -7,7 +7,7 @@ import { vswrTable, dielectricsTable, waveguideTable, freqBandsTable } from './d
 import PageWrapper from '@/components/PageWrapper';
 import SectionHeader from '@/components/SectionHeader';
 import { VSWRCalculator, DBCalculator, MicrostripCalculator, WaveguideCalculator, StriplineCalculator, CPWCalculator, SkinDepthCalculator, PCBViaCalculator } from '@/components/Calculators';
-import { ImpedanceMatchingCalculator, ReceiverCascadeCalculator, PatchAntennaCalculator, PhasedArrayCalculator } from '@/components/AdvancedCalculators';
+import { ImpedanceMatchingCalculator, ReceiverCascadeCalculator, PatchAntennaCalculator, PhasedArrayCalculator, PLLCalculator } from '@/components/AdvancedCalculators';
 import { InteractiveSmithChart } from '@/components/InteractiveSmithChart';
 import SystemCascadeBuilder from '@/components/SystemCascadeBuilder';
 import SParameterViewer from '@/components/SParameterViewer';
@@ -66,6 +66,7 @@ export default function RFToolboxPage() {
               {activeTab === 's_parameter_tools' && <SParameterSection />}
               {activeTab === 'system_fundamentals' && <SystemFundamentalsSection />}
               {activeTab === 'components_waveguides' && <ComponentsWaveguidesSection />}
+              {activeTab === 'measurement_tutorial' && <MeasurementTutorialSection />}
             </main>
           </div>
         </div>
@@ -135,8 +136,9 @@ function SystemFundamentalsSection() {
 
       <div>
         <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">System Level Calculators</h3>
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Tools for signal power, impedance mismatch, and receiver cascade analysis.</p>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Tools for signal power, impedance mismatch, receiver cascade analysis, and PLL loop filter synthesis.</p>
         <ReceiverCascadeCalculator />
+        <PLLCalculator />
         <DBCalculator />
         <VSWRCalculator />
         <SkinDepthCalculator />
@@ -228,6 +230,61 @@ function ComponentsWaveguidesSection() {
           <FormulaCard title="T-Pad Attenuator (N = 10^{dB/10})">
             <BlockMath math="R_1 = Z \frac{\sqrt{N}-1}{\sqrt{N}+1}, \ R_3 = \frac{2Z\sqrt{N}}{N-1}" />
           </FormulaCard>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MeasurementTutorialSection() {
+  return (
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div>
+        <h3 className="text-2xl font-bold text-eng-blue dark:text-blue-300 mb-2">RF/mmWave Measurement Tutorials</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
+          A collection of educational videos covering vector network analysis (VNA), spectrum analysis, probe station calibration, and on-wafer measurements.
+        </p>
+        
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Main Video Feature */}
+          <div className="lg:col-span-2 bg-white/70 dark:bg-slate-900/70 p-6 rounded-2xl border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300">
+            <h4 className="text-lg font-bold text-eng-blue dark:text-blue-300 mb-4">On-Wafer VNA Calibration (mmWave)</h4>
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-900 border border-slate-800 shadow-inner">
+              <iframe 
+                className="absolute inset-0 w-full h-full" 
+                src="https://www.youtube.com/embed/placeholder" 
+                title="Measurement Tutorial Video" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+              ></iframe>
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none bg-slate-900/80">
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-full bg-red-600/90 text-white flex items-center justify-center mx-auto mb-3 backdrop-blur-sm">
+                    <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                  </div>
+                  <p className="text-slate-300 font-medium">Video Coming Soon</p>
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mt-4 leading-relaxed">
+              Learn the step-by-step procedure for performing a rigorous Line-Reflect-Reflect-Match (LRRM) and Short-Open-Load-Thru (SOLT) calibration on a high-frequency probe station up to 110 GHz.
+            </p>
+          </div>
+          
+          {/* Secondary Videos / Resources */}
+          <div className="bg-white/70 dark:bg-slate-900/70 p-6 rounded-2xl border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300">
+            <h4 className="text-md font-bold text-eng-blue dark:text-blue-300 mb-4">Spectrum Analyzer Basics</h4>
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-800/80 flex items-center justify-center border border-slate-700/50">
+              <p className="text-slate-500 font-medium text-sm">Coming Soon</p>
+            </div>
+          </div>
+          
+          <div className="bg-white/70 dark:bg-slate-900/70 p-6 rounded-2xl border border-white/50 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300">
+            <h4 className="text-md font-bold text-eng-blue dark:text-blue-300 mb-4">Active Device Biasing & Stability</h4>
+            <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-slate-800/80 flex items-center justify-center border border-slate-700/50">
+              <p className="text-slate-500 font-medium text-sm">Coming Soon</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

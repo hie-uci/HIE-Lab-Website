@@ -350,3 +350,115 @@ function createComplex(v1: string, v2: string, format: string): Complex {
     return { real: n1, imag: n2 };
   }
 }
+
+export interface TDRPoint {
+  time: number;
+  timeNs: number;
+  timePs: number;
+  impulse: number;
+  step: number;
+  impedance: number;
+}
+
+function fft(arr: Complex[], invert: boolean): Complex[] {
+  const n = arr.length;
+  if (n === 1) return [arr[0]];
+
+  const even = fft(arr.filter((_, i) => i % 2 === 0), invert);
+  const odd = fft(arr.filter((_, i) => i % 2 !== 0), invert);
+
+  const res = new Array(n);
+  const angleSign = invert ? 1 : -1;
+  for (let k = 0; k < n / 2; k++) {
+    const angle = (2 * Math.PI * k) / n * angleSign;
+    const w = { real: Math.cos(angle), imag: Math.sin(angle) };
+    const t = cMul(w, odd[k]);
+    res[k] = cAdd(even[k], t);
+    res[k + n / 2] = cSub(even[k], t);
+  }
+  return res;
+}
+
+export function computeTDR(points: SParamMatrix[], portIndex: number = 0): TDRPoint[] {
+  if (points.length < 2) return [];
+
+  const df = points[1].frequency - points[0].frequency;
+  if (df <= 0) return []; 
+
+  let f0 = points[0].frequency;
+  const s11Points: Complex[] = [];
+  
+  let dcVal = { real: points[0].matrix[portIndex][portIndex].real, imag: 0 };
+  
+  let startIdx = Math.round(f0 / df);
+  if (startIdx === 0) {
+    dcVal = points[0].matrix[portIndex][portIndex]; 
+    s11Points.push(dcVal);
+    for (let i = 1; i < points.length; i++) s11Points.push(points[i].matrix[portIndex][portIndex]);
+  } else {
+    s11Points.push(dcVal); 
+    for (let i = 1; i < startIdx; i++) {
+       const frac = i / startIdx;
+       s11Points.push({
+         real: dcVal.real + frac * (points[0].matrix[portIndex][portIndex].real - dcVal.real),
+         imag: frac * points[0].matrix[portIndex][portIndex].imag
+       });
+    }
+    for (let i = 0; i < points.length; i++) s11Points.push(points[i].matrix[portIndex][portIndex]);
+  }
+
+  const M = s11Points.length;
+  let N = 1;
+  while (N < M * 2) N *= 2; 
+
+  const X = new Array(N).fill({ real: 0, imag: 0 });
+  
+  for (let i = 0; i < M; i++) {
+    // Hamming window to reduce Gibbs ringing
+    const window = 0.54 - 0.46 * Math.cos((2 * Math.PI * i) / (M - 1));
+    X[i] = {
+      real: s11Points[i].real * window,
+      imag: s11Points[i].imag * window
+    };
+  }
+
+  for (let i = 1; i < M; i++) {
+    if (N - i > 0) {
+      X[N - i] = { real: X[i].real, imag: -X[i].imag };
+    }
+  }
+
+  const res = fft(X, true);
+  const x = res.map(c => ({ real: c.real / N, imag: c.imag / N }));
+
+  const dt = 1 / (N * df);
+  const tdr: TDRPoint[] = [];
+
+  const z0 = points[0].z0 || 50;
+  
+  let stepSum = 0;
+
+  for (let i = 0; i < N / 2; i++) {
+    const time = i * dt;
+    const impulse = x[i].real;
+    
+    stepSum += impulse; 
+    let rho = stepSum;
+    
+    if (rho > 0.999) rho = 0.999;
+    if (rho < -0.999) rho = -0.999;
+
+    let impedance = z0 * (1 + rho) / (1 - rho);
+
+    tdr.push({
+      time,
+      timeNs: time * 1e9,
+      timePs: time * 1e12,
+      impulse,
+      step: rho,
+      impedance
+    });
+  }
+
+  return tdr;
+}

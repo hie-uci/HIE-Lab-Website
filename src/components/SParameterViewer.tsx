@@ -3,7 +3,8 @@
 import React, { useState, useMemo, ChangeEvent } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Brush } from 'recharts';
 import { UploadCloud, FileText, AlertCircle, Trash2, ShieldAlert } from 'lucide-react';
-import { parseTouchstone, sToMixedMode, cDB, cPhase, cMag } from '../lib/sParameterEngine';
+import { parseTouchstone, sToMixedMode, cDB, cPhase, cMag, computeTDR, TDRPoint } from '../lib/sParameterEngine';
+import { SmithChart } from './SmithChart';
 
 const colors = [
   '#ef4444', // red-500
@@ -18,6 +19,8 @@ const colors = [
 
 export default function SParameterViewer() {
   const [data, setData] = useState<any[]>([]);
+  const [tdrData, setTdrData] = useState<TDRPoint[]>([]);
+  const [viewMode, setViewMode] = useState<'Frequency' | 'Time' | 'SmithChart'>('Frequency');
   const [fileName, setFileName] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [isPassive, setIsPassive] = useState<boolean>(true);
@@ -161,6 +164,7 @@ export default function SParameterViewer() {
       });
 
       setData(plotData);
+      setTdrData(computeTDR(parsed.points, 0));
       setSParamMode('Single');
       setSParamViewType('Magnitude');
       setAnalysisGroup('S');
@@ -180,6 +184,7 @@ export default function SParameterViewer() {
 
   const handleClear = () => {
     setData([]);
+    setTdrData([]);
     setFileName('');
     setError('');
     setSelectedKeys([]);
@@ -327,7 +332,31 @@ export default function SParameterViewer() {
 
       {data.length > 0 && (
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+          
+          <div className="flex gap-2 border-b border-slate-200 dark:border-slate-800 pb-2">
+            <button
+              onClick={() => setViewMode('Frequency')}
+              className={`px-4 py-2 font-semibold text-sm transition-colors rounded-lg ${viewMode === 'Frequency' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+            >
+              Frequency Domain
+            </button>
+            <button
+              onClick={() => setViewMode('SmithChart')}
+              className={`px-4 py-2 font-semibold text-sm transition-colors rounded-lg ${viewMode === 'SmithChart' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+            >
+              Smith Chart
+            </button>
+            <button
+              onClick={() => setViewMode('Time')}
+              className={`px-4 py-2 font-semibold text-sm transition-colors rounded-lg ${viewMode === 'Time' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+            >
+              Time Domain (TDR)
+            </button>
+          </div>
+
+          {viewMode === 'Frequency' ? (
+            <>
+              <div className="flex flex-col gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
             
             <div className="flex flex-col gap-4">
               <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
@@ -507,6 +536,86 @@ export default function SParameterViewer() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
+            </>
+          ) : viewMode === 'SmithChart' ? (
+            <div className="flex flex-col gap-4">
+              <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">S-Parameter Smith Chart</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Continuous frequency trajectories of complex reflection coefficients on the Smith Chart.
+                </p>
+              </div>
+              <div className="p-6 w-full flex justify-center items-center bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+                 <SmithChart 
+                   gammaTrajectories={[
+                     {
+                       points: data.map(d => ({ real: d.S11_Real, imag: d.S11_Imag })),
+                       color: '#3b82f6',
+                       name: 'S11'
+                     },
+                     ...(numPorts >= 2 ? [{
+                       points: data.map(d => ({ real: d.S22_Real, imag: d.S22_Imag })),
+                       color: '#ef4444',
+                       name: 'S22'
+                     }] : [])
+                   ]}
+                 />
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">Time-Domain Reflectometry (TDR)</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Impedance profile calculated via Inverse Fast Fourier Transform (IFFT) of S11 data.
+                </p>
+              </div>
+              <div className="h-[500px] w-full mt-2 bg-white dark:bg-slate-900 rounded-xl">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={tdrData} margin={{ top: 10, right: 30, left: 20, bottom: 20 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#94a3b8" opacity={0.3} />
+                    <XAxis 
+                      dataKey="timeNs" 
+                      type="number"
+                      domain={['dataMin', 'dataMax']}
+                      tickCount={10}
+                      label={{ value: 'Time (ns)', position: 'bottom', offset: 0, fill: '#64748b' }}
+                      tick={{ fill: '#64748b', fontSize: 12 }}
+                      tickFormatter={(val) => val.toFixed(3)}
+                      stroke="#94a3b8"
+                    />
+                    <YAxis 
+                      label={{ value: 'Impedance (Ω)', angle: -90, position: 'insideLeft', fill: '#64748b' }}
+                      tick={{ fill: '#64748b', fontSize: 12 }}
+                      domain={[0, 150]}
+                      stroke="#94a3b8"
+                    />
+                    <Tooltip 
+                      formatter={(val: any, name: any) => [typeof val === 'number' ? val.toFixed(2) : val, name === 'impedance' ? 'Z(t) [Ω]' : name]}
+                      labelFormatter={(label: any) => typeof label === 'number' ? `${label.toFixed(3)} ns` : label}
+                    />
+                    <Legend verticalAlign="top" height={40} />
+                    <Line 
+                      type="stepAfter" 
+                      dataKey="impedance" 
+                      name="impedance"
+                      stroke="#4f46e5" 
+                      strokeWidth={2.5}
+                      dot={false}
+                      isAnimationActive={false}
+                    />
+                    <Brush 
+                      dataKey="timeNs" 
+                      height={30} 
+                      stroke="#8884d8" 
+                      tickFormatter={(val) => val.toFixed(3)} 
+                      y={460}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

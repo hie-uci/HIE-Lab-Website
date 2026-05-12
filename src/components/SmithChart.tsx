@@ -2,13 +2,14 @@
 
 import React from 'react';
 
-interface SmithChartProps {
+export interface SmithChartProps {
   points?: { r: number; x: number; label?: string; color?: string }[];
   paths?: { start: { r: number; x: number }; end: { r: number; x: number }; color?: string }[];
+  gammaTrajectories?: { points: { real: number; imag: number }[]; color?: string; name?: string }[];
   z0?: number;
 }
 
-export function SmithChart({ points = [], paths = [], z0 = 50 }: SmithChartProps) {
+export function SmithChart({ points = [], paths = [], gammaTrajectories = [], z0 = 50 }: SmithChartProps) {
   // SVG coordinates: Center is (0,0), radius is 1.
   // Real axis: Left is -1 (short), Right is +1 (open).
   // Gamma = (Z/Z0 - 1) / (Z/Z0 + 1)
@@ -79,6 +80,23 @@ export function SmithChart({ points = [], paths = [], z0 = 50 }: SmithChartProps
               x1={startG.x} y1={startG.y} x2={endG.x} y2={endG.y}
               stroke={path.color || "#0064a4"} strokeWidth="0.015"
               strokeDasharray="0.04, 0.04"
+            />
+          );
+        })}
+
+        {/* Draw Gamma Trajectories */}
+        {gammaTrajectories.map((traj, idx) => {
+          if (traj.points.length < 2) return null;
+          const d = `M ${traj.points[0].real} ${-traj.points[0].imag} ` + 
+                    traj.points.slice(1).map(p => `L ${p.real} ${-p.imag}`).join(' ');
+          return (
+            <path
+              key={`traj-${idx}`}
+              d={d}
+              fill="none"
+              stroke={traj.color || "#e03b24"}
+              strokeWidth="0.008"
+              className="drop-shadow-sm"
             />
           );
         })}

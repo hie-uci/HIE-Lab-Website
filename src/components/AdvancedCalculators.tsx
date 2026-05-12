@@ -495,3 +495,88 @@ export function PhasedArrayCalculator() {
     </div>
   );
 }
+
+/* =========================================================================
+   PLL Loop Filter Synthesizer
+   ========================================================================= */
+
+export function PLLCalculator() {
+  const [fc, setFc] = useState<string>('100'); // kHz
+  const [pm, setPm] = useState<string>('45'); // Degrees
+  const [kvco, setKvco] = useState<string>('50'); // MHz/V
+  const [icp, setIcp] = useState<string>('5'); // mA
+  const [n, setN] = useState<string>('100'); // Divider
+
+  const calcPLL = () => {
+    const f_c = parseFloat(fc) * 1e3; // Hz
+    const phi = parseFloat(pm) * Math.PI / 180.0;
+    const K_vco = parseFloat(kvco) * 1e6; // Hz/V
+    const I_cp = parseFloat(icp) * 1e-3; // A
+    const N_div = parseFloat(n);
+
+    if (isNaN(f_c) || isNaN(phi) || isNaN(K_vco) || isNaN(I_cp) || isNaN(N_div) || f_c <= 0 || phi <= 0 || phi >= Math.PI/2) return null;
+
+    const w_c = 2.0 * Math.PI * f_c;
+    const secPhi = 1.0 / Math.cos(phi);
+    const tanPhi = Math.tan(phi);
+
+    const T2 = (secPhi + tanPhi) / w_c;
+    const T1 = (secPhi - tanPhi) / w_c;
+
+    const C_tot = (I_cp * K_vco) / (N_div * w_c * w_c) * Math.sqrt(T2 / T1);
+    
+    const C1 = C_tot * (T1 / T2);
+    const C2 = C_tot - C1;
+    const R2 = T2 / C2;
+
+    return { C1, C2, R2 };
+  };
+
+  const results = calcPLL();
+
+  return (
+    <div className="bg-white/70 dark:bg-slate-900/70 p-6 rounded-2xl border border-white/50 dark:border-white/10 shadow-sm mt-8">
+      <h4 className="text-lg font-bold text-eng-blue dark:text-blue-300 mb-6">PLL Loop Filter Synthesis (2nd Order Passive)</h4>
+      
+      <div className="grid lg:grid-cols-2 gap-8 items-start">
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Loop Bandwidth (kHz)</label>
+              <input type="number" step="any" value={fc} onChange={(e) => setFc(e.target.value)} className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Phase Margin (Degrees)</label>
+              <input type="number" step="any" value={pm} onChange={(e) => setPm(e.target.value)} className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">VCO Gain (MHz/V)</label>
+              <input type="number" step="any" value={kvco} onChange={(e) => setKvco(e.target.value)} className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Charge Pump Current (mA)</label>
+              <input type="number" step="any" value={icp} onChange={(e) => setIcp(e.target.value)} className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono" />
+            </div>
+            <div className="col-span-2">
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Feedback Divider Ratio (N)</label>
+              <input type="number" step="1" value={n} onChange={(e) => setN(e.target.value)} className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-uci-blue outline-none font-mono" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 dark:bg-slate-950 p-5 rounded-xl border border-gray-100 dark:border-gray-800 space-y-3">
+          <h5 className="font-semibold text-sm text-gray-500 uppercase tracking-wider mb-2">Filter Components</h5>
+          {results ? (
+            <>
+              <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-400">Shunt Capacitor (C1)</span> <span className="font-mono font-medium text-uci-blue dark:text-blue-400 text-lg">{(results.C1 * 1e12 > 1000 ? results.C1 * 1e9 : results.C1 * 1e12).toFixed(2)} {results.C1 * 1e12 > 1000 ? 'nF' : 'pF'}</span></div>
+              <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-400">Series Capacitor (C2)</span> <span className="font-mono font-medium text-uci-blue dark:text-blue-400 text-lg">{(results.C2 * 1e12 > 1000 ? results.C2 * 1e9 : results.C2 * 1e12).toFixed(2)} {results.C2 * 1e12 > 1000 ? 'nF' : 'pF'}</span></div>
+              <div className="flex justify-between items-center"><span className="text-gray-600 dark:text-gray-400">Series Resistor (R2)</span> <span className="font-mono font-medium text-eecs-teal text-lg">{(results.R2 > 1000 ? results.R2 / 1e3 : results.R2).toFixed(2)} {results.R2 > 1000 ? 'kΩ' : 'Ω'}</span></div>
+            </>
+          ) : (
+            <div className="text-sm text-gray-400">Invalid input values</div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

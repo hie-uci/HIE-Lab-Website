@@ -19,6 +19,8 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { calculateCascade, CascadeBlock, CascadeResult } from '@/lib/cascadeMath';
+import { parseTouchstone } from '@/lib/sParameterEngine';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 // Custom Node for RF Block
 const RFBlockNode = ({ data, id }: NodeProps) => {
@@ -31,9 +33,11 @@ const RFBlockNode = ({ data, id }: NodeProps) => {
           <label className="text-gray-600 dark:text-gray-400 font-medium">Gain (dB)</label>
           <input 
             type="number" 
-            className="w-16 p-1 border rounded bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-600 text-right focus:outline-none focus:ring-2 focus:ring-blue-500" 
+            className="w-16 p-1 border rounded bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-600 text-right focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" 
             value={data.gain as number}
             onChange={(e) => (data.onChange as Function)(id, 'gain', parseFloat(e.target.value) || 0)}
+            disabled={!!data.sParamData}
+            title={data.sParamData ? "Gain is driven by S-Parameter file" : ""}
           />
         </div>
         <div className="flex justify-between items-center gap-3">
@@ -53,6 +57,27 @@ const RFBlockNode = ({ data, id }: NodeProps) => {
             value={data.oip3 as number}
             onChange={(e) => (data.onChange as Function)(id, 'oip3', parseFloat(e.target.value) || 0)}
           />
+        </div>
+        <div className="flex flex-col gap-1 mt-1 border-t border-gray-200 dark:border-gray-700 pt-2">
+          <label className="text-gray-600 dark:text-gray-400 font-medium text-[10px]">.s2p File (Overrides Gain)</label>
+          <input 
+            type="file" 
+            accept=".s2p,.s1p,.s3p,.s4p"
+            className="text-[10px] w-full text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900/30 dark:file:text-blue-400 cursor-pointer"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                  if (ev.target?.result) {
+                    (data.onFileLoad as Function)(id, ev.target.result as string, file.name);
+                  }
+                };
+                reader.readAsText(file);
+              }
+            }}
+          />
+          {!!data.sParamFileName && <div className="text-[9px] text-blue-500 truncate mt-1 font-medium" title={data.sParamFileName as string}>Loaded: {data.sParamFileName as string}</div>}
         </div>
       </div>
       <Handle type="source" position={Position.Right} className="w-3 h-3 bg-blue-500 border-none" />
@@ -87,12 +112,40 @@ export default function SystemCascadeBuilder() {
     );
   }, [setNodes]);
 
+  const onFileLoad = useCallback((id: string, content: string, fileName: string) => {
+    // Basic detection of ports from extension (e.g. .s2p -> 2)
+    const extMatch = fileName.match(/\.s(\d+)p$/i);
+    const numPorts = extMatch ? parseInt(extMatch[1]) : 2;
+    
+    try {
+      const parsed = parseTouchstone(content, numPorts);
+      setNodes((nds) =>
+        nds.map((node) => {
+          if (node.id === id) {
+            return { 
+              ...node, 
+              data: { 
+                ...node.data, 
+                sParamData: parsed,
+                sParamFileName: fileName
+              } 
+            };
+          }
+          return node;
+        })
+      );
+    } catch (err) {
+      console.error("Error parsing S-parameter file:", err);
+      alert("Failed to parse Touchstone file. Please ensure it is a valid format.");
+    }
+  }, [setNodes]);
+
   const nodeTypes = useMemo(() => {
     const RFBlockNodeWrapper = (props: NodeProps) => {
-      return <RFBlockNode {...props} data={{...props.data, onChange: onNodeDataChange}} />
+      return <RFBlockNode {...props} data={{...props.data, onChange: onNodeDataChange, onFileLoad}} />
     };
     return { rfBlock: RFBlockNodeWrapper };
-  }, [onNodeDataChange]);
+  }, [onNodeDataChange, onFileLoad]);
 
   const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge({ ...params, animated: true }, eds)), [setEdges]);
 
@@ -140,6 +193,8 @@ export default function SystemCascadeBuilder() {
           gain: node.data.gain as number,
           nf: node.data.nf as number,
           oip3: node.data.oip3 as number,
+          sParamData: node.data.sParamData as any,
+          sParamFileName: node.data.sParamFileName as string,
         });
       }
       currentNodeId = outgoingEdges[currentNodeId];
@@ -213,22 +268,47 @@ export default function SystemCascadeBuilder() {
           </h3>
           {cascadeResult ? (
             <div className="flex flex-col gap-3">
+              {cascadeResult.sweptResults && cascadeResult.sweptResults.length > 0 && (
+                <div className="bg-white dark:bg-gray-800 p-2 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm w-full h-48 mb-2">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={cascadeResult.sweptResults} margin={{ top: 10, right: 5, left: -25, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.5} />
+                      <XAxis 
+                        dataKey="frequency" 
+                        tickFormatter={(val) => (val / 1e9).toFixed(1) + 'G'} 
+                        stroke="#9ca3af" 
+                        style={{ fontSize: '10px' }}
+                      />
+                      <YAxis stroke="#9ca3af" style={{ fontSize: '10px' }} />
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: '#1f2937', borderColor: '#374151', fontSize: '12px', color: '#f3f4f6' }}
+                        labelFormatter={(val) => `Freq: ${(Number(val) / 1e9).toFixed(2)} GHz`}
+                        formatter={(val: any, name: any) => [Number(val).toFixed(2) + ' dB/dBm', String(name)]}
+                      />
+                      <Legend wrapperStyle={{ fontSize: '10px' }} />
+                      <Line type="monotone" dataKey="cascadedGain" name="Gain" stroke="#3b82f6" dot={false} strokeWidth={2} />
+                      <Line type="monotone" dataKey="cascadedNF" name="NF" stroke="#ef4444" dot={false} strokeWidth={2} />
+                      <Line type="monotone" dataKey="cascadedOIP3" name="OIP3" stroke="#22c55e" dot={false} strokeWidth={2} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
               <div className="bg-white dark:bg-gray-800 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex justify-between items-center">
-                <div className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">Gain</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">Gain {cascadeResult.sweptResults ? "(DC/Center)" : ""}</div>
                 <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{cascadeResult.cascadedGain.toFixed(2)} <span className="text-xs font-normal text-gray-500">dB</span></div>
               </div>
               <div className="bg-white dark:bg-gray-800 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex justify-between items-center">
-                <div className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">NF</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">NF {cascadeResult.sweptResults ? "(DC/Center)" : ""}</div>
                 <div className="text-lg font-bold text-red-600 dark:text-red-400">{cascadeResult.cascadedNF.toFixed(2)} <span className="text-xs font-normal text-gray-500">dB</span></div>
               </div>
               <div className="bg-white dark:bg-gray-800 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex justify-between items-center">
-                <div className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">OIP3</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">OIP3 {cascadeResult.sweptResults ? "(DC/Center)" : ""}</div>
                 <div className="text-lg font-bold text-green-600 dark:text-green-400">
                   {isFinite(cascadeResult.cascadedOIP3) ? cascadeResult.cascadedOIP3.toFixed(2) : '---'} <span className="text-xs font-normal text-gray-500">dBm</span>
                 </div>
               </div>
               <div className="bg-white dark:bg-gray-800 p-3.5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex justify-between items-center">
-                <div className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">IIP3</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wider">IIP3 {cascadeResult.sweptResults ? "(DC/Center)" : ""}</div>
                 <div className="text-lg font-bold text-green-600 dark:text-green-400">
                   {isFinite(cascadeResult.cascadedIIP3) ? cascadeResult.cascadedIIP3.toFixed(2) : '---'} <span className="text-xs font-normal text-gray-500">dBm</span>
                 </div>
